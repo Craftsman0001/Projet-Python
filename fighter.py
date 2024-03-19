@@ -188,5 +188,5 @@ class Fighter() :
             self.action = new_action
 
         # update de animation settings
-        self.frame_index = 0
-        self.last_update = pygame.time.get_ticks() 
+            self.frame_index = 0
+            self.last_update = pygame.time.get_ticks() 
