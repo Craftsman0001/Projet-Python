@@ -150,15 +150,15 @@ class Fighter() :
 
     def draw(self, surface) :
         # Get the current animation frame
-        image = self.animation[self.action][self.frame_index]
+        current_frame = self.animation[self.action][self.frame_index]
     
         # Flip the current frame if necessary
-        #if self.flip == True :
-            #current_frame = pygame.transform.flip(current_frame, self.flip, False)
-        #image = pygame.transform.flip(self.image, self.flip, False)
+        if self.flip == True :
+            current_frame = pygame.transform.flip(current_frame, self.flip, False)
+
         # Draw the flipped frame onto the surface
         pygame.draw.rect(surface, (255, 0, 0), self.rect)
-        surface.blit(image, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
+        surface.blit(current_frame, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
 
     def attack(self, surface, enemy) :
 
@@ -187,6 +187,6 @@ class Fighter() :
         if new_action != self.action :
             self.action = new_action
 
-        # update de animation settings
+            # update de animation settings
             self.frame_index = 0
             self.last_update = pygame.time.get_ticks() 
