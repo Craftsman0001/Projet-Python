@@ -20,7 +20,7 @@ fighter_2 = Fighter(925, 400)
 
 
 # Game Loop
-clock = pygame.time.Clock()
+clock = pygame.time.Clock() # Setting up framerate
 run = True
 while run :
 
@@ -33,8 +33,7 @@ while run :
     keys = pygame.key.get_pressed()
     
     # Move Fighters
-    fighter_1.move(keys)
-    fighter_2.move(keys)
+    fighter_1.move(keys, screen_width, screen_height)
 
     # Draw background Image
     screen.blit(background_image, (0, 0))
