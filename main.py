@@ -59,6 +59,17 @@ attack2_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Spr
 hit_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Sprites/Take Hit.png")
 death_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Sprites/Death.png")
 
+idle_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Idle.png")
+run_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Run.png")
+jump_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Going Up.png")
+attack1_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Attack1.png")
+attack2_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Attack2.png")
+hit_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Take Hit.png")
+death_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Death.png")
+attack3_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Attack3.png")
+
+martial_hero_sprite_sheets = [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet]
+
 fantasy_warrior_sprite_sheet = [idle_fantasy_warrior_sprite_sheet, run_fantasy_warrior_sprite_sheet, jump_fantasy_warrior_sprite_sheet, attack1_fantasy_warrior_sprite_sheet, attack2_fantasy_warrior_sprite_sheet, hit_fantasy_warrior_sprite_sheet, death_fantasy_warrior_sprite_sheet, attack3_fantasy_warrior_sprite_sheet]
 
 wizard_sprite_sheet = [idle_wizard_sprite_sheet, run_wizard_sprite_sheet, jump_wizard_sprite_sheet, attack1_wizard_sprite_sheet, attack2_wizard_sprite_sheet, hit_wizard_sprite_sheet, death_wizard_sprite_sheet] 
@@ -81,8 +92,18 @@ attack2_wizard_animation_steps = [8]
 hit_wizard_animation_steps = [3]
 death_wizard_animation_steps = [7]
 
+idle_martial_hero_animation_steps = [10]
+run_martial_hero_animation_steps = [8]
+jump_martial_hero_animation_steps = [3]
+attack1_martial_hero_animation_steps = [7]
+attack2_martial_hero_animation_steps = [6]
+hit_martial_hero_animation_steps = [3]
+death_martial_hero_animation_steps = [11]
+attack3_martial_hero_animation_steps = [9]
+
 fantasy_warrior_animation_steps = [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps, attack3_fantasy_warrior_animation_steps]
 wizard_animation_steps = [idle_wizard_animation_steps, run_wizard_animation_steps, jump_wizard_animation_steps, attack1_wizard_animation_steps, attack2_wizard_animation_steps, hit_wizard_animation_steps, death_wizard_animation_steps]
+martial_hero_animation_steps = [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps]
 
 # Defining fighter variables
 fantasy_warrior_size = 162
@@ -93,6 +114,10 @@ wizard_size = 250
 wizard_scale = 3
 wizard_offset = [112, 107]
 wizard_data = [wizard_size, wizard_scale, wizard_offset]
+martial_hero_size = 126
+martial_hero_scale = 3.5
+martial_hero_offset = [50, 30.5]
+martial_hero_data = [martial_hero_size, martial_hero_scale, martial_hero_offset]
 
 # Colors
 Blue = (0, 0, 255)
@@ -116,7 +141,8 @@ score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
 
 # Creation of instances for fighters
 fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
-fighter_2 = Fighter(2, 925, 400, 581, False, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
+#fighter_2 = Fighter(2, 925, 400, 581, False, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
+fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets, martial_hero_animation_steps)
 
 
 # Function to draw fighter health bars
