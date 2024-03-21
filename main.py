@@ -29,16 +29,16 @@ def display_intro_video():
 
 
 # Display the intro video
-display_intro_video()
+#display_intro_video()
 
 # Loop until the player presses a key to start the game
-in_progress = False
-while not in_progress:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            in_progress = False
-        if event.type == pygame.KEYDOWN:
-            in_progress = True
+#in_progress = False
+#while not in_progress:
+#    for event in pygame.event.get():
+#        if event.type == pygame.QUIT:
+#            in_progress = False
+#        if event.type == pygame.KEYDOWN:
+#            in_progress = True
 
 
 # Load Spritesheets
@@ -179,8 +179,15 @@ while run :
     fighter_1.update()
     
     # Draw fighter
-    fighter_2.draw(screen)
-    fighter_1.draw(screen)
+    if fighter_1.attacking == True :
+        fighter_2.draw(screen)
+        fighter_1.draw(screen)
+    elif fighter_2.attacking == True :
+        fighter_1.draw(screen)
+        fighter_2.draw(screen)
+    else :
+        fighter_2.draw(screen)
+        fighter_1.draw(screen)
 
     # check if player was defeated
     if round_over == False :
