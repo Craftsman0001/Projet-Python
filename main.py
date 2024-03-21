@@ -5,9 +5,9 @@ from fighter import Fighter
 # Initialize all imported pygame modules
 pygame.init()
 
-# Creation of the Game Window 
-screen_width = 1200 
-screen_height = 600 
+# Creation of the Game Window
+screen_width = 1200
+screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Its my game !")
 
@@ -18,6 +18,52 @@ background_image = pygame.transform.scale(original_background_image, (screen_wid
 # load the victory image
 original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
 victory_image = pygame.transform.scale(original_victory_image, (400,150))
+
+
+def display_intro_video():
+    clip = VideoFileClip("Assets/intro/intro.mp4")
+    clip = clip.without_audio()  # Disable audio track
+    clip = clip.set_fps(60) 
+    clip.preview(screen_width, screen_height)
+
+
+
+# Display the intro video
+display_intro_video()
+
+# Loop until the player presses a key to start the game
+in_progress = False
+while not in_progress:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            in_progress = False
+        if event.type == pygame.KEYDOWN:
+            in_progress = True
+
+
+def afficher_video_accueil():
+    clip = VideoFileClip("Assets/intro/intro.mp4")
+    clip = clip.without_audio()  # Désactiver la piste audio
+    clip.preview(screen_width, screen_height)
+
+
+
+# Affichage de la vidéo d'accueil
+afficher_video_accueil()
+
+# Boucle pour attendre que le joueur appuie sur une touche pour commencer le jeu
+en_cours = False
+while not en_cours:
+    # Gestion des événements
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            en_cours = False
+        if event.type == pygame.KEYDOWN:
+            en_cours = True
+
+
+
+
 
 
 # Load Spritesheets
