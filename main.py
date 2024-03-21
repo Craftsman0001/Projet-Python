@@ -41,31 +41,6 @@ while not in_progress:
             in_progress = True
 
 
-def afficher_video_accueil():
-    clip = VideoFileClip("Assets/intro/intro.mp4")
-    clip = clip.without_audio()  # Désactiver la piste audio
-    clip.preview(screen_width, screen_height)
-
-
-
-# Affichage de la vidéo d'accueil
-afficher_video_accueil()
-
-# Boucle pour attendre que le joueur appuie sur une touche pour commencer le jeu
-en_cours = False
-while not en_cours:
-    # Gestion des événements
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            en_cours = False
-        if event.type == pygame.KEYDOWN:
-            en_cours = True
-
-
-
-
-
-
 # Load Spritesheets
 idle_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Idle.png")
 run_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Run.png")
