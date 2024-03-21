@@ -49,6 +49,7 @@ attack1_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantas
 attack2_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Attack2.png")
 hit_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Take Hit.png")
 death_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Death.png")
+attack3_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Attack3.png")
 
 idle_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Sprites/Idle.png")
 run_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Sprites/Run.png")
@@ -58,7 +59,7 @@ attack2_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Spr
 hit_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Sprites/Take Hit.png")
 death_wizard_sprite_sheet = pygame.image.load("Assets/Fighters/Evil Wizard/Sprites/Death.png")
 
-fantasy_warrior_sprite_sheet = [idle_fantasy_warrior_sprite_sheet, run_fantasy_warrior_sprite_sheet, jump_fantasy_warrior_sprite_sheet, attack1_fantasy_warrior_sprite_sheet, attack2_fantasy_warrior_sprite_sheet, hit_fantasy_warrior_sprite_sheet, death_fantasy_warrior_sprite_sheet]
+fantasy_warrior_sprite_sheet = [idle_fantasy_warrior_sprite_sheet, run_fantasy_warrior_sprite_sheet, jump_fantasy_warrior_sprite_sheet, attack1_fantasy_warrior_sprite_sheet, attack2_fantasy_warrior_sprite_sheet, hit_fantasy_warrior_sprite_sheet, death_fantasy_warrior_sprite_sheet, attack3_fantasy_warrior_sprite_sheet]
 
 wizard_sprite_sheet = [idle_wizard_sprite_sheet, run_wizard_sprite_sheet, jump_wizard_sprite_sheet, attack1_wizard_sprite_sheet, attack2_wizard_sprite_sheet, hit_wizard_sprite_sheet, death_wizard_sprite_sheet] 
 
@@ -70,6 +71,7 @@ attack1_fantasy_warrior_animation_steps = [7]
 attack2_fantasy_warrior_animation_steps = [7]
 hit_fantasy_warrior_animation_steps = [3]
 death_fantasy_warrior_animation_steps = [7]
+attack3_fantasy_warrior_animation_steps = [8]
 
 idle_wizard_animation_steps = [8]
 run_wizard_animation_steps = [8]
@@ -79,7 +81,7 @@ attack2_wizard_animation_steps = [8]
 hit_wizard_animation_steps = [3]
 death_wizard_animation_steps = [7]
 
-fantasy_warrior_animation_steps = [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps]
+fantasy_warrior_animation_steps = [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps, attack3_fantasy_warrior_animation_steps]
 wizard_animation_steps = [idle_wizard_animation_steps, run_wizard_animation_steps, jump_wizard_animation_steps, attack1_wizard_animation_steps, attack2_wizard_animation_steps, hit_wizard_animation_steps, death_wizard_animation_steps]
 
 # Defining fighter variables
@@ -113,8 +115,9 @@ countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
 
 # Creation of instances for fighters
-fighter_1 = Fighter(1, 200, 400, 581, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
-fighter_2 = Fighter(2, 925, 400, 581, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
+fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
+fighter_2 = Fighter(2, 925, 400, 581, False, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
+
 
 # Function to draw fighter health bars
 def draw_health_bar (fighter, x, y) :
@@ -122,11 +125,26 @@ def draw_health_bar (fighter, x, y) :
     pygame.draw.rect(screen, Black, (x - 5, y -5, 410, 40) )
     pygame.draw.rect(screen, Blue, (x, y, 400, 30) )
     pygame.draw.rect(screen, Green, (x, y, 400 * ratio, 30) )
+    
 
 # function to draw text
 def draw_text(text, font, text_color, x, y) :
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
+
+
+def smooth_attack_animation(fighter_1, fighter_2) :
+    # Draw fighter
+    if fighter_1.attacking == True :
+        fighter_2.draw(screen)
+        fighter_1.draw(screen)
+    elif fighter_2.attacking == True :
+        fighter_1.draw(screen)
+        fighter_2.draw(screen)
+    else :
+        fighter_2.draw(screen)
+        fighter_1.draw(screen)
+
 
 
 # Game Loop
@@ -164,11 +182,11 @@ while run :
             fighter_2.flip = False
         # display the countdown timer
         if countdown == 1 :
-            draw_text(str(countdown), countdown_font_2, Black, screen_width / 2 , screen_height / 3)
-            draw_text(str(countdown), countdown_font_1, Red, screen_width / 2 , screen_height / 3)
+            draw_text(str(countdown), countdown_font_2, Black, screen_width / 2 - 20, screen_height / 3)
+            draw_text(str(countdown), countdown_font_1, Red, screen_width / 2 - 20, screen_height / 3)
         else : 
-            draw_text(str(countdown), countdown_font_2, Black, screen_width / 2 - 25, screen_height / 3)
-            draw_text(str(countdown), countdown_font_1, Red, screen_width / 2 - 25, screen_height / 3)
+            draw_text(str(countdown), countdown_font_2, Black, screen_width / 2 - 40, screen_height / 3)
+            draw_text(str(countdown), countdown_font_1, Red, screen_width / 2 - 40, screen_height / 3)
         # update countdown
         if (pygame.time.get_ticks() - last_count_update) >= 1000 :
             countdown -=1
@@ -178,16 +196,7 @@ while run :
     fighter_2.update()
     fighter_1.update()
     
-    # Draw fighter
-    if fighter_1.attacking == True :
-        fighter_2.draw(screen)
-        fighter_1.draw(screen)
-    elif fighter_2.attacking == True :
-        fighter_1.draw(screen)
-        fighter_2.draw(screen)
-    else :
-        fighter_2.draw(screen)
-        fighter_1.draw(screen)
+    smooth_attack_animation(fighter_1, fighter_2)
 
     # check if player was defeated
     if round_over == False :
@@ -206,8 +215,8 @@ while run :
             round_over = False
             countdown = 3
             # Creation of instances for fighters
-            fighter_1 = Fighter(1, 200, 400, 581, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
-            fighter_2 = Fighter(2, 925, 400, 581, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
+            fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
+            fighter_2 = Fighter(2, 925, 400, 581, False, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
 
         
     # Update display
