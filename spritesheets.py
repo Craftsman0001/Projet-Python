@@ -1,6 +1,7 @@
 import pygame
 
 def load_spritesheets():
+    # function that downloads the fighters spritesheets for each action
     idle_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Idle.png")
     run_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Run.png")
     jump_fantasy_warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/Jump.png")
@@ -34,6 +35,7 @@ def load_spritesheets():
     }
 
 def load_animation_steps():
+    # function that has the number of frames for each spritesheet
     idle_fantasy_warrior_animation_steps = [10]
     run_fantasy_warrior_animation_steps = [8]
     jump_fantasy_warrior_animation_steps = [3]
@@ -64,4 +66,24 @@ def load_animation_steps():
         "fantasy_warrior": [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps, attack3_fantasy_warrior_animation_steps],
         "wizard": [idle_wizard_animation_steps, run_wizard_animation_steps, jump_wizard_animation_steps, attack1_wizard_animation_steps, attack2_wizard_animation_steps, hit_wizard_animation_steps, death_wizard_animation_steps],
         "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps]
+    }
+
+def fighter_variables() :
+    #function that has the data for each fighter
+    fantasy_warrior_size = 162
+    fantasy_warrior_scale = 4
+    fantasy_warrior_offset = [72, 56]   
+
+    wizard_size = 250
+    wizard_scale = 3
+    wizard_offset = [112, 107]
+
+    martial_hero_size = 126
+    martial_hero_scale = 3.5
+    martial_hero_offset = [50, 30.5]
+
+    return {
+        "fantasy_warrior" : [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset],
+        "wizard" : [wizard_size, wizard_scale, wizard_offset],
+        "martial_hero" : [martial_hero_size, martial_hero_scale, martial_hero_offset],
     }

@@ -57,18 +57,14 @@ martial_hero_animation_steps = animation_steps["martial_hero"]
 
 
 # Defining fighter variables
-fantasy_warrior_size = 162
-fantasy_warrior_scale = 4
-fantasy_warrior_offset = [72, 56]   
-fantasy_warrior_data = [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset]
-wizard_size = 250
-wizard_scale = 3
-wizard_offset = [112, 107]
-wizard_data = [wizard_size, wizard_scale, wizard_offset]
-martial_hero_size = 126
-martial_hero_scale = 3.5
-martial_hero_offset = [50, 30.5]
-martial_hero_data = [martial_hero_size, martial_hero_scale, martial_hero_offset]
+
+fighter_data = fighter_variables()
+
+fantasy_warrior_data = fighter_data["fantasy_warrior"]
+
+wizard_data = fighter_data["wizard"]
+
+martial_hero_data = fighter_data["martial_hero"]
 
 # Colors
 Blue = (0, 0, 255)
