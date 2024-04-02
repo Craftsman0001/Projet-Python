@@ -77,13 +77,13 @@ class Fighter() :
                     # Determining which attack was used
                     if keys[pygame.K_e] :
                         self.attack_type = 1
-                        self.attack_duration = 200
+                        self.attack_duration = 350
                     elif keys[pygame.K_a] :
                         self.attack_type = 2
                         self.attack_duration = 200
                     elif keys[pygame.K_r] and self.third_attack == True:
                         self.attack_type = 7
-                        self.attack_duration = 500
+                        self.attack_duration = 450
                     self.attack(enemy) 
 
             # check the player 2 controls
