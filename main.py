@@ -108,7 +108,7 @@ martial_hero_animation_steps = [idle_martial_hero_animation_steps, run_martial_h
 # Defining fighter variables
 fantasy_warrior_size = 162
 fantasy_warrior_scale = 4
-fantasy_warrior_offset = [72, 56]
+fantasy_warrior_offset = [72, 56]   
 fantasy_warrior_data = [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset]
 wizard_size = 250
 wizard_scale = 3
@@ -219,8 +219,8 @@ while run :
             last_count_update = pygame.time.get_ticks()
 
     # update fighters
-    fighter_2.update()
-    fighter_1.update()
+    fighter_2.update(fighter_1)
+    fighter_1.update(fighter_2)
     
     smooth_attack_animation(fighter_1, fighter_2)
 
