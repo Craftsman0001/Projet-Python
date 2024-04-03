@@ -56,8 +56,7 @@ wizard_animation_steps = animation_steps["wizard"]
 martial_hero_animation_steps = animation_steps["martial_hero"]
 
 
-# Defining fighter variables
-
+# defining fighter variables
 fighter_data = fighter_variables()
 
 fantasy_warrior_data = fighter_data["fantasy_warrior"]

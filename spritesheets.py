@@ -72,18 +72,27 @@ def fighter_variables() :
     #function that has the data for each fighter
     fantasy_warrior_size = 162
     fantasy_warrior_scale = 4
-    fantasy_warrior_offset = [72, 56]   
+    fantasy_warrior_offset = [72, 56]  
+    fantasy_warrior_timer_attack_1 = 350
+    fantasy_warrior_timer_attack_2 = 200
+    fantasy_warrior_timer_attack_3 = 450
 
     wizard_size = 250
     wizard_scale = 3
     wizard_offset = [112, 107]
+    wizard_timer_attack_1 = 400
+    wizard_timer_attack_2 = 400
+    wizard_timer_attack_3 = 0
 
     martial_hero_size = 126
     martial_hero_scale = 3.5
     martial_hero_offset = [50, 30.5]
+    martial_hero_timer_attack_1 = 350
+    martial_hero_timer_attack_2 = 200
+    martial_hero_timer_attack_3 = 550
 
     return {
-        "fantasy_warrior" : [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset],
-        "wizard" : [wizard_size, wizard_scale, wizard_offset],
-        "martial_hero" : [martial_hero_size, martial_hero_scale, martial_hero_offset],
+        "fantasy_warrior" : [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
+        "wizard" : [wizard_size, wizard_scale, wizard_offset, wizard_timer_attack_1, wizard_timer_attack_2, wizard_timer_attack_3],
+        "martial_hero" : [martial_hero_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
     }

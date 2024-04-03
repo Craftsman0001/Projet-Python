@@ -8,6 +8,9 @@ class Fighter() :
         self.size = data[0]
         self.image_scale = data[1]
         self.offset = data[2]
+        self.timer_attack_1 = data[3]
+        self.timer_attack_2 = data[4]
+        self.timer_attack_3 = data[5]
         self.flip = False
         self.action = 0 # 0: idle, 1: run, 2: jump, 3: attack1, 4: attack2, 5: hit, 6: death
         self.frame_index = 0
@@ -72,20 +75,19 @@ class Fighter() :
                         self.velocity_y = -30
                         self.jump = True 
                 # Attack
-                if keys[pygame.K_e] or keys[pygame.K_a] or keys[pygame.K_r] :
-                    ### self.attack(surface, enemy)
-                    # Determining which attack was used
-                    if keys[pygame.K_e] :
-                        self.attack_type = 1
-                        self.attack_duration = 350
-                    elif keys[pygame.K_a] :
-                        self.attack_type = 2
-                        self.attack_duration = 200
-                    elif keys[pygame.K_r] and self.third_attack == True:
-                        self.attack_type = 7
-                        self.attack_duration = 450
+                if keys[pygame.K_r] and self.third_attack == True:
+                    self.attack_type = 7
+                    self.attack_duration = self.timer_attack_3 
                     self.attack(enemy) 
-
+                elif keys[pygame.K_e] :
+                    self.attack_type = 1
+                    self.attack_duration = self.timer_attack_1 
+                    self.attack(enemy) 
+                elif keys[pygame.K_a] :
+                    self.attack_type = 2
+                    self.attack_duration = self.timer_attack_2 
+                    self.attack(enemy) 
+                
             # check the player 2 controls
             if self.player == 2 :
                 if keys[pygame.K_LEFT]:
@@ -100,18 +102,17 @@ class Fighter() :
                         self.velocity_y = -30
                         self.jump = True
                 # Attack
-                if keys[pygame.K_m] or keys[pygame.K_l] or keys[pygame.K_p]:
-                    ### self.attack(surface, enemy)
-                    # Determining which attack was used
-                    if keys[pygame.K_m] :
-                        self.attack_type = 1
-                        self.attack_duration = 200
-                    elif keys[pygame.K_l] :
-                        self.attack_type = 2
-                        self.attack_duration = 200
-                    elif keys[pygame.K_p] and self.third_attack == True :
-                        self.attack_type = 7
-                        self.attack_duration = 500
+                if keys[pygame.K_p] and self.third_attack == True:
+                    self.attack_type = 7
+                    self.attack_duration = self.timer_attack_3
+                    self.attack(enemy)
+                elif keys[pygame.K_m]:
+                    self.attack_type = 1
+                    self.attack_duration = self.timer_attack_1
+                    self.attack(enemy)
+                elif keys[pygame.K_l]:
+                    self.attack_type = 2
+                    self.attack_duration = self.timer_attack_2
                     self.attack(enemy)
 
         # Ensure fighters face each other
