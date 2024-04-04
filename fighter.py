@@ -153,27 +153,36 @@ class Fighter() :
                 enemy.health -= 10
                 self.apply_attack_damage = False
 
-        # check what action the fighter is doing
+        # check if the fighter is dead
         if self.health <= 0 :
             self.health = 0
             self.alive = False
-            self.update_fighter_action(6) # death
-        elif self.hit == True :
-            self.update_fighter_action(5) # hit
-            self.hit = False
-        elif self.attacking == True :
-            if self.attack_type == 1 :
-                self.update_fighter_action(3) # attack1
-            elif self.attack_type == 2 :
-                self.update_fighter_action(4) # attack2
-            elif self.attack_type == 7 :
-                self.update_fighter_action(7) # attack 3
-        elif self.jump == True :
-            self.update_fighter_action(2) # jump
-        elif self.running == True :
-            self.update_fighter_action(1)  # run
-        else : 
-            self.update_fighter_action(0) # idle
+            self.update_fighter_action(7) # death
+
+        # Check if the fighter is in mid-air
+        elif self.jump == True and self.rect.bottom != self.ground_level:
+            # Check if the fighter is at the maximum height of the jump
+            if self.velocity_y >= 0:
+                self.update_fighter_action(3)  # fall animation
+            else:
+                self.update_fighter_action(2)  # jump animation
+
+        else:
+        # Check other conditions and update animations accordingly
+            if self.hit == True :
+                self.update_fighter_action(6) # hit
+                self.hit = False
+            elif self.attacking == True :
+                if self.attack_type == 1 :
+                    self.update_fighter_action(4) # attack1
+                elif self.attack_type == 2 :
+                    self.update_fighter_action(5) # attack2
+                elif self.attack_type == 7 :
+                    self.update_fighter_action(8) # attack 3
+            elif self.running == True :
+                self.update_fighter_action(1)  # run
+            else : 
+                self.update_fighter_action(0) # idle
 
   
         animation_cooldown = 90 # Default to 100 milliseconds if action not found
@@ -190,14 +199,14 @@ class Fighter() :
             if self.frame_index >= len(self.animation[self.action]) :
                 if self.alive == True :
                     # check if an attack was done
-                    if self.action in (3, 4, 7) :
+                    if self.action in (4, 5, 8) :
                         self.frame_index = 0
                         # Check if it's during a attack animation
                         self.attacking = False
                         self.attack_cooldown = 20
                         self.update_fighter_action(0) # idle
                     # check if fighter took a hit
-                    elif self.action == 5 :
+                    elif self.action == 6 :
                         self.frame_index = 0
                         self.hit = False
                         # check that if the player is in the middle of an attack it is stoppped

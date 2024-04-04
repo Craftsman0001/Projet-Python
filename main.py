@@ -60,9 +60,7 @@ martial_hero_animation_steps = animation_steps["martial_hero"]
 fighter_data = fighter_variables()
 
 fantasy_warrior_data = fighter_data["fantasy_warrior"]
-
 wizard_data = fighter_data["wizard"]
-
 martial_hero_data = fighter_data["martial_hero"]
 
 # Colors
