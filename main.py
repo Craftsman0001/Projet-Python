@@ -87,7 +87,7 @@ def draw_text(text, font, text_color, x, y):
 def display_intro_video():
     clip = VideoFileClip("Assets/intro/intro.mp4")
     clip = clip.without_audio()  # Disable audio track
-    clip = clip.set_fps(24)
+    clip = clip.set_fps(60)
 
     # Loop to display each frame of the video
     for frame in clip.iter_frames():
@@ -96,7 +96,7 @@ def display_intro_video():
         pygame.display.update()
 
     # Wait for a certain time after the end of the video
-    pygame.time.wait(2000)
+    pygame.time.wait(100)
 
 
 # Function to handle intro display and wait for key press to start game
