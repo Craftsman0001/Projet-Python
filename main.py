@@ -57,7 +57,7 @@ score = [0, 0]  # player scores : [player1, player2]
 round_over = False
 round_over_cooldown = 3000
 
-# Defining the font
+# Defining the fonts
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
