@@ -1,8 +1,8 @@
 import pygame
 import sys
 from fighter import Fighter
-from spritesheets import *
-from moviepy.editor import VideoFileClip
+from FighterData import *
+#from moviepy.editor import VideoFileClip
 
 # Initialize all imported pygame modules
 pygame.init()
@@ -158,7 +158,7 @@ def display_pause_menu():
 
 
 # call intro function
-display_intro_video()
+# display_intro_video()
 
 # Game Loop
 clock = pygame.time.Clock() # Setting up framerate
