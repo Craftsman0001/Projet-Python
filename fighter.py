@@ -47,8 +47,8 @@ class Fighter() :
 
 
     def move(self, round_over, screen_width, screen_height, surface, enemy) :
-        speed = 8
-        gravity = 1.5
+        SPEED = 8 # constant
+        GRAVITY = 1.5
         dx = 0
         dy = 0
 
@@ -64,10 +64,10 @@ class Fighter() :
             # check the player 1 controls
             if self.player == 1 :
                 if keys[pygame.K_q]:
-                    dx -= speed
+                    dx -= SPEED
                     self.running = True
                 elif keys[pygame.K_d]:
-                    dx += speed
+                    dx += SPEED
                     self.running = True  
                 # Jumping 
                 if keys[pygame.K_z] and self.jump == False:
@@ -91,10 +91,10 @@ class Fighter() :
             # check the player 2 controls
             if self.player == 2 :
                 if keys[pygame.K_LEFT]:
-                    dx -= speed
+                    dx -= SPEED
                     self.running = True
                 if keys[pygame.K_RIGHT]:
-                    dx += speed
+                    dx += SPEED
                     self.running = True
                 # Jumping 
                 if keys[pygame.K_UP] and self.jump == False:
@@ -137,7 +137,7 @@ class Fighter() :
         self.rect.move_ip(dx, dy) 
 
         # Update velocity for gravity
-        self.velocity_y += gravity
+        self.velocity_y += GRAVITY
 
         # Fighter stays on the ground
         if self.rect.bottom > self.ground_level :
@@ -146,6 +146,7 @@ class Fighter() :
             self.jump = False
 
     def update(self, enemy) :
+
         if self.attacking == True and self.apply_attack_damage == True :
             current_time = pygame.time.get_ticks()
             elapsed_time = current_time - self.attack_start_time
@@ -185,14 +186,14 @@ class Fighter() :
                 self.update_fighter_action(0) # idle
 
   
-        animation_cooldown = 90 # Default to 100 milliseconds if action not found
+        ANIMATION_COOLDOWN = 90 # Default to 100 milliseconds if action not found
         current_time = pygame.time.get_ticks()
 
         # update image
         self.image = self.animation[self.action][self.frame_index]
 
         # Check if enough time has passed since the last update
-        if current_time - self.last_update > animation_cooldown :
+        if current_time - self.last_update > ANIMATION_COOLDOWN :
             self.frame_index += 1
             self.last_update = current_time
 
