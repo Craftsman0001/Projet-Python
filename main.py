@@ -1,7 +1,8 @@
 import pygame
 import sys
 from fighter import Fighter
-from FighterData import *
+from spritesheets import *
+from moviepy.editor import VideoFileClip
 
 # Initialize all imported pygame modules
 pygame.init()
@@ -10,7 +11,7 @@ pygame.init()
 screen_width = 1200
 screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Its my game !")
+pygame.display.set_caption("Mon jeu !")
 
 # Load background image and scale it to fit the screen
 original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
@@ -18,28 +19,7 @@ background_image = pygame.transform.scale(original_background_image, (screen_wid
 
 # load the victory image
 original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
-victory_image = pygame.transform.scale(original_victory_image, (400,150))
-
-
-def display_intro_video():
-    clip = VideoFileClip("Assets/intro/intro.mp4")
-    clip = clip.without_audio()  # Disable audio track
-    clip = clip.set_fps(60) 
-    clip.preview(screen_width, screen_height)
-
-
-
-# Display the intro video
-#display_intro_video()
-
-# Loop until the player presses a key to start the game
-#in_progress = False
-#while not in_progress:
-#    for event in pygame.event.get():
-#        if event.type == pygame.QUIT:
-#            in_progress = False
-#        if event.type == pygame.KEYDOWN:
-#            in_progress = True
+victory_image = pygame.transform.scale(original_victory_image, (400, 150))
 
 # Load sprite sheets and animation steps
 sprite_sheets = load_spritesheets()
@@ -54,7 +34,6 @@ martial_hero_sprite_sheets = sprite_sheets["martial_hero"]
 fantasy_warrior_animation_steps = animation_steps["fantasy_warrior"]
 wizard_animation_steps = animation_steps["wizard"]
 martial_hero_animation_steps = animation_steps["martial_hero"]
-
 
 # defining fighter variables
 fighter_data = fighter_variables()
@@ -74,7 +53,7 @@ GREEN = (0, 255, 0)
 # defining game variables
 countdown = 3
 last_count_update = pygame.time.get_ticks()
-score = [0, 0] # player scores : [player1, player2]
+score = [0, 0]  # player scores : [player1, player2]
 round_over = False
 ROUND_OVER_COOLDOWN = 3000
 game_paused = False
@@ -85,13 +64,35 @@ countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
 
 # Creation of instances for fighters
-fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
-#fighter_2 = Fighter(2, 925, 400, 581, False, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
-fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets, martial_hero_animation_steps)
+fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
+                    fantasy_warrior_animation_steps)
+fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
+                    martial_hero_animation_steps)
+
+# function for displaying introduction video and wait for user to press space bar to continue
+def display_intro_video():
+    clip = VideoFileClip("Assets/intro/intro.mp4")
+    clip = clip.without_audio()  # disable audio track
+    clip = clip.set_fps(60)
+
+    # loop to display each frame of the video
+    for frame in clip.iter_frames():
+        frame_surface = pygame.image.frombuffer(frame, clip.size, "RGB")
+        screen.blit(frame_surface, (0, 0))
+        pygame.display.update()
+
+        # check if space bar is pressed to skip intro video
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    return
+
+    # wait a certain time after the end of the video
+    pygame.time.wait(100)
 
 
 # Function to draw fighter health bars
-def draw_health_bar (fighter, x, y) :
+def draw_health_bar(fighter, x, y):
     ratio = fighter.health / 100
     pygame.draw.rect(screen, BLACK, (x - 5, y -5, 410, 40) )
     pygame.draw.rect(screen, BLUE, (x, y, 400, 30) )
@@ -99,7 +100,7 @@ def draw_health_bar (fighter, x, y) :
     
 
 # function to draw text
-def draw_text(text, font, text_color, x, y) :
+def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
 
@@ -156,15 +157,16 @@ def display_pause_menu():
         pygame.display.update()
 
 
+# call intro function
+display_intro_video()
 
 # Game Loop
 clock = pygame.time.Clock() # Setting up framerate
 run = True
-while run :
-
-    # Event Handler
-    for event in pygame.event.get() :
-        if event.type == pygame.QUIT :
+while run:
+    # Gestion des événements
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             run = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:  # Press ESC key 
@@ -208,7 +210,7 @@ while run :
                 draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 40, screen_height / 3)
             # update countdown
             if (pygame.time.get_ticks() - last_count_update) >= 1000 :
-                countdown -=1
+                countdown -= 1
                 last_count_update = pygame.time.get_ticks()
 
         # update fighters
@@ -235,12 +237,11 @@ while run :
                 countdown = 3
                 # Creation of instances for fighters
                 fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
-                fighter_2 = Fighter(2, 925, 400, 581, False, False, wizard_data, wizard_sprite_sheet, wizard_animation_steps)
+                fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets, martial_hero_animation_steps)
         
     # Update display
     pygame.display.update()
 
-
-# Exiting the Game and uninitializing all pygame modules
+# Quitter le jeu et désinitialiser tous les modules pygame
 pygame.quit()
 sys.exit()
