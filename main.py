@@ -69,22 +69,23 @@ fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_
 fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
                     martial_hero_animation_steps)
 
+
 # function for displaying introduction video and wait for user to press space bar to continue
-def display_intro_video():
+def display_intro_video() :
     clip = VideoFileClip("Assets/intro/intro.mp4")
     clip = clip.without_audio()  # disable audio track
     clip = clip.set_fps(60)
 
     # loop to display each frame of the video
-    for frame in clip.iter_frames():
+    for frame in clip.iter_frames() :
         frame_surface = pygame.image.frombuffer(frame, clip.size, "RGB")
         screen.blit(frame_surface, (0, 0))
         pygame.display.update()
 
         # check if space bar is pressed to skip intro video
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+        for event in pygame.event.get() :
+            if event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_SPACE :
                     return
 
     # wait a certain time after the end of the video
@@ -92,7 +93,7 @@ def display_intro_video():
 
 
 # Function to draw fighter health bars
-def draw_health_bar(fighter, x, y):
+def draw_health_bar(fighter, x, y) :
     ratio = fighter.health / 100
     pygame.draw.rect(screen, BLACK, (x - 5, y -5, 410, 40) )
     pygame.draw.rect(screen, BLUE, (x, y, 400, 30) )
@@ -100,9 +101,13 @@ def draw_health_bar(fighter, x, y):
     
 
 # function to draw text
-def draw_text(text, font, text_color, x, y):
-    image = font.render(text, True, text_color)
-    screen.blit(image, (x, y))
+def draw_text(num, text, font, text_color, x, y) :
+    if num == 1 :
+        image = font.render(text, True, text_color)
+        screen.blit(image, (x, y))
+    if num == 2 :
+        text_surface = font.render(text, True, text_color)
+        screen.blit(text_surface, (x, y))
 
 
 def smooth_attack_animation(fighter_1, fighter_2) :
@@ -117,44 +122,46 @@ def smooth_attack_animation(fighter_1, fighter_2) :
         fighter_2.draw(screen)
         fighter_1.draw(screen)
 
+
 # Define a function to display the pause menu
-def display_pause_menu():
+def display_pause_menu() :
     game_paused = True
-    while game_paused:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+
+    text_font = pygame.font.Font(None, 40)
+
+    # creation of rectangle for the window
+    window_rect = pygame.Rect(screen_width // 4, screen_height // 4, screen_width // 2, screen_height // 2)
+
+    # creation of rectangle for button
+    resume_button_rect = pygame.Rect(screen_width // 3, screen_height // 2, screen_width // 3, screen_height // 8)
+
+    while game_paused == True :
+        for event in pygame.event.get() :
+            if event.type == pygame.QUIT :
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:  # Resume game on ESC key press
+            elif event.type == pygame.KEYDOWN :
+                if event.key == pygame.K_ESCAPE :  # Resume game on ESC key press
                     game_paused = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN :
                 mouse_position = pygame.mouse.get_pos()
-                if resume_button_rect.collidepoint(mouse_position):
+                if resume_button_rect.collidepoint(mouse_position) :
                     game_paused = False
-
-        # Draw a semi-transparent overlay
-        overlay = pygame.Surface((screen_width, screen_height))
-        overlay.set_alpha(128)  # Set transparency level
-        overlay.fill((0, 0, 0))  # Fill with black
-        screen.blit(overlay, (0, 0))
 
         # Draw a pause window/rectangle
-        pause_rect = pygame.Rect(screen_width // 4, screen_height // 4, screen_width // 2, screen_height // 2)
-        pygame.draw.rect(screen, (200, 200, 200), pause_rect)
+        pygame.draw.rect(screen, (200, 200, 200), window_rect)
 
-        # Draw resume button
-        text_font = pygame.font.Font(None, 40)
-        resume_button_rect = pygame.Rect(screen_width // 3, screen_height // 2, screen_width // 3, screen_height // 8)
         pygame.draw.rect(screen, (100, 100, 100), resume_button_rect)
-        draw_text("Resume", text_font, BLACK, 600, 300)
+        draw_text(2, "Resume", text_font, BLACK, 600, 300)
 
         # Highlight resume button if mouse hovers over it
         mouse_position = pygame.mouse.get_pos()
-        if resume_button_rect.collidepoint(mousez_position):
+        if resume_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, (150, 150, 150), resume_button_rect)
 
         pygame.display.update()
+
+        return game_paused
 
 
 # call intro function
@@ -163,18 +170,18 @@ def display_pause_menu():
 # Game Loop
 clock = pygame.time.Clock() # Setting up framerate
 run = True
-while run:
+while run :
     # Gestion des événements
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for event in pygame.event.get() :
+        if event.type == pygame.QUIT :
             run = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:  # Press ESC key 
+        elif event.type == pygame.KEYDOWN :
+            if event.key == pygame.K_ESCAPE :  # Press ESC key 
                 game_paused = True  # Toggle pause state
 
     if game_paused == True :
         # Enter pause menu loop
-        while game_paused:
+        while game_paused :
             game_paused = display_pause_menu()  # Keep displaying pause menu until game is unpaused
 
     else :
@@ -187,8 +194,8 @@ while run:
         # Displaying the players stats
         draw_health_bar(fighter_1, 20, 20)
         draw_health_bar(fighter_2, 780, 20)
-        draw_text(" Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
-        draw_text(" Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
+        draw_text(1," Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
+        draw_text(1, " Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
 
         # update countdown 
         if countdown <= 0 :
@@ -203,11 +210,11 @@ while run:
                 fighter_2.flip = False
             # display the countdown timer
             if countdown == 1 :
-                draw_text(str(countdown), countdown_font_2, BLACK, screen_width / 2 - 20, screen_height / 3)
-                draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 20, screen_height / 3)
+                draw_text(1, str(countdown), countdown_font_2, BLACK, screen_width / 2 - 20, screen_height / 3)
+                draw_text(1, str(countdown), countdown_font_1, RED, screen_width / 2 - 20, screen_height / 3)
             else : 
-                draw_text(str(countdown), countdown_font_2, BLACK, screen_width / 2 - 40, screen_height / 3)
-                draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 40, screen_height / 3)
+                draw_text(1, str(countdown), countdown_font_2, BLACK, screen_width / 2 - 40, screen_height / 3)
+                draw_text(1, str(countdown), countdown_font_1, RED, screen_width / 2 - 40, screen_height / 3)
             # update countdown
             if (pygame.time.get_ticks() - last_count_update) >= 1000 :
                 countdown -= 1
