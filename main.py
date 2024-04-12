@@ -14,6 +14,8 @@ screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Mon jeu !")
 
+
+
 # Load background image and scale it to fit the screen
 original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
 background_image = pygame.transform.scale(original_background_image, (screen_width, screen_height))
@@ -77,7 +79,7 @@ score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
 
 
 # Creation of instances for fighters
-fighter_1 = Fighter(1, 200, 400, 581, True, False, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
+fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
                     fantasy_warrior_animation_steps)
 fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
                     martial_hero_animation_steps)
@@ -115,6 +117,8 @@ def reset_game() :
     # Reset countdown timer
     last_count_update = pygame.time.get_ticks()
 
+
+
 # Function to draw fighter health bars
 def draw_health_bar(fighter, x, y) :
     ratio = fighter.health / 100
@@ -131,6 +135,29 @@ def draw_text(num, text, font, text_color, x, y) :
     if num == 2 :
         text_surface = font.render(text, True, text_color)
         screen.blit(text_surface, (x, y))
+
+# function to have music
+def manage_music(action, filepath=None, loops=-1, start=0.0):
+    if action == "load":
+        pygame.mixer.init()
+        pygame.mixer.music.load(filepath)
+        pygame.mixer.music.play(loops=loops, start=start)
+    elif action == "play":
+        if not pygame.mixer.get_init():
+            pygame.mixer.init()
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.play(loops=loops, start=start)
+    elif action == "pause":
+        if pygame.mixer.music.get_busy():
+            pygame.mixer.music.pause()
+    elif action == "unpause":
+        if pygame.mixer.music.get_busy():
+            pygame.mixer.music.unpause()
+    elif action == "stop":
+        if pygame.mixer.music.get_busy():
+            pygame.mixer.music.stop()
+    else:
+        print("Invalid action")
 
 
 def smooth_attack_animation(fighter_1, fighter_2) :
@@ -159,25 +186,31 @@ def display_pause_menu() :
     exit_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 + 100, screen_width // 3, screen_height // 8)
 
     while game_paused == True :
+        pygame.mixer.music.pause()
         for event in pygame.event.get() :
             if event.type == pygame.QUIT :
                 pygame.quit()
                 sys.exit()
+
             elif event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_ESCAPE :  # Resume game on ESC key press
                     game_paused = False
+
             elif event.type == pygame.MOUSEBUTTONDOWN :
                 mouse_position = pygame.mouse.get_pos()
                 if resume_button_rect.collidepoint(mouse_position) :
                     game_paused = False
+
                 elif restart_button_rect.collidepoint(mouse_position) :
                     # Restart the game
                     reset_game()
                     game_paused = False
+
                 elif exit_button_rect.collidepoint(mouse_position) :
                     # Close the game window
                     pygame.quit()
                     sys.exit()
+
 
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, BLACK_2, window_rect)
@@ -219,6 +252,10 @@ def intro_screen(startresume):
     screen = pygame.display.set_mode((screen_width, screen_height))
     clock = pygame.time.Clock()
 
+    # Chargement de l'image de fond
+    background_img = pygame.image.load("Assets/BackGrounds/Background_start_menu2.png").convert()
+    background_img = pygame.transform.scale(background_img, (screen_width, screen_height))
+
     play_button = Button(screen_width // 2 - 100, 200, 200, 50, (50, 50, 50), AZURE_2, f"{startresume} Game", 32)
     exit_button = Button(screen_width // 2 - 100, 300, 200, 50, (50, 50, 50), AZURE_2, "Exit Game", 32)
 
@@ -230,7 +267,8 @@ def intro_screen(startresume):
                 pygame.quit()
                 sys.exit()
 
-        screen.fill((0, 0, 0))
+        screen.blit(background_img, (0, 0))  # Dessiner l'image de fond
+
         title_font = pygame.font.Font(None, 64)
         title = title_font.render("Main Menu", True, (255, 255, 255))
         title_rect = title.get_rect(center=(screen_width // 2, 100))
@@ -262,6 +300,8 @@ intro_screen("Start")
 clock = pygame.time.Clock() # Setting up framerate
 run = True
 while run :
+    # load music's battle
+
     # Gestion des événements
     for event in pygame.event.get() :
         if event.type == pygame.QUIT :
@@ -275,6 +315,7 @@ while run :
         while game_paused :
             game_paused = display_pause_menu()  # Keep displaying pause menu until game is unpaused
 
+
     else :
         # Limit frame rate
         clock.tick(60)
@@ -287,6 +328,7 @@ while run :
         draw_health_bar(fighter_2, 780, 20)
         draw_text(1, " Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
         draw_text(1, " Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
+
 
         # update countdown
         if countdown <= 0 :
@@ -341,5 +383,6 @@ while run :
     pygame.display.update()
 
 # Quitter le jeu et désinitialiser tous les modules pygame
+pygame.mixer.music.stop()
 pygame.quit()
 sys.exit()
