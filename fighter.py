@@ -273,3 +273,9 @@ class Fighter() :
             # update de animation settings
             self.frame_index = 0
             self.last_update = pygame.time.get_ticks() 
+
+    # Inside the Fighter class definition
+    def reset(self, x, y):
+        self.rect.centerx = x
+        self.rect.centery = y
+        self.health = 100

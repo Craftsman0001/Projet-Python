@@ -91,6 +91,20 @@ def display_intro_video() :
     # wait a certain time after the end of the video
     pygame.time.wait(100)
 
+def reset_game() :
+    global score, countdown, round_over, fighter_1, fighter_2
+    score = [0, 0]
+    countdown = 4
+    round_over = False
+    fighter_1.reset(238, 491)  # Reset fighter 1 position
+    fighter_2.reset(963, 491)  # Reset fighter 2 position
+
+    # Reset fighters' health to max
+    #fighter_1.health = fighter_1.max_health
+    #fighter_2.health = fighter_2.max_health
+
+    # Reset countdown timer
+    last_count_update = pygame.time.get_ticks()
 
 # Function to draw fighter health bars
 def draw_health_bar(fighter, x, y) :
@@ -132,8 +146,9 @@ def display_pause_menu() :
     # creation of rectangle for the window
     window_rect = pygame.Rect(screen_width // 4, screen_height // 4, screen_width // 2, screen_height // 2)
 
-    # creation of rectangle for button
-    resume_button_rect = pygame.Rect(screen_width // 3, screen_height // 2, screen_width // 3, screen_height // 8)
+     # creation of rectangle for buttons
+    resume_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 -100, screen_width // 3, screen_height // 8)
+    restart_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 , screen_width // 3, screen_height // 8)
 
     while game_paused == True :
         for event in pygame.event.get() :
@@ -147,18 +162,30 @@ def display_pause_menu() :
                 mouse_position = pygame.mouse.get_pos()
                 if resume_button_rect.collidepoint(mouse_position) :
                     game_paused = False
+                elif restart_button_rect.collidepoint(mouse_position):
+                    # Restart the game
+                    reset_game()
+                    game_paused = False
 
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, (200, 200, 200), window_rect)
 
         # Draw button rectangle
         pygame.draw.rect(screen, (100, 100, 100), resume_button_rect)
-        draw_text(2, "Resume", text_font, BLACK, 550, 330)
+        pygame.draw.rect(screen, (100, 100, 100), restart_button_rect)
 
-        # Highlight resume button if mouse hovers over it
+        # Draw text
+        draw_text(2, "Resume", text_font, BLACK, 550, 230)
+        draw_text(2, "Restart", text_font, BLACK, 555, 330)
+
+        # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
         if resume_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, (150, 150, 150), resume_button_rect)
+            draw_text(2, "Resume", text_font, BLACK, 550, 230)
+        elif restart_button_rect.collidepoint(mouse_position):
+            pygame.draw.rect(screen, (150, 150, 150), restart_button_rect)
+            draw_text(2, "Restart", text_font, BLACK, 555, 330)
 
         pygame.display.update()
 
@@ -195,7 +222,7 @@ while run :
         # Displaying the players stats
         draw_health_bar(fighter_1, 20, 20)
         draw_health_bar(fighter_2, 780, 20)
-        draw_text(1," Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
+        draw_text(1, " Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
         draw_text(1, " Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
 
         # update countdown 
