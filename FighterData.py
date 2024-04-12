@@ -31,10 +31,21 @@ def load_spritesheets():
     death_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Death.png")
     attack3_martial_hero_sprite_sheet = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/Attack3.png")
 
+    idle_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Idle.png")
+    run_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Run.png")
+    jump_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Jump.png")
+    fall_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Fall.png")
+    attack1_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Attack1.png")
+    attack2_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Attack2.png")
+    hit_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Take Hit.png")
+    death_oni_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/Death.png")
+
+
     return {
         "fantasy_warrior": [idle_fantasy_warrior_sprite_sheet, run_fantasy_warrior_sprite_sheet, jump_fantasy_warrior_sprite_sheet, fall_fantasy_warrior_sprite_sheet, attack1_fantasy_warrior_sprite_sheet, attack2_fantasy_warrior_sprite_sheet, hit_fantasy_warrior_sprite_sheet, death_fantasy_warrior_sprite_sheet, attack3_fantasy_warrior_sprite_sheet],
         "wizard": [idle_wizard_sprite_sheet, run_wizard_sprite_sheet, jump_wizard_sprite_sheet, fall_wizard_sprite_sheet, attack1_wizard_sprite_sheet, attack2_wizard_sprite_sheet, hit_wizard_sprite_sheet, death_wizard_sprite_sheet],
-        "martial_hero": [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, fall_martial_hero_sprite_sheet,  attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet]
+        "martial_hero": [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, fall_martial_hero_sprite_sheet,  attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet],
+        "oni_samurai": [idle_oni_samurai_sprite_sheet, run_oni_samurai_sprite_sheet, jump_oni_samurai_sprite_sheet, fall_oni_samurai_sprite_sheet,  attack1_oni_samurai_sprite_sheet, attack2_oni_samurai_sprite_sheet, hit_oni_samurai_sprite_sheet, death_oni_samurai_sprite_sheet]
     }
 
 def load_animation_steps():
@@ -68,10 +79,21 @@ def load_animation_steps():
     death_martial_hero_animation_steps = [11]
     attack3_martial_hero_animation_steps = [9]
 
+    idle_oni_samurai_animation_steps = [4]
+    run_oni_samurai_animation_steps = [8]
+    jump_oni_samurai_animation_steps = [2]
+    fall_oni_samurai_animation_steps = [2]
+    attack1_oni_samurai_animation_steps = [4]
+    attack2_oni_samurai_animation_steps = [4]
+    hit_oni_samurai_animation_steps = [3]
+    death_oni_samurai_animation_steps = [7]
+
+
     return {
         "fantasy_warrior": [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, fall_fantasy_warrior_animation_steps,  attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps, attack3_fantasy_warrior_animation_steps],
         "wizard": [idle_wizard_animation_steps, run_wizard_animation_steps, jump_wizard_animation_steps, fall_wizard_animation_steps, attack1_wizard_animation_steps, attack2_wizard_animation_steps, hit_wizard_animation_steps, death_wizard_animation_steps],
-        "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, fall_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps]
+        "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, fall_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps],
+        "oni_samurai": [idle_oni_samurai_animation_steps, run_oni_samurai_animation_steps,jump_oni_samurai_animation_steps, fall_oni_samurai_animation_steps,attack1_oni_samurai_animation_steps, attack2_oni_samurai_animation_steps,hit_oni_samurai_animation_steps, death_oni_samurai_animation_steps]
     }
 
 def fighter_variables() :
@@ -97,8 +119,16 @@ def fighter_variables() :
     martial_hero_timer_attack_2 = 200
     martial_hero_timer_attack_3 = 550
 
+    oni_samurai_size = 126
+    oni_samurai_scale = 3.3
+    oni_samurai_offset = [80, 80.5]
+    oni_samurai_timer_attack_1 = 350
+    oni_samurai_timer_attack_2 = 200
+    oni_samurai_timer_attack_3 = 0
+
     return {
         "fantasy_warrior" : [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
         "wizard" : [wizard_size, wizard_scale, wizard_offset, wizard_timer_attack_1, wizard_timer_attack_2, wizard_timer_attack_3],
         "martial_hero" : [martial_hero_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
+        "oni_samurai" : [oni_samurai_size, oni_samurai_scale,oni_samurai_offset, oni_samurai_timer_attack_1,oni_samurai_timer_attack_2, oni_samurai_timer_attack_3]
     }
