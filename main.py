@@ -151,8 +151,9 @@ def display_pause_menu() :
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, (200, 200, 200), window_rect)
 
+        # Draw button rectangle
         pygame.draw.rect(screen, (100, 100, 100), resume_button_rect)
-        draw_text(2, "Resume", text_font, BLACK, 600, 300)
+        draw_text(2, "Resume", text_font, BLACK, 550, 330)
 
         # Highlight resume button if mouse hovers over it
         mouse_position = pygame.mouse.get_pos()
