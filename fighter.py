@@ -145,6 +145,14 @@ class Fighter() :
             self.velocity_y = 0
             self.jump = False
 
+    def update_attack(self) :
+        if self.attack_type == 1 :
+            self.update_fighter_action(4) # attack1
+        elif self.attack_type == 2 :
+            self.update_fighter_action(5) # attack2
+        elif self.attack_type == 7 :
+            self.update_fighter_action(8) # attack 3
+
     def update(self, enemy) :
 
         if self.attacking == True and self.apply_attack_damage == True :
@@ -161,11 +169,14 @@ class Fighter() :
             self.update_fighter_action(7) # death
 
         # Check if the fighter is in mid-air
-        elif self.jump == True and self.rect.bottom != self.ground_level:
+        elif self.jump == True and self.rect.bottom != self.ground_level : 
+            if self.attacking == True :
+                # Update the fighter's action to attacking while jumping
+                self.update_attack()
             # Check if the fighter is at the maximum height of the jump
-            if self.velocity_y >= 0:
+            elif self.velocity_y >= 0:
                 self.update_fighter_action(3)  # fall animation
-            else:
+            else :
                 self.update_fighter_action(2)  # jump animation
 
         else:
@@ -174,12 +185,7 @@ class Fighter() :
                 self.update_fighter_action(6) # hit
                 self.hit = False
             elif self.attacking == True :
-                if self.attack_type == 1 :
-                    self.update_fighter_action(4) # attack1
-                elif self.attack_type == 2 :
-                    self.update_fighter_action(5) # attack2
-                elif self.attack_type == 7 :
-                    self.update_fighter_action(8) # attack 3
+                self.update_attack()
             elif self.running == True :
                 self.update_fighter_action(1)  # run
             else : 

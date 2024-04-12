@@ -151,7 +151,7 @@ def display_pause_menu():
 
         # Highlight resume button if mouse hovers over it
         mouse_position = pygame.mouse.get_pos()
-        if resume_button_rect.collidepoint(mouse_position):
+        if resume_button_rect.collidepoint(mousez_position):
             pygame.draw.rect(screen, (150, 150, 150), resume_button_rect)
 
         pygame.display.update()
