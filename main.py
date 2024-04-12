@@ -143,12 +143,11 @@ def display_pause_menu() :
 
     text_font = pygame.font.Font(None, 40)
 
-    # creation of rectangle for the window
-    window_rect = pygame.Rect(screen_width // 4, screen_height // 4, screen_width // 2, screen_height // 2)
-
-     # creation of rectangle for buttons
+    # create rectangles for the window and buttons
+    window_rect = pygame.Rect(screen_width // 4, screen_height // 4, screen_width // 2, screen_height // 2 + 80)
     resume_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 -100, screen_width // 3, screen_height // 8)
     restart_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 , screen_width // 3, screen_height // 8)
+    exit_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 + 100, screen_width // 3, screen_height // 8)
 
     while game_paused == True :
         for event in pygame.event.get() :
@@ -162,10 +161,14 @@ def display_pause_menu() :
                 mouse_position = pygame.mouse.get_pos()
                 if resume_button_rect.collidepoint(mouse_position) :
                     game_paused = False
-                elif restart_button_rect.collidepoint(mouse_position):
+                elif restart_button_rect.collidepoint(mouse_position) :
                     # Restart the game
                     reset_game()
                     game_paused = False
+                elif exit_button_rect.collidepoint(mouse_position) :
+                    # Close the game window
+                    pygame.quit()
+                    sys.exit()
 
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, (200, 200, 200), window_rect)
@@ -173,19 +176,24 @@ def display_pause_menu() :
         # Draw button rectangle
         pygame.draw.rect(screen, (100, 100, 100), resume_button_rect)
         pygame.draw.rect(screen, (100, 100, 100), restart_button_rect)
+        pygame.draw.rect(screen, (100, 100, 100), exit_button_rect)
 
         # Draw text
         draw_text(2, "Resume", text_font, BLACK, 550, 230)
         draw_text(2, "Restart", text_font, BLACK, 555, 330)
+        draw_text(2, "Exit Game", text_font, BLACK, 533, 430)
 
         # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
         if resume_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, (150, 150, 150), resume_button_rect)
             draw_text(2, "Resume", text_font, BLACK, 550, 230)
-        elif restart_button_rect.collidepoint(mouse_position):
+        elif restart_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, (150, 150, 150), restart_button_rect)
             draw_text(2, "Restart", text_font, BLACK, 555, 330)
+        elif exit_button_rect.collidepoint(mouse_position) :
+            pygame.draw.rect(screen, (150, 150, 150), exit_button_rect)
+            draw_text(2, "Exit Game", text_font, BLACK, 533, 430)    
 
         pygame.display.update()
 
