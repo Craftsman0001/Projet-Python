@@ -220,16 +220,7 @@ def display_pause_menu() :
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, BLACK_2, window_rect)
 
-        # Draw button rectangle
-        ## pygame.draw.rect(screen, GREY_3, resume_button_rect)
-        ## pygame.draw.rect(screen, GREY_3, restart_button_rect)
-        ## pygame.draw.rect(screen, GREY_3, exit_button_rect)
-
-        # Draw text
-        ## draw_text("Resume", text_font, BLACK, 550, 230)
-        ## draw_text("Restart", text_font, BLACK, 555, 330)
-        ## draw_text("Exit Game", text_font, BLACK, 533, 430)
-
+        # Draw buttons
         resume_button.update_button()
         restart_button.update_button()
         exit_button.update_button()
@@ -237,16 +228,10 @@ def display_pause_menu() :
         # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
         if resume_button.rect.collidepoint(mouse_position) :
-            ## pygame.draw.rect(screen, AZURE, resume_button_rect)
-            ## draw_text("Resume", text_font, BLACK, 550, 230)
             resume_button.update_button_color()
         elif restart_button.rect.collidepoint(mouse_position) :
-            ## pygame.draw.rect(screen, AZURE, restart_button_rect)
-            ## draw_text("Restart", text_font, BLACK, 555, 330)
             restart_button.update_button_color()
         elif exit_button.rect.collidepoint(mouse_position) :
-            ## pygame.draw.rect(screen, AZURE, exit_button_rect)
-            ## draw_text("Exit Game", text_font, BLACK, 533, 430)
             exit_button.update_button_color()
 
         # Update display
