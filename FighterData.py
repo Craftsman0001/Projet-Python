@@ -119,7 +119,7 @@ def fighter_variables() :
     martial_hero_timer_attack_2 = 200
     martial_hero_timer_attack_3 = 550
 
-    oni_samurai_size = 126
+    oni_samurai_size = 200
     oni_samurai_scale = 3.3
     oni_samurai_offset = [80, 80.5]
     oni_samurai_timer_attack_1 = 350

@@ -9,16 +9,16 @@ from button import Button
 pygame.init()
 
 # Creation of the Game Window
-screen_width = 1200
-screen_height = 600
-screen = pygame.display.set_mode((screen_width, screen_height))
+SCREEN_WIDTH = 1200
+SCREEN_HEIGHT = 600
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Mon jeu !")
 
 
 
 # Load background image and scale it to fit the screen
 original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
-background_image = pygame.transform.scale(original_background_image, (screen_width, screen_height))
+background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # load the victory image
 original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
@@ -174,18 +174,22 @@ def smooth_attack_animation(fighter_1, fighter_2) :
 
 # Define a function to display the pause menu
 def display_pause_menu() :
-    game_paused = True
 
     text_font = pygame.font.Font(None, 40)
 
     # create rectangles for the window and buttons
-    window_rect = pygame.Rect(screen_width // 4, screen_height // 4, screen_width // 2, screen_height // 2 + 80)
-    resume_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 -100, screen_width // 3, screen_height // 8)
-    restart_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 , screen_width // 3, screen_height // 8)
-    exit_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 + 100, screen_width // 3, screen_height // 8)
+    window_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 4, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 80)
 
-    ## resume_button = Button(screen_width // 3, screen_height // 2 -100, screen_width // 3, screen_height // 8, GREY_3, AZURE, "Resume", 40)
+    ## resume_button_rect = pygame.Rect(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8)
+    ## restart_button_rect = pygame.Rect(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8)
+    ## exit_button_rect = pygame.Rect(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8)
 
+    # Create buttons
+    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, RED, "Resume", text_font, BLACK, screen)
+    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, RED, "Restart", text_font, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, RED, "Exit Game", text_font, BLACK, screen)
+
+    game_paused = True
     while game_paused == True :
         pygame.mixer.music.pause()
         for event in pygame.event.get() :
@@ -199,15 +203,15 @@ def display_pause_menu() :
 
             elif event.type == pygame.MOUSEBUTTONDOWN :
                 mouse_position = pygame.mouse.get_pos()
-                if resume_button_rect.collidepoint(mouse_position) :
+                if resume_button.rect.collidepoint(mouse_position) :
                     game_paused = False
 
-                elif restart_button_rect.collidepoint(mouse_position) :
+                elif restart_button.rect.collidepoint(mouse_position) :
                     # Restart the game
                     reset_game()
                     game_paused = False
 
-                elif exit_button_rect.collidepoint(mouse_position) :
+                elif exit_button.rect.collidepoint(mouse_position) :
                     # Close the game window
                     pygame.quit()
                     sys.exit()
@@ -217,29 +221,33 @@ def display_pause_menu() :
         pygame.draw.rect(screen, BLACK_2, window_rect)
 
         # Draw button rectangle
-        pygame.draw.rect(screen, GREY_3, resume_button_rect)
-        ## resume_button.draw(self.rect)
-        pygame.draw.rect(screen, GREY_3, restart_button_rect)
-        pygame.draw.rect(screen, GREY_3, exit_button_rect)
+        ## pygame.draw.rect(screen, GREY_3, resume_button_rect)
+        ## pygame.draw.rect(screen, GREY_3, restart_button_rect)
+        ## pygame.draw.rect(screen, GREY_3, exit_button_rect)
 
         # Draw text
-        draw_text("Resume", text_font, BLACK, 550, 230)
-        draw_text("Restart", text_font, BLACK, 555, 330)
-        draw_text("Exit Game", text_font, BLACK, 533, 430)
+        ## draw_text("Resume", text_font, BLACK, 550, 230)
+        ## draw_text("Restart", text_font, BLACK, 555, 330)
+        ## draw_text("Exit Game", text_font, BLACK, 533, 430)
+
+        resume_button.update_button()
+        restart_button.update_button()
+        exit_button.update_button()
 
         # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
-        if resume_button_rect.collidepoint(mouse_position) :
-            pygame.draw.rect(screen, AZURE, resume_button_rect)
-            ## resume_button.draw(self.rect)
-            draw_text("Resume", text_font, BLACK, 550, 230)
-            ## resume_button.update_color(mouse_position)
-        elif restart_button_rect.collidepoint(mouse_position) :
-            pygame.draw.rect(screen, AZURE, restart_button_rect)
-            draw_text("Restart", text_font, BLACK, 555, 330)
-        elif exit_button_rect.collidepoint(mouse_position) :
-            pygame.draw.rect(screen, AZURE, exit_button_rect)
-            draw_text("Exit Game", text_font, BLACK, 533, 430)
+        if resume_button.rect.collidepoint(mouse_position) :
+            ## pygame.draw.rect(screen, AZURE, resume_button_rect)
+            ## draw_text("Resume", text_font, BLACK, 550, 230)
+            resume_button.update_button_color()
+        elif restart_button.rect.collidepoint(mouse_position) :
+            ## pygame.draw.rect(screen, AZURE, restart_button_rect)
+            ## draw_text("Restart", text_font, BLACK, 555, 330)
+            restart_button.update_button_color()
+        elif exit_button.rect.collidepoint(mouse_position) :
+            ## pygame.draw.rect(screen, AZURE, exit_button_rect)
+            ## draw_text("Exit Game", text_font, BLACK, 533, 430)
+            exit_button.update_button_color()
 
         # Update display
         pygame.display.update()
@@ -251,17 +259,18 @@ def display_pause_menu() :
 def intro_screen():
     pygame.init()
 
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Load background image and scale it to fit the screen
     original_background_image = pygame.image.load("Assets/BackGrounds/Background_start_menu2.png")
-    background_image = pygame.transform.scale(original_background_image, (screen_width, screen_height))
+    background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     title_font = pygame.font.Font(None, 80)
     button_font = pygame.font.Font(None, 32)
 
-    play_button = Button(screen_width // 2 - 100, 200, 200, 50, GREY_3, AZURE_2, "Start Game", button_font, BLACK, screen)
-    exit_button = Button(screen_width // 2 - 100, 300, 200, 50, GREY_3, AZURE_2, "Exit Game", button_font, BLACK, screen)
+    # Create buttons
+    play_button = Button(SCREEN_WIDTH // 2 - 100, 200, 200, 50, GREY_3, RED, "Start Game", button_font, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 2 - 100, 300, 200, 50, GREY_3, RED, "Exit Game", button_font, BLACK, screen)
 
     clock = pygame.time.Clock()
     intro = True
@@ -289,8 +298,8 @@ def intro_screen():
         screen.blit(original_background_image, (0, 0))
 
         # Draw text
-        draw_text("Main menu", main_menu_font_1, BLACK, screen_width // 2 - 170, 70)
-        draw_text("Main menu", main_menu_font_2, RED, screen_width // 2 - 180, 70)
+        draw_text("Main menu", main_menu_font_1, BLACK, SCREEN_WIDTH // 2 - 170, 70)
+        draw_text("Main menu", main_menu_font_2, RED, SCREEN_WIDTH // 2 - 180, 70)
 
         # Draw buttons
         play_button.update_button()
@@ -350,8 +359,8 @@ while run :
         # update countdown
         if countdown <= 0 :
             # fighters can move
-            fighter_1.move(round_over, screen_width, screen_height, screen, fighter_2)
-            fighter_2.move(round_over, screen_width, screen_height, screen, fighter_1)
+            fighter_1.move(round_over, SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
+            fighter_2.move(round_over, SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
         else :
             # Ensure fighters face each other during countdown
             if fighter_2.rect.centerx > fighter_1.rect.centerx :
@@ -360,11 +369,11 @@ while run :
                 fighter_2.flip = False
             # display the countdown timer
             if countdown == 1 :
-                draw_text(str(countdown), countdown_font_2, BLACK, screen_width / 2 - 20, screen_height / 3)
-                draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 20, screen_height / 3)
+                draw_text(str(countdown), countdown_font_2, BLACK, SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 3)
+                draw_text(str(countdown), countdown_font_1, RED, SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 3)
             else :
-                draw_text(str(countdown), countdown_font_2, BLACK, screen_width / 2 - 40, screen_height / 3)
-                draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 40, screen_height / 3)
+                draw_text(str(countdown), countdown_font_2, BLACK, SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 3)
+                draw_text(str(countdown), countdown_font_1, RED, SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 3)
             # update countdown
             if (pygame.time.get_ticks() - last_count_update) >= 1000 :
                 countdown -= 1
