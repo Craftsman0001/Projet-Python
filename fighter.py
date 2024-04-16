@@ -237,7 +237,7 @@ class Fighter() :
             current_frame = pygame.transform.flip(current_frame, self.flip, False)
 
         # Draw the flipped frame onto the surface
-        ### pygame.draw.rect(surface, (255, 0, 0), self.rect)
+        pygame.draw.rect(surface, (255, 0, 0), self.rect)
         surface.blit(current_frame, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
 
 

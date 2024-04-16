@@ -3,7 +3,7 @@ import sys
 from moviepy.editor import VideoFileClip
 from fighter import Fighter
 from FighterData import *
-from button import Button
+from button import *
 
 # Initialize all imported pygame modules
 pygame.init()
@@ -84,8 +84,10 @@ main_menu_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 80)
 # Creation of instances for fighters
 fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
                     fantasy_warrior_animation_steps)
-fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
-                    martial_hero_animation_steps)
+## fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
+##                    martial_hero_animation_steps)
+fighter_2 = Fighter(2, 925, 400, 581, False, False, oni_samurai_data, oni_samurai_sprite_sheets,
+                    oni_samurai_animation_steps)
 
 
 # function for displaying introduction video and wait for user to press space bar to continue
@@ -180,14 +182,10 @@ def display_pause_menu() :
     # create rectangles for the window and buttons
     window_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 4, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 80)
 
-    ## resume_button_rect = pygame.Rect(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8)
-    ## restart_button_rect = pygame.Rect(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8)
-    ## exit_button_rect = pygame.Rect(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8)
-
     # Create buttons
-    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, RED, "Resume", text_font, BLACK, screen)
-    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, RED, "Restart", text_font, BLACK, screen)
-    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, RED, "Exit Game", text_font, BLACK, screen)
+    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, AZURE_2, "Resume", text_font, BLACK, screen)
+    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, AZURE_2, "Restart", text_font, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, AZURE_2, "Exit Game", text_font, BLACK, screen)
 
     game_paused = True
     while game_paused == True :
@@ -239,7 +237,6 @@ def display_pause_menu() :
 
     return game_paused
 
-
 # Define the intro_screen function
 def intro_screen():
     pygame.init()
@@ -254,8 +251,8 @@ def intro_screen():
     button_font = pygame.font.Font(None, 32)
 
     # Create buttons
-    play_button = Button(SCREEN_WIDTH // 2 - 100, 200, 200, 50, GREY_3, RED, "Start Game", button_font, BLACK, screen)
-    exit_button = Button(SCREEN_WIDTH // 2 - 100, 300, 200, 50, GREY_3, RED, "Exit Game", button_font, BLACK, screen)
+    play_button = Button(SCREEN_WIDTH // 2 - 100, 200, 200, 50, GREY_3, AZURE_2, "Start Game", button_font, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 2 - 100, 300, 200, 50, GREY_3, AZURE_2, "Exit Game", button_font, BLACK, screen)
 
     clock = pygame.time.Clock()
     intro = True
@@ -284,7 +281,7 @@ def intro_screen():
 
         # Draw text
         draw_text("Main menu", main_menu_font_1, BLACK, SCREEN_WIDTH // 2 - 170, 70)
-        draw_text("Main menu", main_menu_font_2, RED, SCREEN_WIDTH // 2 - 180, 70)
+        draw_text("Main menu", main_menu_font_2, AZURE_2, SCREEN_WIDTH // 2 - 180, 70)
 
         # Draw buttons
         play_button.update_button()
@@ -299,7 +296,6 @@ def intro_screen():
 
         # Update display
         pygame.display.update()
-
 
 # call intro function
 display_intro_video()
