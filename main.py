@@ -60,11 +60,11 @@ AZURE_2 = (20, 150, 255)
 AQUAMARINE = (0, 255, 100)
 GREY = (128, 128, 128)
 GREY_2 = (93, 93, 93)
-GREY_3 = (58, 58, 58)
+GREY_3 = (50, 50, 50)
 BLACK_2 = (16, 16, 16)
 
 # defining game variables
-countdown = 3
+countdown = 4
 last_count_update = pygame.time.get_ticks()
 score = [0, 0]  # player scores : [player1, player2]
 round_over = False
@@ -76,6 +76,9 @@ game_paused = False
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
+
+main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 80)
+main_menu_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 80)
 
 
 # Creation of instances for fighters
@@ -128,13 +131,9 @@ def draw_health_bar(fighter, x, y) :
 
 
 # function to draw text
-def draw_text(num, text, font, text_color, x, y) :
-    if num == 1 :
-        image = font.render(text, True, text_color)
-        screen.blit(image, (x, y))
-    if num == 2 :
-        text_surface = font.render(text, True, text_color)
-        screen.blit(text_surface, (x, y))
+def draw_text(text, font, text_color, x, y) :
+    image = font.render(text, True, text_color)
+    screen.blit(image, (x, y))
 
 # function to have music
 def manage_music(action, filepath=None, loops=-1, start=0.0):
@@ -185,6 +184,8 @@ def display_pause_menu() :
     restart_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 , screen_width // 3, screen_height // 8)
     exit_button_rect = pygame.Rect(screen_width // 3, screen_height // 2 + 100, screen_width // 3, screen_height // 8)
 
+    ## resume_button = Button(screen_width // 3, screen_height // 2 -100, screen_width // 3, screen_height // 8, GREY_3, AZURE, "Resume", 40)
+
     while game_paused == True :
         pygame.mixer.music.pause()
         for event in pygame.event.get() :
@@ -217,48 +218,52 @@ def display_pause_menu() :
 
         # Draw button rectangle
         pygame.draw.rect(screen, GREY_3, resume_button_rect)
+        ## resume_button.draw(self.rect)
         pygame.draw.rect(screen, GREY_3, restart_button_rect)
         pygame.draw.rect(screen, GREY_3, exit_button_rect)
 
         # Draw text
-        draw_text(2, "Resume", text_font, BLACK, 550, 230)
-        draw_text(2, "Restart", text_font, BLACK, 555, 330)
-        draw_text(2, "Exit Game", text_font, BLACK, 533, 430)
+        draw_text("Resume", text_font, BLACK, 550, 230)
+        draw_text("Restart", text_font, BLACK, 555, 330)
+        draw_text("Exit Game", text_font, BLACK, 533, 430)
 
         # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
         if resume_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, AZURE, resume_button_rect)
-            draw_text(2, "Resume", text_font, BLACK, 550, 230)
+            ## resume_button.draw(self.rect)
+            draw_text("Resume", text_font, BLACK, 550, 230)
+            ## resume_button.update_color(mouse_position)
         elif restart_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, AZURE, restart_button_rect)
-            draw_text(2, "Restart", text_font, BLACK, 555, 330)
+            draw_text("Restart", text_font, BLACK, 555, 330)
         elif exit_button_rect.collidepoint(mouse_position) :
             pygame.draw.rect(screen, AZURE, exit_button_rect)
-            draw_text(2, "Exit Game", text_font, BLACK, 533, 430)
+            draw_text("Exit Game", text_font, BLACK, 533, 430)
 
+        # Update display
         pygame.display.update()
 
-        return game_paused
-
-
-
+    return game_paused
 
 
 # Define the intro_screen function
-def intro_screen(startresume):
+def intro_screen():
     pygame.init()
 
     screen = pygame.display.set_mode((screen_width, screen_height))
+
+    # Load background image and scale it to fit the screen
+    original_background_image = pygame.image.load("Assets/BackGrounds/Background_start_menu2.png")
+    background_image = pygame.transform.scale(original_background_image, (screen_width, screen_height))
+
+    title_font = pygame.font.Font(None, 80)
+    button_font = pygame.font.Font(None, 32)
+
+    play_button = Button(screen_width // 2 - 100, 200, 200, 50, GREY_3, AZURE_2, "Start Game", button_font, BLACK, screen)
+    exit_button = Button(screen_width // 2 - 100, 300, 200, 50, GREY_3, AZURE_2, "Exit Game", button_font, BLACK, screen)
+
     clock = pygame.time.Clock()
-
-    # Chargement de l'image de fond
-    background_img = pygame.image.load("Assets/BackGrounds/Background_start_menu2.png").convert()
-    background_img = pygame.transform.scale(background_img, (screen_width, screen_height))
-
-    play_button = Button(screen_width // 2 - 100, 200, 200, 50, (50, 50, 50), AZURE_2, f"{startresume} Game", 32)
-    exit_button = Button(screen_width // 2 - 100, 300, 200, 50, (50, 50, 50), AZURE_2, "Exit Game", 32)
-
     intro = True
     while intro:
         for event in pygame.event.get():
@@ -266,35 +271,47 @@ def intro_screen(startresume):
                 intro = False
                 pygame.quit()
                 sys.exit()
+    
+            elif event.type == pygame.MOUSEBUTTONDOWN :
+                mouse_position = pygame.mouse.get_pos()
+                if play_button.rect.collidepoint(mouse_position) :
+                    # Play the game
+                    intro = False
 
-        screen.blit(background_img, (0, 0))  # Dessiner l'image de fond
+                elif exit_button.rect.collidepoint(mouse_position) :
+                    # Close the game window
+                    pygame.quit()
+                    sys.exit()
 
-        title_font = pygame.font.Font(None, 64)
-        title = title_font.render("Main Menu", True, (255, 255, 255))
-        title_rect = title.get_rect(center=(screen_width // 2, 100))
-        screen.blit(title, title_rect)
-
-        play_button.update_color(pygame.mouse.get_pos())
-        play_button.draw(screen)
-
-        exit_button.update_color(pygame.mouse.get_pos())
-        exit_button.draw(screen)
-
-        mouse_pressed = pygame.mouse.get_pressed()
-        if play_button.is_pressed(pygame.mouse.get_pos(), mouse_pressed):
-            intro = False
-        elif exit_button.is_pressed(pygame.mouse.get_pos(), mouse_pressed):
-            pygame.quit()
-            sys.exit()
-
-        pygame.display.flip()
         clock.tick(60)
+
+        # Draw background Image
+        screen.blit(original_background_image, (0, 0))
+
+        # Draw text
+        draw_text("Main menu", main_menu_font_1, BLACK, screen_width // 2 - 170, 70)
+        draw_text("Main menu", main_menu_font_2, RED, screen_width // 2 - 180, 70)
+
+        # Draw buttons
+        play_button.update_button()
+        exit_button.update_button()
+
+        # Highlight buttons if mouse hovers over them
+        mouse_position = pygame.mouse.get_pos()
+        if play_button.rect.collidepoint(mouse_position) :
+            play_button.update_button_color()
+        elif exit_button.rect.collidepoint(mouse_position) :
+            exit_button.update_button_color()
+
+        # Update display
+        pygame.display.update()
+
 
 # call intro function
 display_intro_video()
 
 # Call the intro_screen function
-intro_screen("Start")
+intro_screen()
 
 # Game Loop
 clock = pygame.time.Clock() # Setting up framerate
@@ -326,8 +343,8 @@ while run :
         # Displaying the players stats
         draw_health_bar(fighter_1, 20, 20)
         draw_health_bar(fighter_2, 780, 20)
-        draw_text(1, " Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
-        draw_text(1, " Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
+        draw_text(" Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
+        draw_text(" Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
 
 
         # update countdown
@@ -343,11 +360,11 @@ while run :
                 fighter_2.flip = False
             # display the countdown timer
             if countdown == 1 :
-                draw_text(1, str(countdown), countdown_font_2, BLACK, screen_width / 2 - 20, screen_height / 3)
-                draw_text(1, str(countdown), countdown_font_1, RED, screen_width / 2 - 20, screen_height / 3)
+                draw_text(str(countdown), countdown_font_2, BLACK, screen_width / 2 - 20, screen_height / 3)
+                draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 20, screen_height / 3)
             else :
-                draw_text(1, str(countdown), countdown_font_2, BLACK, screen_width / 2 - 40, screen_height / 3)
-                draw_text(1, str(countdown), countdown_font_1, RED, screen_width / 2 - 40, screen_height / 3)
+                draw_text(str(countdown), countdown_font_2, BLACK, screen_width / 2 - 40, screen_height / 3)
+                draw_text(str(countdown), countdown_font_1, RED, screen_width / 2 - 40, screen_height / 3)
             # update countdown
             if (pygame.time.get_ticks() - last_count_update) >= 1000 :
                 countdown -= 1
