@@ -54,6 +54,7 @@ RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+BLACK_2 = (25, 25, 25)
 GREEN = (0, 255, 0)
 AZURE = (0, 100, 255)
 AZURE_2 = (20, 150, 255)
@@ -61,7 +62,6 @@ AQUAMARINE = (0, 255, 100)
 GREY = (128, 128, 128)
 GREY_2 = (93, 93, 93)
 GREY_3 = (50, 50, 50)
-BLACK_2 = (16, 16, 16)
 
 # defining game variables
 countdown = 4
@@ -76,9 +76,6 @@ game_paused = False
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
-
-main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 80)
-main_menu_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 80)
 
 
 # Creation of instances for fighters
@@ -177,15 +174,15 @@ def smooth_attack_animation(fighter_1, fighter_2) :
 # Define a function to display the pause menu
 def display_pause_menu() :
 
-    text_font = pygame.font.Font(None, 40)
+    main_menu_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 40)
 
     # create rectangles for the window and buttons
     window_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 4, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 80)
 
     # Create buttons
-    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, AZURE_2, "Resume", text_font, BLACK, screen)
-    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, AZURE_2, "Restart", text_font, BLACK, screen)
-    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_3, AZURE_2, "Exit Game", text_font, BLACK, screen)
+    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2, AZURE_2, "Resume", main_menu_font, BLACK, screen)
+    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2, AZURE_2, "Restart", main_menu_font, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2, AZURE_2, "Exit Game", main_menu_font, BLACK, screen)
 
     game_paused = True
     while game_paused == True :
@@ -239,7 +236,6 @@ def display_pause_menu() :
 
 # Define the intro_screen function
 def intro_screen():
-    pygame.init()
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -247,12 +243,13 @@ def intro_screen():
     original_background_image = pygame.image.load("Assets/BackGrounds/Background_start_menu2.png")
     background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    title_font = pygame.font.Font(None, 80)
-    button_font = pygame.font.Font(None, 32)
+    ### main_menu_font = pygame.font.Font(None, 32)
+    main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 80)
+    main_menu_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 38)
 
     # Create buttons
-    play_button = Button(SCREEN_WIDTH // 2 - 100, 200, 200, 50, GREY_3, AZURE_2, "Start Game", button_font, BLACK, screen)
-    exit_button = Button(SCREEN_WIDTH // 2 - 100, 300, 200, 50, GREY_3, AZURE_2, "Exit Game", button_font, BLACK, screen)
+    play_button = Button(SCREEN_WIDTH // 2 - 150, 200, 300, 75, GREY_2, AZURE_2, "Start Game", main_menu_font_2, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 2 - 150, 300, 300, 75, GREY_2, AZURE_2, "Exit Game", main_menu_font_2, BLACK, screen)
 
     clock = pygame.time.Clock()
     intro = True
@@ -281,7 +278,7 @@ def intro_screen():
 
         # Draw text
         draw_text("Main menu", main_menu_font_1, BLACK, SCREEN_WIDTH // 2 - 170, 70)
-        draw_text("Main menu", main_menu_font_2, AZURE_2, SCREEN_WIDTH // 2 - 180, 70)
+        draw_text("Main menu", main_menu_font_1, AZURE_2, SCREEN_WIDTH // 2 - 180, 70)
 
         # Draw buttons
         play_button.update_button()
