@@ -321,10 +321,10 @@ def selected_player_1():
                                                 martial_hero_animation_steps)
                         selecting_player_1 = False
 
-        # Dessine les images sélectionnées sur l'écran à différentes positions
-        screen.fill(BLACK_2)  # Efface l'écran pour éviter les artefacts
+        # Draw the selected images on the screen at different positions
+        screen.fill(BLACK_2)  # Clears the screen to avoid artifacts
         for image, rect in zip(selected_images, image_rects):
-            # Dessine le contour bleu autour de l'image
+            # Draw a blue outline around the image
             if rect.collidepoint(pygame.mouse.get_pos()):
                 pygame.draw.rect(screen, (AZURE_2), rect, 3)
             screen.blit(image, rect.topleft)
@@ -337,7 +337,7 @@ def selected_player_1():
 def initialize_fighters(player1_data, player2_data, player1_sprite_sheet, player2_sprite_sheet, player1_animation_steps,
                         player2_animation_steps):
     global fighter_1, fighter_2
-    fighter_1 = Fighter(1, 200, 400, 581, True, True, player1_data, player1_sprite_sheet, player1_animation_steps)
+    fighter_1 = Fighter(1, 200, 400, 581, True, False, player1_data, player1_sprite_sheet, player1_animation_steps)
     fighter_2 = Fighter(2, 925, 400, 581, False, True, player2_data, player2_sprite_sheet, player2_animation_steps)
 
 # call intro function
@@ -348,10 +348,6 @@ intro_screen()
 
 # call selected player functions
 selected_player_1()
-
-
-
-
 
 # Game Loop
 clock = pygame.time.Clock()  # Setting up framerate
