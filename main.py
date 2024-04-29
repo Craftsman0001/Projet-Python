@@ -14,8 +14,6 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Mon jeu !")
 
-
-
 # Load background image and scale it to fit the screen
 original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
 background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -71,44 +69,37 @@ round_over = False
 ROUND_OVER_COOLDOWN = 3000
 game_paused = False
 
-
 # defining the font
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
 
 
-# Creation of instances for fighters
-fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
-                    fantasy_warrior_animation_steps)
-## fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
-##                    martial_hero_animation_steps)
-fighter_2 = Fighter(2, 925, 400, 581, False, False, oni_samurai_data, oni_samurai_sprite_sheets,
-                    oni_samurai_animation_steps)
 
 
 # function for displaying introduction video and wait for user to press space bar to continue
-def display_intro_video() :
+def display_intro_video():
     clip = VideoFileClip("Assets/intro/intro.mp4")
     clip = clip.without_audio()  # disable audio track
     clip = clip.set_fps(60)
 
     # loop to display each frame of the video
-    for frame in clip.iter_frames() :
+    for frame in clip.iter_frames():
         frame_surface = pygame.image.frombuffer(frame, clip.size, "RGB")
         screen.blit(frame_surface, (0, 0))
         pygame.display.update()
 
         # check if space bar is pressed to skip intro video
-        for event in pygame.event.get() :
-            if event.type == pygame.KEYDOWN :
-                if event.key == pygame.K_SPACE :
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
                     return
 
     # wait a certain time after the end of the video
     pygame.time.wait(100)
 
-def reset_game() :
+
+def reset_game():
     global score, countdown, round_over, fighter_1, fighter_2
     score = [0, 0]
     countdown = 4
@@ -120,19 +111,19 @@ def reset_game() :
     last_count_update = pygame.time.get_ticks()
 
 
-
 # Function to draw fighter health bars
-def draw_health_bar(fighter, x, y) :
+def draw_health_bar(fighter, x, y):
     ratio = fighter.health / 100
-    pygame.draw.rect(screen, BLACK, (x - 5, y -5, 410, 40) )
-    pygame.draw.rect(screen, BLUE, (x, y, 400, 30) )
-    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30) )
+    pygame.draw.rect(screen, BLACK, (x - 5, y - 5, 410, 40))
+    pygame.draw.rect(screen, BLUE, (x, y, 400, 30))
+    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
 
 # function to draw text
-def draw_text(text, font, text_color, x, y) :
+def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
+
 
 # function to have music
 def manage_music(action, filepath=None, loops=-1, start=0.0):
@@ -158,59 +149,60 @@ def manage_music(action, filepath=None, loops=-1, start=0.0):
         print("Invalid action")
 
 
-def smooth_attack_animation(fighter_1, fighter_2) :
+def smooth_attack_animation(fighter_1, fighter_2):
     # Draw fighter
-    if fighter_1.attacking == True :
+    if fighter_1.attacking == True:
         fighter_2.draw(screen)
         fighter_1.draw(screen)
-    elif fighter_2.attacking == True :
+    elif fighter_2.attacking == True:
         fighter_1.draw(screen)
         fighter_2.draw(screen)
-    else :
+    else:
         fighter_2.draw(screen)
         fighter_1.draw(screen)
 
 
 # Define a function to display the pause menu
-def display_pause_menu() :
-
+def display_pause_menu():
     main_menu_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 40)
 
     # create rectangles for the window and buttons
     window_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 4, SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 80)
 
     # Create buttons
-    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 -100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2, AZURE_2, "Resume", main_menu_font, BLACK, screen)
-    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 , SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2, AZURE_2, "Restart", main_menu_font, BLACK, screen)
-    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2, AZURE_2, "Exit Game", main_menu_font, BLACK, screen)
+    resume_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 - 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2,
+                           AZURE_2, "Resume", main_menu_font, BLACK, screen)
+    restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2,
+                            AZURE_2, "Restart", main_menu_font, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2,
+                         AZURE_2, "Exit Game", main_menu_font, BLACK, screen)
 
     game_paused = True
-    while game_paused == True :
+    while game_paused == True:
         pygame.mixer.music.pause()
-        for event in pygame.event.get() :
-            if event.type == pygame.QUIT :
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-            elif event.type == pygame.KEYDOWN :
-                if event.key == pygame.K_ESCAPE :  # Resume game on ESC key press
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:  # Resume game on ESC key press
                     game_paused = False
 
-            elif event.type == pygame.MOUSEBUTTONDOWN :
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
-                if resume_button.rect.collidepoint(mouse_position) :
+                if resume_button.rect.collidepoint(mouse_position):
                     game_paused = False
 
-                elif restart_button.rect.collidepoint(mouse_position) :
+                elif restart_button.rect.collidepoint(mouse_position):
                     # Restart the game
                     reset_game()
                     game_paused = False
 
-                elif exit_button.rect.collidepoint(mouse_position) :
+                elif exit_button.rect.collidepoint(mouse_position):
                     # Close the game window
                     pygame.quit()
                     sys.exit()
-
 
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, BLACK_2, window_rect)
@@ -222,11 +214,11 @@ def display_pause_menu() :
 
         # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
-        if resume_button.rect.collidepoint(mouse_position) :
+        if resume_button.rect.collidepoint(mouse_position):
             resume_button.update_button_color()
-        elif restart_button.rect.collidepoint(mouse_position) :
+        elif restart_button.rect.collidepoint(mouse_position):
             restart_button.update_button_color()
-        elif exit_button.rect.collidepoint(mouse_position) :
+        elif exit_button.rect.collidepoint(mouse_position):
             exit_button.update_button_color()
 
         # Update display
@@ -234,9 +226,9 @@ def display_pause_menu() :
 
     return game_paused
 
+
 # Define the intro_screen function
 def intro_screen():
-
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Load background image and scale it to fit the screen
@@ -248,8 +240,10 @@ def intro_screen():
     main_menu_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 38)
 
     # Create buttons
-    play_button = Button(SCREEN_WIDTH // 2 - 150, 200, 300, 75, GREY_2, AZURE_2, "Start Game", main_menu_font_2, BLACK, screen)
-    exit_button = Button(SCREEN_WIDTH // 2 - 150, 300, 300, 75, GREY_2, AZURE_2, "Exit Game", main_menu_font_2, BLACK, screen)
+    play_button = Button(SCREEN_WIDTH // 2 - 150, 200, 300, 75, GREY_2, AZURE_2, "Start Game", main_menu_font_2, BLACK,
+                         screen)
+    exit_button = Button(SCREEN_WIDTH // 2 - 150, 300, 300, 75, GREY_2, AZURE_2, "Exit Game", main_menu_font_2, BLACK,
+                         screen)
 
     clock = pygame.time.Clock()
     intro = True
@@ -259,14 +253,14 @@ def intro_screen():
                 intro = False
                 pygame.quit()
                 sys.exit()
-    
-            elif event.type == pygame.MOUSEBUTTONDOWN :
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
-                if play_button.rect.collidepoint(mouse_position) :
+                if play_button.rect.collidepoint(mouse_position):
                     # Play the game
                     intro = False
 
-                elif exit_button.rect.collidepoint(mouse_position) :
+                elif exit_button.rect.collidepoint(mouse_position):
                     # Close the game window
                     pygame.quit()
                     sys.exit()
@@ -286,13 +280,68 @@ def intro_screen():
 
         # Highlight buttons if mouse hovers over them
         mouse_position = pygame.mouse.get_pos()
-        if play_button.rect.collidepoint(mouse_position) :
+        if play_button.rect.collidepoint(mouse_position):
             play_button.update_button_color()
-        elif exit_button.rect.collidepoint(mouse_position) :
+        elif exit_button.rect.collidepoint(mouse_position):
             exit_button.update_button_color()
 
         # Update display
         pygame.display.update()
+
+
+def selected_player_1():
+    selecting_player_1 = True
+    main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
+    screen.fill(BLACK_2)
+    selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
+    selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
+    selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
+
+    selected_images = [selected_FW, selected_wizard, selected_Samurai]
+    image_rects = [selected_FW.get_rect(topleft=(75, 170)), selected_wizard.get_rect(topleft=(700, 120)),
+                   selected_Samurai.get_rect(topleft=(400, 180))]
+
+    while selecting_player_1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                for i, rect in enumerate(image_rects):
+                    if rect.collidepoint(event.pos):
+                        if i == 0:
+                            initialize_fighters(fantasy_warrior_data, martial_hero_data, fantasy_warrior_sprite_sheet,
+                                                martial_hero_sprite_sheets, fantasy_warrior_animation_steps,
+                                                martial_hero_animation_steps)
+                        elif i == 1:
+                            initialize_fighters(wizard_data, martial_hero_data, wizard_sprite_sheet,
+                                                martial_hero_sprite_sheets, wizard_animation_steps,
+                                                martial_hero_animation_steps)
+                        elif i == 2:
+                            initialize_fighters(oni_samurai_data, martial_hero_data, oni_samurai_sprite_sheets,
+                                                martial_hero_sprite_sheets, oni_samurai_animation_steps,
+                                                martial_hero_animation_steps)
+                        selecting_player_1 = False
+
+        # Dessine les images sélectionnées sur l'écran à différentes positions
+        screen.fill(BLACK_2)  # Efface l'écran pour éviter les artefacts
+        for image, rect in zip(selected_images, image_rects):
+            # Dessine le contour bleu autour de l'image
+            if rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen, (AZURE_2), rect, 3)
+            screen.blit(image, rect.topleft)
+
+        draw_text("Player 1: Select your fighter", main_menu_font_1, WHITE, 250, 20)
+        pygame.display.flip()
+
+
+
+def initialize_fighters(player1_data, player2_data, player1_sprite_sheet, player2_sprite_sheet, player1_animation_steps,
+                        player2_animation_steps):
+    global fighter_1, fighter_2
+    fighter_1 = Fighter(1, 200, 400, 581, True, True, player1_data, player1_sprite_sheet, player1_animation_steps)
+    fighter_2 = Fighter(2, 925, 400, 581, False, True, player2_data, player2_sprite_sheet, player2_animation_steps)
 
 # call intro function
 display_intro_video()
@@ -300,27 +349,33 @@ display_intro_video()
 # Call the intro_screen function
 intro_screen()
 
+# call selected player functions
+selected_player_1()
+
+
+
+
+
 # Game Loop
-clock = pygame.time.Clock() # Setting up framerate
+clock = pygame.time.Clock()  # Setting up framerate
 run = True
-while run :
-    # load music's battle
+while run:
 
     # Gestion des événements
-    for event in pygame.event.get() :
-        if event.type == pygame.QUIT :
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             run = False
-        elif event.type == pygame.KEYDOWN :
-            if event.key == pygame.K_ESCAPE :  # Press ESC key
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:  # Press ESC key
                 game_paused = True  # Toggle pause state
 
-    if game_paused == True :
+    if game_paused == True:
         # Enter pause menu loop
-        while game_paused :
+        while game_paused:
             game_paused = display_pause_menu()  # Keep displaying pause menu until game is unpaused
 
 
-    else :
+    else:
         # Limit frame rate
         clock.tick(60)
 
@@ -333,27 +388,26 @@ while run :
         draw_text(" Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
         draw_text(" Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
 
-
         # update countdown
-        if countdown <= 0 :
+        if countdown <= 0:
             # fighters can move
             fighter_1.move(round_over, SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
             fighter_2.move(round_over, SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
-        else :
+        else:
             # Ensure fighters face each other during countdown
-            if fighter_2.rect.centerx > fighter_1.rect.centerx :
+            if fighter_2.rect.centerx > fighter_1.rect.centerx:
                 fighter_2.flip = True
-            else :
+            else:
                 fighter_2.flip = False
             # display the countdown timer
-            if countdown == 1 :
+            if countdown == 1:
                 draw_text(str(countdown), countdown_font_2, BLACK, SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 3)
                 draw_text(str(countdown), countdown_font_1, RED, SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 3)
-            else :
+            else:
                 draw_text(str(countdown), countdown_font_2, BLACK, SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 3)
                 draw_text(str(countdown), countdown_font_1, RED, SCREEN_WIDTH / 2 - 40, SCREEN_HEIGHT / 3)
             # update countdown
-            if (pygame.time.get_ticks() - last_count_update) >= 1000 :
+            if (pygame.time.get_ticks() - last_count_update) >= 1000:
                 countdown -= 1
                 last_count_update = pygame.time.get_ticks()
 
@@ -364,24 +418,26 @@ while run :
         smooth_attack_animation(fighter_1, fighter_2)
 
         # check if player was defeated
-        if round_over == False :
-            if fighter_1.alive == False :
+        if round_over == False:
+            if fighter_1.alive == False:
                 score[1] += 1
                 round_over = True
                 round_over_time = pygame.time.get_ticks()
-            elif fighter_2.alive == False :
+            elif fighter_2.alive == False:
                 score[0] += 1
                 round_over = True
                 round_over_time = pygame.time.get_ticks()
-        else :
+        else:
             # display the victory image
             screen.blit(victory_image, (400, 50))
-            if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN :
+            if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
                 countdown = 3
                 # Creation of instances for fighters
-                fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet, fantasy_warrior_animation_steps)
-                fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets, martial_hero_animation_steps)
+                fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
+                                    fantasy_warrior_animation_steps)
+                fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
+                                    martial_hero_animation_steps)
 
     # Update display
     pygame.display.update()
