@@ -12,9 +12,7 @@ pygame.init()
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Mon jeu !")
-
-
+pygame.display.set_caption("Brawl Arena")
 
 # Load background image and scale it to fit the screen
 original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
@@ -186,7 +184,7 @@ def display_pause_menu() :
 
     game_paused = True
     while game_paused == True :
-        pygame.mixer.music.pause()
+        #pygame.mixer.music.pause()
         for event in pygame.event.get() :
             if event.type == pygame.QUIT :
                 pygame.quit()
@@ -194,22 +192,20 @@ def display_pause_menu() :
 
             elif event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_ESCAPE :  # Resume game on ESC key press
-                    game_paused = False
+                    return "resume"
 
             elif event.type == pygame.MOUSEBUTTONDOWN :
                 mouse_position = pygame.mouse.get_pos()
                 if resume_button.rect.collidepoint(mouse_position) :
-                    game_paused = False
+                    return "resume"
 
                 elif restart_button.rect.collidepoint(mouse_position) :
-                    # Restart the game
-                    reset_game()
-                    game_paused = False
+                    return "restart"
 
                 elif exit_button.rect.collidepoint(mouse_position) :
-                    # Close the game window
-                    pygame.quit()
-                    sys.exit()
+                    # Set flag to return to main menu
+                    return "exit"
+
 
 
         # Draw a pause window/rectangle
@@ -232,7 +228,7 @@ def display_pause_menu() :
         # Update display
         pygame.display.update()
 
-    return game_paused
+    return None
 
 # Define the intro_screen function
 def intro_screen():
@@ -277,8 +273,8 @@ def intro_screen():
         screen.blit(original_background_image, (0, 0))
 
         # Draw text
-        draw_text("Main menu", main_menu_font_1, BLACK, SCREEN_WIDTH // 2 - 170, 70)
-        draw_text("Main menu", main_menu_font_1, AZURE_2, SCREEN_WIDTH // 2 - 180, 70)
+        draw_text("Brawl Arena", main_menu_font_1, BLACK, SCREEN_WIDTH // 2 - 210, 70)
+        draw_text("Brawl Arena", main_menu_font_1, AZURE_2, SCREEN_WIDTH // 2 - 220, 70)
 
         # Draw buttons
         play_button.update_button()
@@ -314,11 +310,17 @@ while run :
             if event.key == pygame.K_ESCAPE :  # Press ESC key
                 game_paused = True  # Toggle pause state
 
-    if game_paused == True :
+    if game_paused:
         # Enter pause menu loop
-        while game_paused :
-            game_paused = display_pause_menu()  # Keep displaying pause menu until game is unpaused
-
+        pause_action = display_pause_menu()
+        if pause_action == "resume":
+            game_paused = False
+        elif pause_action == "restart":
+            reset_game()
+            game_paused = False
+        elif pause_action == "exit":
+            intro_screen()
+            game_paused = False
 
     else :
         # Limit frame rate
