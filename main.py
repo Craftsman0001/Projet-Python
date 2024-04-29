@@ -1,5 +1,5 @@
 import pygame
-import sys
+
 from moviepy.editor import VideoFileClip
 from fighter import Fighter
 from FighterData import *
@@ -31,12 +31,14 @@ fantasy_warrior_sprite_sheet = sprite_sheets["fantasy_warrior"]
 wizard_sprite_sheet = sprite_sheets["wizard"]
 martial_hero_sprite_sheets = sprite_sheets["martial_hero"]
 oni_samurai_sprite_sheets = sprite_sheets["oni_samurai"]
+samurai_sprite_sheets = sprite_sheets["samurai"]
 
 # Extract animation steps for each fighter
 fantasy_warrior_animation_steps = animation_steps["fantasy_warrior"]
 wizard_animation_steps = animation_steps["wizard"]
 martial_hero_animation_steps = animation_steps["martial_hero"]
 oni_samurai_animation_steps = animation_steps["oni_samurai"]
+samurai_animation_steps = animation_steps["samurai"]
 
 # defining fighter variables
 fighter_data = fighter_variables()
@@ -45,6 +47,7 @@ fantasy_warrior_data = fighter_data["fantasy_warrior"]
 wizard_data = fighter_data["wizard"]
 martial_hero_data = fighter_data["martial_hero"]
 oni_samurai_data = fighter_data["oni_samurai"]
+samurai_data = fighter_data["samurai"]
 
 # Colors
 BLUE = (0, 0, 255)
@@ -296,10 +299,11 @@ def select_player_1():
     selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
     selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
     selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
+    selected_samurai = pygame.image.load("Assets/Fighters/Samurai/Sprites/selected.png")
 
-    selected_images = [selected_FW, selected_wizard, selected_Samurai]
+    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai]
     image_rects = [selected_FW.get_rect(topleft=(75, 170)), selected_wizard.get_rect(topleft=(700, 120)),
-                   selected_Samurai.get_rect(topleft=(400, 180))]
+                   selected_Samurai.get_rect(topleft=(400, 180)), selected_samurai.get_rect(topleft=(960 , 160 ))]
 
     while selecting_player_1:
         for event in pygame.event.get():
@@ -316,6 +320,8 @@ def select_player_1():
                             return "Evil Wizard"
                         elif i == 2:
                             return "Oni Samurai"
+                        elif i == 3:
+                            return "samurai"
 
         # Draw the selected images on the screen at different positions
         screen.fill(BLACK_2)  # Clears the screen to avoid artifacts
@@ -336,10 +342,11 @@ def select_player_2():
     selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
     selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
     selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
+    selected_samurai = pygame.image.load("Assets/Fighters/Samurai/Sprites/selected.png")
 
-    selected_images = [selected_FW, selected_wizard, selected_Samurai]
+    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai ]
     image_rects = [selected_FW.get_rect(topleft=(75, 170)), selected_wizard.get_rect(topleft=(700, 120)),
-                   selected_Samurai.get_rect(topleft=(400, 180))]
+                   selected_Samurai.get_rect(topleft=(400, 180)), selected_samurai.get_rect(topleft=(960, 160))]
 
     while selecting_player_2:
         for event in pygame.event.get():
@@ -356,6 +363,8 @@ def select_player_2():
                             return "Evil Wizard"
                         elif j == 2:
                             return "Oni Samurai"
+                        elif j == 3:
+                            return "samurai"
 
         screen.fill(BLACK_2)
         for image, rect in zip(selected_images, image_rects):
@@ -379,6 +388,10 @@ def initialize_fighter_1(player1_choice):
         player1_data = oni_samurai_data
         player1_sprite_sheet = oni_samurai_sprite_sheets
         player1_animation_steps = oni_samurai_animation_steps
+    elif player1_choice == "samurai":
+        player1_data = samurai_data
+        player1_sprite_sheet = samurai_sprite_sheets
+        player1_animation_steps = samurai_animation_steps
 
     global fighter_1
     fighter_1 = Fighter(1, 200, 400, 581, True, True, player1_data, player1_sprite_sheet, player1_animation_steps)
@@ -397,6 +410,10 @@ def initialize_fighter_2(player2_choice):
         player2_data = oni_samurai_data
         player2_sprite_sheet = oni_samurai_sprite_sheets
         player2_animation_steps = oni_samurai_animation_steps
+    elif player2_choice == "samurai":
+        player2_data = samurai_data
+        player2_sprite_sheet = samurai_sprite_sheets
+        player2_animation_steps = samurai_animation_steps
 
     global fighter_2
     fighter_2 = Fighter(2, 925, 400, 581, False, True, player2_data, player2_sprite_sheet, player2_animation_steps)
@@ -487,16 +504,13 @@ while run:
                 round_over = True
                 round_over_time = pygame.time.get_ticks()
         else:
-            # display the victory image
+            # Afficher l'image de la victoire
             screen.blit(victory_image, (400, 50))
             if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
                 countdown = 3
-                # Creation of instances for fighters
-                fighter_1 = Fighter(1, 200, 400, 581, True, True, fantasy_warrior_data, fantasy_warrior_sprite_sheet,
-                                    fantasy_warrior_animation_steps)
-                fighter_2 = Fighter(2, 925, 400, 581, False, True, martial_hero_data, martial_hero_sprite_sheets,
-                                    martial_hero_animation_steps)
+                # Réinitialiser les combattants en fonction des choix des joueurs
+
 
     # Update display
     pygame.display.update()
