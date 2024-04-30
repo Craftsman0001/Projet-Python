@@ -398,25 +398,30 @@ def initialize_fighter_1(player1_choice):
 
 
 def initialize_fighter_2(player2_choice):
+    third_attack = none
+
     if player2_choice == "Fantasy Warrior":
         player2_data = fantasy_warrior_data
         player2_sprite_sheet = fantasy_warrior_sprite_sheet
         player2_animation_steps = fantasy_warrior_animation_steps
+        third_attack = False
     elif player2_choice == "Evil Wizard":
         player2_data = wizard_data
         player2_sprite_sheet = wizard_sprite_sheet
+        third_attack = False
         player2_animation_steps = wizard_animation_steps
     elif player2_choice == "Oni Samurai":
         player2_data = oni_samurai_data
         player2_sprite_sheet = oni_samurai_sprite_sheets
         player2_animation_steps = oni_samurai_animation_steps
+        third_attack = False
     elif player2_choice == "samurai":
         player2_data = samurai_data
         player2_sprite_sheet = samurai_sprite_sheets
         player2_animation_steps = samurai_animation_steps
 
     global fighter_2
-    fighter_2 = Fighter(2, 925, 400, 581, False, True, player2_data, player2_sprite_sheet, player2_animation_steps)
+    fighter_2 = Fighter(2, 925, 400, 581, False, third_attack, player2_data, player2_sprite_sheet, player2_animation_steps)
 
 
 
@@ -510,7 +515,8 @@ while run:
                 round_over = False
                 countdown = 3
                 # Réinitialiser les combattants en fonction des choix des joueurs
-
+                initialize_fighter_1(player1_choice)
+                initialize_fighter_2(player2_choice)
 
     # Update display
     pygame.display.update()
