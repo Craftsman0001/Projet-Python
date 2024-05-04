@@ -1,5 +1,4 @@
 import pygame
-
 from moviepy.editor import VideoFileClip
 from fighter import Fighter
 from FighterData import *
@@ -32,6 +31,7 @@ wizard_sprite_sheet = sprite_sheets["wizard"]
 martial_hero_sprite_sheets = sprite_sheets["martial_hero"]
 oni_samurai_sprite_sheets = sprite_sheets["oni_samurai"]
 samurai_sprite_sheets = sprite_sheets["samurai"]
+Female_Warrior_sprite_sheets = sprite_sheets["Female Warrior"]
 
 # Extract animation steps for each fighter
 fantasy_warrior_animation_steps = animation_steps["fantasy_warrior"]
@@ -39,6 +39,7 @@ wizard_animation_steps = animation_steps["wizard"]
 martial_hero_animation_steps = animation_steps["martial_hero"]
 oni_samurai_animation_steps = animation_steps["oni_samurai"]
 samurai_animation_steps = animation_steps["samurai"]
+Female_Warrior_animation_steps = animation_steps["Female Warrior"]
 
 # defining fighter variables
 fighter_data = fighter_variables()
@@ -48,6 +49,7 @@ wizard_data = fighter_data["wizard"]
 martial_hero_data = fighter_data["martial_hero"]
 oni_samurai_data = fighter_data["oni_samurai"]
 samurai_data = fighter_data["samurai"]
+Female_Warrior_data = fighter_data["Female Warrior"]
 
 # Colors
 BLUE = (0, 0, 255)
@@ -71,6 +73,9 @@ score = [0, 0]  # player scores : [player1, player2]
 round_over = False
 ROUND_OVER_COOLDOWN = 3000
 game_paused = False
+player1_choice = None
+player2_choice = None
+
 
 # defining the font
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
@@ -103,7 +108,8 @@ def display_intro_video():
 
 
 def reset_game():
-    global score, countdown, round_over, fighter_1, fighter_2
+    global score, countdown, round_over, fighter_1, fighter_2, last_count_update
+
     score = [0, 0]
     countdown = 4
     round_over = False
@@ -132,24 +138,23 @@ def draw_text(text, font, text_color, x, y):
 def manage_music(action, filepath=None, loops=-1, start=0.0):
     if action == "load":
         pygame.mixer.init()
-        pygame.mixer.music.load(filepath)
-        pygame.mixer.music.play(loops=loops, start=start)
+        return pygame.mixer.Sound(filepath)
     elif action == "play":
         if not pygame.mixer.get_init():
             pygame.mixer.init()
-        if not pygame.mixer.music.get_busy():
-            pygame.mixer.music.play(loops=loops, start=start)
+        sound = pygame.mixer.Sound(filepath)
+        sound.play(loops=loops, start=start)
+        return sound
     elif action == "pause":
-        if pygame.mixer.music.get_busy():
-            pygame.mixer.music.pause()
+        if pygame.mixer.get_busy():
+            pygame.mixer.pause()
     elif action == "unpause":
-        if pygame.mixer.music.get_busy():
-            pygame.mixer.music.unpause()
+        pygame.mixer.unpause()
     elif action == "stop":
-        if pygame.mixer.music.get_busy():
-            pygame.mixer.music.stop()
+        pygame.mixer.stop()
     else:
         print("Invalid action")
+
 
 
 def smooth_attack_animation(fighter_1, fighter_2):
@@ -198,10 +203,13 @@ def display_pause_menu():
                     return "resume"
 
                 elif restart_button.rect.collidepoint(mouse_position) :
+                    manage_music("stop")
+                    manage_music("play")
                     return "restart"
 
                 elif exit_button.rect.collidepoint(mouse_position) :
                     # Set flag to return to main menu
+                    manage_music("stop")
                     return "exit"
 
 
@@ -228,6 +236,222 @@ def display_pause_menu():
     return None
 
 # Define the intro_screen function
+
+def select_player_1():
+    selecting_player_1 = True
+    main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
+    screen.fill(BLACK_2)
+
+    # Load selected images and scale them
+    selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
+    selected_FW = pygame.transform.scale(selected_FW, (200, 200))
+    selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
+    selected_wizard = pygame.transform.scale(selected_wizard, (200, 200))
+    selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
+    selected_Samurai = pygame.transform.scale(selected_Samurai, (200, 200))
+    selected_samurai = pygame.image.load("Assets/Fighters/Samurai/Sprites/selected.png")
+    selected_samurai = pygame.transform.scale(selected_samurai, (200, 200))
+    selected_MH = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/selected.png")
+    selected_MH = pygame.transform.scale(selected_MH, (200, 200))
+    selected_Female = pygame.image.load("Assets/Fighters/Female Warrior/selected.png")
+    selected_Female = pygame.transform.scale(selected_Female, (200, 200))
+
+    # Create instances of the Button class for each image
+    selected_FW_button = Button(50, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_wizard_button = Button(275, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_Samurai_button = Button(500, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_samurai_button = Button(725, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_MH_button = Button(950, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_Female_button = Button(175, 333,200,200,BLACK_2,AZURE_2, "", None, None, screen )
+
+
+
+    # List of selected images and their corresponding buttons
+    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai, selected_MH, selected_Female]
+    selected_buttons = [selected_FW_button, selected_wizard_button, selected_Samurai_button, selected_samurai_button, selected_MH_button, selected_Female_button]
+
+    # select loop
+
+    while selecting_player_1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                for i, button in enumerate(selected_buttons):
+                    if button.rect.collidepoint(event.pos):
+                        if i == 0:
+                            return "Fantasy Warrior"
+                        elif i == 1:
+                            return "Evil Wizard"
+                        elif i == 2:
+                            return "Oni Samurai"
+                        elif i == 3:
+                            return "samurai"
+                        elif i == 4:
+                            return "martial hero"
+                        elif i == 5:
+                            return "Female Warrior"
+
+        # Draw selected images and buttons on the screen
+        screen.fill(BLACK_2)
+        for image, button in zip(selected_images, selected_buttons):
+            # Draw a blue outline around the button
+            if button.rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen, (AZURE_2), button.rect, 3)
+            # Draw image
+            screen.blit(image, button.rect.topleft)
+
+        # Draw text
+        draw_text("Player 1: Select your fighter", main_menu_font_1, WHITE, 250, 20)
+        pygame.display.flip()
+
+def initialize_fighter_1(player1_choice):
+    THIRD_ATTACK = False  # Default value
+    if player1_choice == "Fantasy Warrior":
+        player1_data = fantasy_warrior_data
+        player1_sprite_sheet = fantasy_warrior_sprite_sheet
+        player1_animation_steps = fantasy_warrior_animation_steps
+        THIRD_ATTACK = True  # Set to True for Fantasy Warrior
+
+    elif player1_choice == "Evil Wizard":
+        player1_data = wizard_data
+        player1_sprite_sheet = wizard_sprite_sheet
+        player1_animation_steps = wizard_animation_steps
+
+    elif player1_choice == "Oni Samurai":
+        player1_data = oni_samurai_data
+        player1_sprite_sheet = oni_samurai_sprite_sheets
+        player1_animation_steps = oni_samurai_animation_steps
+
+    elif player1_choice == "samurai":
+        player1_data = samurai_data
+        player1_sprite_sheet = samurai_sprite_sheets
+        player1_animation_steps = samurai_animation_steps
+
+    elif player1_choice == "martial hero":
+        player1_data = martial_hero_data
+        player1_sprite_sheet = martial_hero_sprite_sheets
+        player1_animation_steps = martial_hero_animation_steps
+        THIRD_ATTACK = True  # Set to True for martial hero
+
+    elif player1_choice == "Female Warrior":
+        player1_data = Female_Warrior_data
+        player1_sprite_sheet = Female_Warrior_sprite_sheets
+        player1_animation_steps = Female_Warrior_animation_steps
+
+
+
+    global fighter_1
+    fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player1_data, player1_sprite_sheet, player1_animation_steps)
+
+
+def select_player_2():
+    selecting_player_2 = True
+    main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
+    screen.fill(BLACK_2)
+
+    # Load selected images and scale them
+    selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
+    selected_FW = pygame.transform.scale(selected_FW, (200, 200))
+    selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
+    selected_wizard = pygame.transform.scale(selected_wizard, (200, 200))
+    selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
+    selected_Samurai = pygame.transform.scale(selected_Samurai, (200, 200))
+    selected_samurai = pygame.image.load("Assets/Fighters/Samurai/Sprites/selected.png")
+    selected_samurai = pygame.transform.scale(selected_samurai, (200, 200))
+    selected_MH = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/selected.png")
+    selected_MH = pygame.transform.scale(selected_MH, (200, 200))
+    selected_Female = pygame.image.load("Assets/Fighters/Female Warrior/selected.png")
+    selected_Female = pygame.transform.scale(selected_Female, (200, 200))
+
+    # Create instances of the Button class for each image
+    selected_FW_button = Button(50, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_wizard_button = Button(275, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_Samurai_button = Button(500, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_samurai_button = Button(725, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_MH_button = Button(950, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_Female_button = Button(175, 333, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+
+    # List of selected images and their corresponding buttons
+    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai, selected_MH, selected_Female]
+    selected_buttons = [selected_FW_button, selected_wizard_button, selected_Samurai_button, selected_samurai_button, selected_MH_button, selected_Female_button]
+
+    # selected loop
+    while selecting_player_2:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                for j, button in enumerate(selected_buttons):
+                    if button.rect.collidepoint(event.pos):
+                        if j == 0:
+                            return "Fantasy Warrior"
+                        elif j == 1:
+                            return "Evil Wizard"
+                        elif j == 2:
+                            return "Oni Samurai"
+                        elif j == 3:
+                            return "samurai"
+                        elif j == 4:
+                            return "martial hero"
+                        elif j == 5:
+                            return "Female Warrior"
+
+        # Draw selected images and buttons on the screen
+        screen.fill(BLACK_2)
+        for image, button in zip(selected_images, selected_buttons):
+            # Draw a blue outline around the button
+            if button.rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen, (AZURE_2), button.rect, 3)
+            # Draw image
+            screen.blit(image, button.rect.topleft)
+
+        # Draw text
+        draw_text("Player 2: Select your fighter", main_menu_font_1, WHITE, 250, 20)
+        pygame.display.flip()
+
+def initialize_fighter_2(player2_choice):
+    THIRD_ATTACK = False
+    if player2_choice == "Fantasy Warrior":
+        player2_data = fantasy_warrior_data
+        player2_sprite_sheet = fantasy_warrior_sprite_sheet
+        player2_animation_steps = fantasy_warrior_animation_steps
+        THIRD_ATTACK = True  # Set to True for martial hero
+
+    elif player2_choice == "Evil Wizard":
+        player2_data = wizard_data
+        player2_sprite_sheet = wizard_sprite_sheet
+        player2_animation_steps = wizard_animation_steps
+
+    elif player2_choice == "Oni Samurai":
+        player2_data = oni_samurai_data
+        player2_sprite_sheet = oni_samurai_sprite_sheets
+        player2_animation_steps = oni_samurai_animation_steps
+
+    elif player2_choice == "samurai":
+        player2_data = samurai_data
+        player2_sprite_sheet = samurai_sprite_sheets
+        player2_animation_steps = samurai_animation_steps
+
+    elif player2_choice == "martial hero":
+        player2_data = martial_hero_data
+        player2_sprite_sheet = martial_hero_sprite_sheets
+        player2_animation_steps = martial_hero_animation_steps
+        THIRD_ATTACK = True
+
+    elif player2_choice == "Female Warrior":
+        player2_data = Female_Warrior_data
+        player2_sprite_sheet = Female_Warrior_sprite_sheets
+        player2_animation_steps = Female_Warrior_animation_steps
+
+
+    global fighter_2
+    fighter_2 = Fighter(2, 925, 400, 581, False, THIRD_ATTACK, player2_data, player2_sprite_sheet, player2_animation_steps)
+
 def intro_screen():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -259,8 +483,10 @@ def intro_screen():
                 if play_button.rect.collidepoint(mouse_position):
                     # Play the game
                     intro = False
+                    global player1_choice, player2_choice
                     player1_choice = select_player_1()
                     player2_choice = select_player_2()
+
                     initialize_fighter_1(player1_choice)
                     initialize_fighter_2(player2_choice)
 
@@ -292,144 +518,19 @@ def intro_screen():
         # Update display
         pygame.display.update()
 
-def select_player_1():
-    selecting_player_1 = True
-    main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
-    screen.fill(BLACK_2)
-    selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
-    selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
-    selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
-    selected_samurai = pygame.image.load("Assets/Fighters/Samurai/Sprites/selected.png")
-
-    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai]
-    image_rects = [selected_FW.get_rect(topleft=(75, 170)), selected_wizard.get_rect(topleft=(700, 120)),
-                   selected_Samurai.get_rect(topleft=(400, 180)), selected_samurai.get_rect(topleft=(960 , 160 ))]
-
-    while selecting_player_1:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                for i, rect in enumerate(image_rects):
-                    if rect.collidepoint(event.pos):
-                        if i == 0:
-                            return "Fantasy Warrior"
-                        elif i == 1:
-                            return "Evil Wizard"
-                        elif i == 2:
-                            return "Oni Samurai"
-                        elif i == 3:
-                            return "samurai"
-
-        # Draw the selected images on the screen at different positions
-        screen.fill(BLACK_2)  # Clears the screen to avoid artifacts
-        for image, rect in zip(selected_images, image_rects):
-            # Draw a blue outline around the image
-            if rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.draw.rect(screen, (AZURE_2), rect, 3)
-            screen.blit(image, rect.topleft)
-
-        draw_text("Player 1: Select your fighter", main_menu_font_1, WHITE, 250, 20)
-        pygame.display.flip()
 
 
-def select_player_2():
-    selecting_player_2 = True
-    main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
-    screen.fill(BLACK_2)
-    selected_FW = pygame.image.load("Assets/Fighters/Fantasy Warrior/Sprites/selected.png")
-    selected_wizard = pygame.image.load("Assets/Fighters/EVil Wizard/Sprites/selected.png")
-    selected_Samurai = pygame.image.load("Assets/Fighters/Oni Samurai/Sprites/selected.png")
-    selected_samurai = pygame.image.load("Assets/Fighters/Samurai/Sprites/selected.png")
-
-    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai ]
-    image_rects = [selected_FW.get_rect(topleft=(75, 170)), selected_wizard.get_rect(topleft=(700, 120)),
-                   selected_Samurai.get_rect(topleft=(400, 180)), selected_samurai.get_rect(topleft=(960, 160))]
-
-    while selecting_player_2:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                for j, rect in enumerate(image_rects):
-                    if rect.collidepoint(event.pos):
-                        if j == 0:
-                            return "Fantasy Warrior"
-                        elif j == 1:
-                            return "Evil Wizard"
-                        elif j == 2:
-                            return "Oni Samurai"
-                        elif j == 3:
-                            return "samurai"
-
-        screen.fill(BLACK_2)
-        for image, rect in zip(selected_images, image_rects):
-            if rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.draw.rect(screen, (AZURE_2), rect, 3)
-            screen.blit(image, rect.topleft)
-
-        draw_text("Player 2: Select your fighter", main_menu_font_1, WHITE, 250, 20)
-        pygame.display.flip()
-
-def initialize_fighter_1(player1_choice):
-    if player1_choice == "Fantasy Warrior":
-        player1_data = fantasy_warrior_data
-        player1_sprite_sheet = fantasy_warrior_sprite_sheet
-        player1_animation_steps = fantasy_warrior_animation_steps
-    elif player1_choice == "Evil Wizard":
-        player1_data = wizard_data
-        player1_sprite_sheet = wizard_sprite_sheet
-        player1_animation_steps = wizard_animation_steps
-    elif player1_choice == "Oni Samurai":
-        player1_data = oni_samurai_data
-        player1_sprite_sheet = oni_samurai_sprite_sheets
-        player1_animation_steps = oni_samurai_animation_steps
-    elif player1_choice == "samurai":
-        player1_data = samurai_data
-        player1_sprite_sheet = samurai_sprite_sheets
-        player1_animation_steps = samurai_animation_steps
-
-    global fighter_1
-    fighter_1 = Fighter(1, 200, 400, 581, True, True, player1_data, player1_sprite_sheet, player1_animation_steps)
-
-
-def initialize_fighter_2(player2_choice):
-    ### third_attack = none
-
-    if player2_choice == "Fantasy Warrior":
-        player2_data = fantasy_warrior_data
-        player2_sprite_sheet = fantasy_warrior_sprite_sheet
-        player2_animation_steps = fantasy_warrior_animation_steps
-        ### third_attack = False
-    elif player2_choice == "Evil Wizard":
-        player2_data = wizard_data
-        player2_sprite_sheet = wizard_sprite_sheet
-        ### third_attack = False
-        player2_animation_steps = wizard_animation_steps
-    elif player2_choice == "Oni Samurai":
-        player2_data = oni_samurai_data
-        player2_sprite_sheet = oni_samurai_sprite_sheets
-        player2_animation_steps = oni_samurai_animation_steps
-        ### third_attack = False
-    elif player2_choice == "samurai":
-        player2_data = samurai_data
-        player2_sprite_sheet = samurai_sprite_sheets
-        player2_animation_steps = samurai_animation_steps
-
-    global fighter_2
-    fighter_2 = Fighter(2, 925, 400, 581, False, False, player2_data, player2_sprite_sheet, player2_animation_steps)
 
 
 
 # call intro function
-display_intro_video()
+#display_intro_video()
 
 # Call the intro_screen function
 intro_screen()
+# Call manage_music to load and play the music
+sound2 = manage_music("load", filepath="Assets/musics/music_game_2.mp3")
+sound2.play()
 
 # Game Loop
 clock = pygame.time.Clock()  # Setting up framerate
@@ -509,14 +610,15 @@ while run:
                 round_over = True
                 round_over_time = pygame.time.get_ticks()
         else:
-            # Afficher l'image de la victoire
+            # Display the victory image
             screen.blit(victory_image, (400, 50))
+            # Reset the fighters based on player choices for round 2
             if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
-                countdown = 3
-                # Réinitialiser les combattants en fonction des choix des joueurs
-                initialize_fighter_1(player1_choice)
+                countdown = 4
                 initialize_fighter_2(player2_choice)
+                initialize_fighter_1(player1_choice)
+
 
     # Update display
     pygame.display.update()
@@ -524,4 +626,3 @@ while run:
 # Quitter le jeu et désinitialiser tous les modules pygame
 pygame.mixer.music.stop()
 pygame.quit()
-sys.exit()
