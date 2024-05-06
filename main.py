@@ -132,31 +132,6 @@ def draw_health_bar(fighter, x, y):
 def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
-
-
-# function to have music
-def manage_music(action, filepath=None, loops=-1, start=0.0):
-    if action == "load":
-        pygame.mixer.init()
-        return pygame.mixer.Sound(filepath)
-    elif action == "play":
-        if not pygame.mixer.get_init():
-            pygame.mixer.init()
-        sound = pygame.mixer.Sound(filepath)
-        sound.play(loops=loops, start=start)
-        return sound
-    elif action == "pause":
-        if pygame.mixer.get_busy():
-            pygame.mixer.pause()
-    elif action == "unpause":
-        pygame.mixer.unpause()
-    elif action == "stop":
-        pygame.mixer.stop()
-    else:
-        print("Invalid action")
-
-
-
 def smooth_attack_animation(fighter_1, fighter_2):
     # Draw fighter
     if fighter_1.attacking == True:
@@ -168,6 +143,15 @@ def smooth_attack_animation(fighter_1, fighter_2):
     else:
         fighter_2.draw(screen)
         fighter_1.draw(screen)
+
+def manage_music(action):
+    if action == "play":
+        # Charger et jouer la musique en boucle indéfiniment (-1)
+        pygame.mixer.music.load("Assets/musics/music_game_2.mp3")
+        pygame.mixer.music.play(-1)
+    elif action == "stop":
+        # Arrêter la musique
+        pygame.mixer.music.stop()
 
 
 # Define a function to display the pause menu
@@ -187,11 +171,10 @@ def display_pause_menu():
 
     game_paused = True
     while game_paused == True :
-        #pygame.mixer.music.pause()
         for event in pygame.event.get() :
             if event.type == pygame.QUIT :
                 pygame.quit()
-                sys.exit()
+
 
             elif event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_ESCAPE :  # Resume game on ESC key press
@@ -202,7 +185,7 @@ def display_pause_menu():
                 if resume_button.rect.collidepoint(mouse_position) :
                     return "resume"
 
-                elif restart_button.rect.collidepoint(mouse_position) :
+                elif restart_button.rect.collidepoint(mouse_position):
                     manage_music("stop")
                     manage_music("play")
                     return "restart"
@@ -476,7 +459,7 @@ def intro_screen():
             if event.type == pygame.QUIT:
                 intro = False
                 pygame.quit()
-                sys.exit()
+
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
@@ -493,7 +476,7 @@ def intro_screen():
                 elif exit_button.rect.collidepoint(mouse_position):
                     # Close the game window
                     pygame.quit()
-                    sys.exit()
+
 
         clock.tick(60)
 
@@ -518,20 +501,12 @@ def intro_screen():
         # Update display
         pygame.display.update()
 
-
-
-
-
-
 # call intro function
-#display_intro_video()
+display_intro_video()
 
 # Call the intro_screen function
 intro_screen()
-# Call manage_music to load and play the music
-sound2 = manage_music("load", filepath="Assets/musics/music_game_2.mp3")
-sound2.play()
-
+manage_music("play")
 # Game Loop
 clock = pygame.time.Clock()  # Setting up framerate
 run = True
@@ -569,6 +544,8 @@ while run:
         draw_health_bar(fighter_2, 780, 20)
         draw_text(" Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
         draw_text(" Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
+
+
 
         # update countdown
         if countdown <= 0:
@@ -622,6 +599,7 @@ while run:
 
     # Update display
     pygame.display.update()
+
 
 # Quitter le jeu et désinitialiser tous les modules pygame
 pygame.mixer.music.stop()
