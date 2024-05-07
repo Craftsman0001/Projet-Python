@@ -220,7 +220,7 @@ def display_pause_menu():
 
 # Define the intro_screen function
 
-def  :
+def select_player_1() :
     selecting_player_1 = True
     main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
     screen.fill(BLACK_2)
