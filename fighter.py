@@ -26,12 +26,12 @@ class Fighter() :
         self.attack_cooldown = 0
         self.health = 100
         self.alive = True
+        self.mana = 0
         self.animation = self.load_images()
         self.ground_level = ground_level
         self.attack_start_time = 0
         self.attack_duration = 0
         self.apply_attack_damage = False
-
 
     def load_images(self) :
         # Extraction of the images from the spritesheet
@@ -44,7 +44,6 @@ class Fighter() :
                     temporary_image_list.append( pygame.transform.scale(temporary_image, (self.size * self.image_scale, self.size * self.image_scale)))
             animation_list.append(temporary_image_list)
         return animation_list
-
 
     def move(self, round_over, screen_width, screen_height, surface, enemy) :
         SPEED = 8 # constant
@@ -75,15 +74,15 @@ class Fighter() :
                         self.velocity_y = -30
                         self.jump = True 
                 # Attack
-                if keys[pygame.K_r] and self.third_attack == True:
+                if keys[pygame.K_r] and self.third_attack == True and self.attack_cooldown == 0:
                     self.attack_type = 7
                     self.attack_duration = self.timer_attack_3 
-                    self.attack(enemy) 
-                elif keys[pygame.K_e] :
+                    self.attack(enemy)
+                elif keys[pygame.K_e] and self.attack_cooldown == 0:
                     self.attack_type = 1
                     self.attack_duration = self.timer_attack_1 
                     self.attack(enemy) 
-                elif keys[pygame.K_a] :
+                elif keys[pygame.K_a] and self.attack_cooldown == 0:
                     self.attack_type = 2
                     self.attack_duration = self.timer_attack_2 
                     self.attack(enemy) 
@@ -102,15 +101,15 @@ class Fighter() :
                         self.velocity_y = -30
                         self.jump = True
                 # Attack
-                if keys[pygame.K_p] and self.third_attack == True:
+                if keys[pygame.K_p] and self.third_attack == True and self.attack_cooldown == 0:
                     self.attack_type = 7
                     self.attack_duration = self.timer_attack_3
                     self.attack(enemy)
-                elif keys[pygame.K_m]:
+                elif keys[pygame.K_m] and self.attack_cooldown == 0:
                     self.attack_type = 1
                     self.attack_duration = self.timer_attack_1
                     self.attack(enemy)
-                elif keys[pygame.K_l]:
+                elif keys[pygame.K_l] and self.attack_cooldown == 0:
                     self.attack_type = 2
                     self.attack_duration = self.timer_attack_2
                     self.attack(enemy)
@@ -159,7 +158,7 @@ class Fighter() :
             current_time = pygame.time.get_ticks()
             elapsed_time = current_time - self.attack_start_time
             if elapsed_time >= self.attack_duration :
-                enemy.health -= 10
+                enemy.health -= 5
                 self.apply_attack_damage = False
 
         # check if the fighter is dead
@@ -210,7 +209,7 @@ class Fighter() :
                         self.frame_index = 0
                         # Check if it's during a attack animation
                         self.attacking = False
-                        self.attack_cooldown = 20
+                        self.attack_cooldown = 50
                         self.update_fighter_action(0) # idle
                     # check if fighter took a hit
                     elif self.action == 6 :
@@ -218,7 +217,7 @@ class Fighter() :
                         self.hit = False
                         # check that if the player is in the middle of an attack it is stoppped
                         self.attacking = False
-                        self.attack_cooldown = 20
+                        self.attack_cooldown = 50
                         self.update_fighter_action(0) # idle
                     # Transition back to idle animation
                     else :
@@ -226,7 +225,9 @@ class Fighter() :
                 else :
                     # If the fighter is dead, keep the last frame of the death animation
                     self.frame_index = len(self.animation[self.action]) - 1
-
+        
+        if self.attack_cooldown > 0:
+            self.attack_cooldown -= 1
 
     def draw(self, surface) :
         # Get the current animation frame
@@ -239,7 +240,6 @@ class Fighter() :
         # Draw the flipped frame onto the surface
         ### pygame.draw.rect(surface, (255, 0, 0), self.rect)
         surface.blit(current_frame, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
-
 
     def attack(self, enemy) : ### def attack(self, surface, enemy) :
 
@@ -261,9 +261,9 @@ class Fighter() :
             if attacking_rect.colliderect(enemy.rect) :
                 enemy.hit = True
                 self.apply_attack_damage = True
+                self.add_mana()
 
             ### pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
-
 
     def update_fighter_action(self, new_action) :
         # check if the new action is different than the previous one
@@ -280,3 +280,8 @@ class Fighter() :
         self.rect.centery = y
         self.ground_level = 581
         self.health = 100
+        self.mana = 0
+
+    def add_mana(self) :
+        if self.mana < 50 :
+            self.mana += 10

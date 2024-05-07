@@ -1,4 +1,5 @@
 import pygame
+import sys
 from moviepy.editor import VideoFileClip
 from fighter import Fighter
 from FighterData import *
@@ -65,6 +66,7 @@ AQUAMARINE = (0, 255, 100)
 GREY = (128, 128, 128)
 GREY_2 = (93, 93, 93)
 GREY_3 = (50, 50, 50)
+VIOLET = (200, 0, 255)
 
 # defining game variables
 countdown = 4
@@ -81,8 +83,6 @@ player2_choice = None
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
-
-
 
 
 # function for displaying introduction video and wait for user to press space bar to continue
@@ -119,19 +119,32 @@ def reset_game():
     # Reset countdown timer
     last_count_update = pygame.time.get_ticks()
 
-
 # Function to draw fighter health bars
-def draw_health_bar(fighter, x, y):
-    ratio = fighter.health / 100
-    pygame.draw.rect(screen, BLACK, (x - 5, y - 5, 410, 40))
-    pygame.draw.rect(screen, BLUE, (x, y, 400, 30))
-    pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
+def draw_bar(fighter, x, y):
+    ratio_health = fighter.health / 100
+    ratio_mana = fighter.mana / 50
+    RECTANGLE_WIDTH = 400
+    RECTANGLE_HEIGHT = 30
+    pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10))
+    pygame.draw.rect(screen, BLUE, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT))
+
+    if fighter == fighter_1 :
+        pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
+        pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH / 2 + 10, RECTANGLE_HEIGHT + 10))
+        pygame.draw.rect(screen, WHITE, (x, y + 45, RECTANGLE_WIDTH / 2, RECTANGLE_HEIGHT))
+        pygame.draw.rect(screen, VIOLET, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
+    if fighter == fighter_2 :
+        pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
+        pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH / 2 - 5, y + 40, RECTANGLE_WIDTH / 2 + 10, RECTANGLE_HEIGHT + 10))
+        pygame.draw.rect(screen, WHITE, (x + RECTANGLE_WIDTH / 2, y + 45, RECTANGLE_WIDTH / 2, RECTANGLE_HEIGHT))
+        pygame.draw.rect(screen, VIOLET, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH / 2 * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
 
 
 # function to draw text
 def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
+
 def smooth_attack_animation(fighter_1, fighter_2):
     # Draw fighter
     if fighter_1.attacking == True:
@@ -153,7 +166,6 @@ def manage_music(action):
         # Arrêter la musique
         pygame.mixer.music.stop()
 
-
 # Define a function to display the pause menu
 def display_pause_menu():
     main_menu_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 40)
@@ -174,7 +186,7 @@ def display_pause_menu():
         for event in pygame.event.get() :
             if event.type == pygame.QUIT :
                 pygame.quit()
-
+                sys.exit()
 
             elif event.type == pygame.KEYDOWN :
                 if event.key == pygame.K_ESCAPE :  # Resume game on ESC key press
@@ -194,7 +206,6 @@ def display_pause_menu():
                     # Set flag to return to main menu
                     manage_music("stop")
                     return "exit"
-
 
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, BLACK_2, window_rect)
@@ -459,7 +470,7 @@ def intro_screen():
             if event.type == pygame.QUIT:
                 intro = False
                 pygame.quit()
-
+                sys.exit()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
@@ -476,7 +487,7 @@ def intro_screen():
                 elif exit_button.rect.collidepoint(mouse_position):
                     # Close the game window
                     pygame.quit()
-
+                    sys.exit()
 
         clock.tick(60)
 
@@ -540,12 +551,10 @@ while run:
         screen.blit(background_image, (0, 0))
 
         # Displaying the players stats
-        draw_health_bar(fighter_1, 20, 20)
-        draw_health_bar(fighter_2, 780, 20)
-        draw_text(" Player 1 : " + str(score[0]), score_font, BLACK, 10, 60)
-        draw_text(" Player 2 : " + str(score[1]), score_font, BLACK, 770, 60)
-
-
+        draw_bar(fighter_1, 20, 20)
+        draw_bar(fighter_2, 780, 20)
+        draw_text(" P1 : " + str(score[0]), score_font, BLACK, 430, 20)
+        draw_text(" P2 : " + str(score[1]), score_font, BLACK, 695, 20)
 
         # update countdown
         if countdown <= 0:
@@ -596,11 +605,11 @@ while run:
                 initialize_fighter_2(player2_choice)
                 initialize_fighter_1(player1_choice)
 
-
     # Update display
     pygame.display.update()
 
-
-# Quitter le jeu et désinitialiser tous les modules pygame
+# Exit the game and uninitialize all pygame modules
 pygame.mixer.music.stop()
 pygame.quit()
+sys.exit()
+
