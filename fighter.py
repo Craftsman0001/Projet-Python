@@ -278,4 +278,5 @@ class Fighter() :
     def reset(self, x, y):
         self.rect.centerx = x
         self.rect.centery = y
+        self.ground_level = 581
         self.health = 100

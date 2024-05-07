@@ -65,7 +65,7 @@ def load_spritesheets():
         "martial_hero": [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, fall_martial_hero_sprite_sheet,  attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet],
         "oni_samurai": [idle_oni_samurai_sprite_sheet, run_oni_samurai_sprite_sheet, jump_oni_samurai_sprite_sheet, fall_oni_samurai_sprite_sheet,  attack1_oni_samurai_sprite_sheet, attack2_oni_samurai_sprite_sheet, hit_oni_samurai_sprite_sheet, death_oni_samurai_sprite_sheet],
         "samurai": [idle_samurai_sprite_sheet, run_samurai_sprite_sheet, jump_samurai_sprite_sheet, fall_samurai_sprite_sheet, attack1_samurai_sprite_sheet, attack2_samurai_sprite_sheet, hit_samurai_sprite_sheet, death_samurai_sprite_sheet],
-        "Female Warrior" : [idle_Female_Warrior_sprite_sheet, run_Female_Warrior_sprite_sheet, jump_Female_Warrior_sprite_sheet, fall_Female_Warrior_sprite_sheet, attack1_Female_Warrior_sprite_sheet, attack2_Female_Warrior_sprite_sheet, hit_Female_Warrior_sprite_sheet, death_Female_Warrior_sprite_sheet]
+        "Female Warrior": [idle_Female_Warrior_sprite_sheet, run_Female_Warrior_sprite_sheet, jump_Female_Warrior_sprite_sheet, fall_Female_Warrior_sprite_sheet, attack1_Female_Warrior_sprite_sheet, attack2_Female_Warrior_sprite_sheet, hit_Female_Warrior_sprite_sheet, death_Female_Warrior_sprite_sheet]
     }
 
 def load_animation_steps():
@@ -133,7 +133,7 @@ def load_animation_steps():
         "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, fall_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps],
         "oni_samurai": [idle_oni_samurai_animation_steps, run_oni_samurai_animation_steps, jump_oni_samurai_animation_steps, fall_oni_samurai_animation_steps, attack1_oni_samurai_animation_steps, attack2_oni_samurai_animation_steps, hit_oni_samurai_animation_steps, death_oni_samurai_animation_steps],
         "samurai": [idle_samurai_animation_steps, run_samurai_animation_steps, jump_samurai_animation_steps, fall_samurai_animation_steps, attack1_samurai_animation_steps, attack2_samurai_animation_steps, hit_samurai_animation_steps, death_samurai_animation_steps],
-        "Female Warrior" : [idle_Female_Warrior_animation_steps, run_Female_Warrior_animation_steps, jump_Female_Warrior_animation_steps, fall_Female_Warrior_animation_steps, attack1_Female_Warrior_animation_steps, attack2_Female_Warrior_animation_steps, hit_Female_Warrior_animation_steps, death_Female_Warrior_animation_steps]
+        "Female Warrior": [idle_Female_Warrior_animation_steps, run_Female_Warrior_animation_steps, jump_Female_Warrior_animation_steps, fall_Female_Warrior_animation_steps, attack1_Female_Warrior_animation_steps, attack2_Female_Warrior_animation_steps, hit_Female_Warrior_animation_steps, death_Female_Warrior_animation_steps]
     }
 
 def fighter_variables() :
@@ -186,5 +186,5 @@ def fighter_variables() :
         "martial_hero" : [martial_hero_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
         "oni_samurai" : [oni_samurai_size, oni_samurai_scale, oni_samurai_offset, oni_samurai_timer_attack_1, oni_samurai_timer_attack_2, oni_samurai_timer_attack_3],
         "samurai": [samurai_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
-        "Female Warrior" : [Female_Warrior_size, Female_Warrior_scale, Female_Warrior_offset, Female_Warrior_timer_attack_1, Female_Warrior_timer_attack_2, Female_Warrior_timer_attack_3]
+        "Female Warrior": [Female_Warrior_size, Female_Warrior_scale, Female_Warrior_offset, Female_Warrior_timer_attack_1, Female_Warrior_timer_attack_2, Female_Warrior_timer_attack_3]
     }
