@@ -66,7 +66,7 @@ AQUAMARINE = (0, 255, 100)
 GREY = (128, 128, 128)
 GREY_2 = (93, 93, 93)
 GREY_3 = (50, 50, 50)
-VIOLET = (200, 0, 255)
+PURPLE = (200, 0, 255)
 
 # defining game variables
 countdown = 4
@@ -106,7 +106,6 @@ def display_intro_video():
     # wait a certain time after the end of the video
     pygame.time.wait(100)
 
-
 def reset_game():
     global score, countdown, round_over, fighter_1, fighter_2, last_count_update
 
@@ -118,27 +117,6 @@ def reset_game():
 
     # Reset countdown timer
     last_count_update = pygame.time.get_ticks()
-
-# Function to draw fighter health bars
-def draw_bar(fighter, x, y):
-    ratio_health = fighter.health / 100
-    ratio_mana = fighter.mana / 50
-    RECTANGLE_WIDTH = 400
-    RECTANGLE_HEIGHT = 30
-    pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10))
-    pygame.draw.rect(screen, BLUE, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT))
-
-    if fighter == fighter_1 :
-        pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
-        pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH / 2 + 10, RECTANGLE_HEIGHT + 10))
-        pygame.draw.rect(screen, WHITE, (x, y + 45, RECTANGLE_WIDTH / 2, RECTANGLE_HEIGHT))
-        pygame.draw.rect(screen, VIOLET, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
-    if fighter == fighter_2 :
-        pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
-        pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH / 2 - 5, y + 40, RECTANGLE_WIDTH / 2 + 10, RECTANGLE_HEIGHT + 10))
-        pygame.draw.rect(screen, WHITE, (x + RECTANGLE_WIDTH / 2, y + 45, RECTANGLE_WIDTH / 2, RECTANGLE_HEIGHT))
-        pygame.draw.rect(screen, VIOLET, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH / 2 * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
-
 
 # function to draw text
 def draw_text(text, font, text_color, x, y):
@@ -228,8 +206,6 @@ def display_pause_menu():
         pygame.display.update()
 
     return None
-
-# Define the intro_screen function
 
 def select_player_1() :
     selecting_player_1 = True
@@ -340,7 +316,6 @@ def initialize_fighter_1(player1_choice):
     global fighter_1
     fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player1_data, player1_sprite_sheet, player1_animation_steps)
 
-
 def select_player_2():
     selecting_player_2 = True
     main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
@@ -446,6 +421,7 @@ def initialize_fighter_2(player2_choice):
     global fighter_2
     fighter_2 = Fighter(2, 925, 400, 581, False, THIRD_ATTACK, player2_data, player2_sprite_sheet, player2_animation_steps)
 
+# Define the intro_screen function
 def intro_screen():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -551,8 +527,9 @@ while run:
         screen.blit(background_image, (0, 0))
 
         # Displaying the players stats
-        draw_bar(fighter_1, 20, 20)
-        draw_bar(fighter_2, 780, 20)
+        fighter_1.update_health(fighter_2, 20, 20, screen)
+        fighter_2.update_health(fighter_1, 780, 20, screen)
+
         draw_text(" P1 : " + str(score[0]), score_font, BLACK, 430, 20)
         draw_text(" P2 : " + str(score[1]), score_font, BLACK, 695, 20)
 
