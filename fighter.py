@@ -5,12 +5,13 @@ class Fighter() :
         self.player = player
         self.sprite_sheets = sprite_sheets
         self.animation_steps = animation_steps
-        self.size = data[0]
-        self.image_scale = data[1]
-        self.offset = data[2]
-        self.timer_attack_1 = data[3]
-        self.timer_attack_2 = data[4]
-        self.timer_attack_3 = data[5]
+        self.x_size = data[0]
+        self.y_size = data[1]
+        self.image_scale = data[2]
+        self.offset = data[3]
+        self.timer_attack_1 = data[4]
+        self.timer_attack_2 = data[5]
+        self.timer_attack_3 = data[6]
         self.flip = False
         self.action = 0 # 0: idle, 1: run, 2: jump, 3: attack1, 4: attack2, 5: hit, 6: death
         self.frame_index = 0
@@ -33,7 +34,7 @@ class Fighter() :
         self.attack_duration = 0
         self.apply_attack_damage = False
         self.damage_taken = 0
-        self.damage_duration = 3000  # milliseconds
+        self.damage_duration = 2000  # milliseconds
         self.last_update_time = pygame.time.get_ticks()
 
 
@@ -44,8 +45,8 @@ class Fighter() :
             temporary_image_list = []
             for step in steps :
                 for x in range(step) :
-                    temporary_image = sheet.subsurface(x * self.size, 0, self.size, self.size)
-                    temporary_image_list.append( pygame.transform.scale(temporary_image, (self.size * self.image_scale, self.size * self.image_scale)))
+                    temporary_image = sheet.subsurface(x * self.x_size, 0, self.x_size, self.y_size)
+                    temporary_image_list.append( pygame.transform.scale(temporary_image, (self.x_size * self.image_scale, self.y_size * self.image_scale)))
             animation_list.append(temporary_image_list)
         return animation_list
 
@@ -206,7 +207,7 @@ class Fighter() :
                         self.frame_index = 0
                         # Check if it's during a attack animation
                         self.attacking = False
-                        self.attack_cooldown = 50
+                        self.attack_cooldown = 30
                         self.update_fighter_action(0) # idle
                     # check if fighter took a hit
                     elif self.action == 6 :
@@ -235,7 +236,7 @@ class Fighter() :
             current_frame = pygame.transform.flip(current_frame, self.flip, False)
 
         # Draw the flipped frame onto the surface
-        ### pygame.draw.rect(surface, (255, 0, 0), self.rect)
+        pygame.draw.rect(surface, (255, 0, 0), self.rect)
         surface.blit(current_frame, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
 
     def attack(self, enemy) : ### def attack(self, surface, enemy) :
@@ -352,7 +353,10 @@ class Fighter() :
 
             if self.damage_duration <= 0:
                 self.damage_taken = 0
-                self.damage_duration = 3000  # Reset duration
+                self.damage_duration = 2000  # Reset duration
+            if self.health == 0 :
+                self.damage_taken = 0
+                self.damage_duration = 0
 
         # Reset the last update time
         self.last_update_time = pygame.time.get_ticks()
@@ -362,5 +366,5 @@ class Fighter() :
             elapsed_time = current_time - self.attack_start_time
             if elapsed_time >= self.attack_duration :
                 enemy.health -= 5
-                enemy.damage_taken +=5
+                enemy.damage_taken += 5
                 self.apply_attack_damage = False

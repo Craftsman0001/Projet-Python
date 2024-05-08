@@ -138,53 +138,59 @@ def load_animation_steps():
 
 def fighter_variables() :
     #function that has the data for each fighter
-    fantasy_warrior_size = 162
+    fantasy_warrior_x_size = 162
+    fantasy_warrior_y_size = 162
     fantasy_warrior_scale = 4
     fantasy_warrior_offset = [72, 56]  
     fantasy_warrior_timer_attack_1 = 350
     fantasy_warrior_timer_attack_2 = 200
     fantasy_warrior_timer_attack_3 = 450
 
-    wizard_size = 250
+    wizard_x_size = 250
+    wizard_y_size = 250
     wizard_scale = 3
     wizard_offset = [112, 107]
     wizard_timer_attack_1 = 400
     wizard_timer_attack_2 = 400
     wizard_timer_attack_3 = 0
 
-    martial_hero_size = 126
+    martial_hero_x_size = 126
+    martial_hero_y_size = 126
     martial_hero_scale = 3.5
     martial_hero_offset = [50, 30.5]
     martial_hero_timer_attack_1 = 350
     martial_hero_timer_attack_2 = 200
     martial_hero_timer_attack_3 = 550
 
-    oni_samurai_size = 200
+    oni_samurai_x_size = 200
+    oni_samurai_y_size = 200
     oni_samurai_scale = 3.3
     oni_samurai_offset = [85, 73.5]
     oni_samurai_timer_attack_1 = 200
     oni_samurai_timer_attack_2 = 200
     oni_samurai_timer_attack_3 = 0
 
-    samurai_size = 200
+    samurai_x_size = 200
+    samurai_y_size = 200
     samurai_scale = 3.3
     samurai_offset = [88, 67.5]
     samurai_timer_attack_1 = 280
     samurai_timer_attack_2 = 300
     samurai_timer_attack_3 = 0
 
-    Female_Warrior_size = 200
-    Female_Warrior_scale = 3.3
-    Female_Warrior_offset = [88, 67.5]
+    Female_Warrior_x_size = 64
+    Female_Warrior_y_size = 44
+    Female_Warrior_scale = 4
+    Female_Warrior_offset = [17, -2]
     Female_Warrior_timer_attack_1 = 200
     Female_Warrior_timer_attack_2 = 200
     Female_Warrior_timer_attack_3 = 0
 
     return {
-        "fantasy_warrior" : [fantasy_warrior_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
-        "wizard" : [wizard_size, wizard_scale, wizard_offset, wizard_timer_attack_1, wizard_timer_attack_2, wizard_timer_attack_3],
-        "martial_hero" : [martial_hero_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
-        "oni_samurai" : [oni_samurai_size, oni_samurai_scale, oni_samurai_offset, oni_samurai_timer_attack_1, oni_samurai_timer_attack_2, oni_samurai_timer_attack_3],
-        "samurai": [samurai_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
-        "Female Warrior": [Female_Warrior_size, Female_Warrior_scale, Female_Warrior_offset, Female_Warrior_timer_attack_1, Female_Warrior_timer_attack_2, Female_Warrior_timer_attack_3]
+        "fantasy_warrior" : [fantasy_warrior_x_size, fantasy_warrior_y_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
+        "wizard" : [wizard_x_size, wizard_y_size, wizard_scale, wizard_offset, wizard_timer_attack_1, wizard_timer_attack_2, wizard_timer_attack_3],
+        "martial_hero" : [martial_hero_x_size, martial_hero_y_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
+        "oni_samurai" : [oni_samurai_x_size, oni_samurai_y_size, oni_samurai_scale, oni_samurai_offset, oni_samurai_timer_attack_1, oni_samurai_timer_attack_2, oni_samurai_timer_attack_3],
+        "samurai": [samurai_x_size, samurai_y_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
+        "Female Warrior": [Female_Warrior_x_size, Female_Warrior_y_size, Female_Warrior_scale, Female_Warrior_offset, Female_Warrior_timer_attack_1, Female_Warrior_timer_attack_2, Female_Warrior_timer_attack_3]
     }
