@@ -106,6 +106,7 @@ def display_intro_video():
     # wait a certain time after the end of the video
     pygame.time.wait(100)
 
+
 def reset_game():
     global score, countdown, round_over, fighter_1, fighter_2, last_count_update
 
@@ -122,7 +123,6 @@ def reset_game():
 def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
-
 def smooth_attack_animation(fighter_1, fighter_2):
     # Draw fighter
     if fighter_1.attacking == True:
@@ -136,13 +136,18 @@ def smooth_attack_animation(fighter_1, fighter_2):
         fighter_1.draw(screen)
 
 def manage_music(action):
-    if action == "play":
+    if action == "play1":
         # Charger et jouer la musique en boucle indéfiniment (-1)
         pygame.mixer.music.load("Assets/musics/music_game_2.mp3")
+        pygame.mixer.music.play(-1)
+    if action == "play2":
+        # Charger et jouer la musique en boucle indéfiniment (-1)
+        pygame.mixer.music.load("Assets/musics/music_game_1.mp3")
         pygame.mixer.music.play(-1)
     elif action == "stop":
         # Arrêter la musique
         pygame.mixer.music.stop()
+
 
 # Define a function to display the pause menu
 def display_pause_menu():
@@ -177,13 +182,15 @@ def display_pause_menu():
 
                 elif restart_button.rect.collidepoint(mouse_position):
                     manage_music("stop")
-                    manage_music("play")
+                    manage_music("play1")
                     return "restart"
 
                 elif exit_button.rect.collidepoint(mouse_position) :
                     # Set flag to return to main menu
                     manage_music("stop")
+                    manage_music("play2")
                     return "exit"
+
 
         # Draw a pause window/rectangle
         pygame.draw.rect(screen, BLACK_2, window_rect)
@@ -315,6 +322,7 @@ def initialize_fighter_1(player1_choice):
 
     global fighter_1
     fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player1_data, player1_sprite_sheet, player1_animation_steps)
+
 
 def select_player_2():
     selecting_player_2 = True
@@ -459,11 +467,12 @@ def intro_screen():
 
                     initialize_fighter_1(player1_choice)
                     initialize_fighter_2(player2_choice)
-
+                    manage_music("play1")
                 elif exit_button.rect.collidepoint(mouse_position):
                     # Close the game window
                     pygame.quit()
                     sys.exit()
+
 
         clock.tick(60)
 
@@ -493,7 +502,7 @@ display_intro_video()
 
 # Call the intro_screen function
 intro_screen()
-manage_music("play")
+manage_music("play2")
 # Game Loop
 clock = pygame.time.Clock()  # Setting up framerate
 run = True
@@ -581,6 +590,7 @@ while run:
                 countdown = 4
                 initialize_fighter_2(player2_choice)
                 initialize_fighter_1(player1_choice)
+
 
     # Update display
     pygame.display.update()
