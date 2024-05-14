@@ -140,10 +140,12 @@ def manage_music(action):
         # Charger et jouer la musique en boucle indéfiniment (-1)
         pygame.mixer.music.load("Assets/musics/music_game_2.mp3")
         pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.45)
     if action == "play2":
         # Charger et jouer la musique en boucle indéfiniment (-1)
         pygame.mixer.music.load("Assets/musics/music_game_1.mp3")
         pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.45)
     elif action == "stop":
         # Arrêter la musique
         pygame.mixer.music.stop()
