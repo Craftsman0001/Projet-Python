@@ -432,7 +432,7 @@ def initialize_fighter_2(player2_choice):
 # Define the intro_screen function
 def intro_screen():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
+    manage_music("play2")
     # Load background image and scale it to fit the screen
     original_background_image = pygame.image.load("Assets/BackGrounds/Background_start_menu2.png")
     background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -450,6 +450,7 @@ def intro_screen():
     clock = pygame.time.Clock()
     intro = True
     while intro:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 intro = False
@@ -502,7 +503,7 @@ display_intro_video()
 
 # Call the intro_screen function
 intro_screen()
-manage_music("play2")
+
 # Game Loop
 clock = pygame.time.Clock()  # Setting up framerate
 run = True
