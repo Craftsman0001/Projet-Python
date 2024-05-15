@@ -106,7 +106,6 @@ def display_intro_video():
     # wait a certain time after the end of the video
     pygame.time.wait(100)
 
-
 def reset_game():
     global score, countdown, round_over, fighter_1, fighter_2, last_count_update
 
@@ -123,6 +122,7 @@ def reset_game():
 def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
+
 def smooth_attack_animation(fighter_1, fighter_2):
     # Draw fighter
     if fighter_1.attacking == True:
@@ -150,7 +150,6 @@ def manage_music(action):
         # Arrêter la musique
         pygame.mixer.music.stop()
 
-
 # Define a function to display the pause menu
 def display_pause_menu():
     main_menu_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 40)
@@ -164,7 +163,7 @@ def display_pause_menu():
     restart_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2,
                             AZURE_2, "Restart", main_menu_font, BLACK, screen)
     exit_button = Button(SCREEN_WIDTH // 3, SCREEN_HEIGHT // 2 + 100, SCREEN_WIDTH // 3, SCREEN_HEIGHT // 8, GREY_2,
-                         AZURE_2, "Exit Game", main_menu_font, BLACK, screen)
+                         AZURE_2, "Main Menu", main_menu_font, BLACK, screen)
 
     game_paused = True
     while game_paused == True :
@@ -191,7 +190,7 @@ def display_pause_menu():
                     # Set flag to return to main menu
                     manage_music("stop")
                     manage_music("play2")
-                    return "exit"
+                    return "Main menu"
 
 
         # Draw a pause window/rectangle
@@ -324,7 +323,6 @@ def initialize_fighter_1(player1_choice):
 
     global fighter_1
     fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player1_data, player1_sprite_sheet, player1_animation_steps)
-
 
 def select_player_2():
     selecting_player_2 = True
@@ -527,7 +525,7 @@ while run:
         elif pause_action == "restart":
             reset_game()
             game_paused = False
-        elif pause_action == "exit":
+        elif pause_action == "Main menu":
             intro_screen()
             game_paused = False
 
