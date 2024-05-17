@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class Fighter() :
     def __init__(self, player, x, y, ground_level, flip, third_attack, data, sprite_sheets, animation_steps) :
@@ -25,6 +26,7 @@ class Fighter() :
         self.third_attack = third_attack
         self.attack_type = 0
         self.attack_cooldown = 0
+        self.bonus_damage = 0
         self.health = 100
         self.alive = True
         self.mana = 0
@@ -91,6 +93,11 @@ class Fighter() :
                     self.attack_type = 2
                     self.attack_duration = self.timer_attack_2 
                     self.attack(enemy) 
+
+                # Mana
+                if keys[pygame.K_t] and self.mana == 50 :
+                    self.bonus_damage = 10
+                    self.mana = 0
                 
             # check the player 2 controls
             if self.player == 2 :
@@ -118,6 +125,11 @@ class Fighter() :
                     self.attack_type = 2
                     self.attack_duration = self.timer_attack_2
                     self.attack(enemy)
+
+                # Mana
+                if keys[pygame.K_o] and self.mana == 50 :
+                    self.bonus_damage = 10
+                    self.mana = 0
 
         # Ensure fighters face each other
         if enemy.rect.centerx > self.rect.centerx :
@@ -259,7 +271,7 @@ class Fighter() :
             if attacking_rect.colliderect(enemy.rect) :
                 enemy.hit = True
                 self.apply_attack_damage = True
-                self.add_mana()
+                self.add_mana(10)
 
             ### pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
@@ -280,9 +292,11 @@ class Fighter() :
         self.health = 100
         self.mana = 0
 
-    def add_mana(self) :
-        if self.mana < 50 :
-            self.mana += 10
+    def add_mana(self, add) :
+        if self.mana + add < 50 : 
+            self.mana += add
+        elif self.mana + add > 50 :
+            self.mana = 50
 
     # Function to draw fighter health bars
     def update_health(self, enemy, x, y, screen):
@@ -314,15 +328,20 @@ class Fighter() :
         if self.player == 2 :
             pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
 
+        RECTANGLE_WIDTH_DIVISION = math.ceil(RECTANGLE_WIDTH / 2)
+
         # Draw mana bar based on fighter
         if self.player == 1 :
-            pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH / 2 + 10, RECTANGLE_HEIGHT + 10))
-            pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH / 2, RECTANGLE_HEIGHT))
+            pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10))
+            pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
             pygame.draw.rect(screen, PURPLE, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
         if self.player == 2 :
-            pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH / 2 - 5, y + 40, RECTANGLE_WIDTH / 2 + 10, RECTANGLE_HEIGHT + 10))
-            pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH / 2, y + 45, RECTANGLE_WIDTH / 2, RECTANGLE_HEIGHT))
-            pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH / 2 * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
+            pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH_DIVISION - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10))
+            if self.mana < 50 :
+                pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION -1, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
+            else :
+                pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
+            pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
 
         # Calculate the width of the damage rectangle based on damage taken
         damage_width = RECTANGLE_WIDTH * (self.damage_taken / 100)
@@ -359,6 +378,8 @@ class Fighter() :
             current_time = pygame.time.get_ticks()
             elapsed_time = current_time - self.attack_start_time
             if elapsed_time >= self.attack_duration :
-                enemy.health -= 5
-                enemy.damage_taken += 5
+                enemy.health = enemy.health -5 - self.bonus_damage
+                enemy.damage_taken = enemy.damage_taken +5 + self.bonus_damage
                 self.apply_attack_damage = False
+                self.bonus_damage = 0
+                

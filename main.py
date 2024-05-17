@@ -570,6 +570,10 @@ while run:
         fighter_2.update(fighter_1)
         fighter_1.update(fighter_2)
 
+        if round_over == False :
+            fighter_1.add_mana(0.01)
+            fighter_2.add_mana(0.01)
+
         smooth_attack_animation(fighter_1, fighter_2)
 
         # check if player was defeated
