@@ -32,7 +32,7 @@ wizard_sprite_sheet = sprite_sheets["wizard"]
 martial_hero_sprite_sheets = sprite_sheets["martial_hero"]
 oni_samurai_sprite_sheets = sprite_sheets["oni_samurai"]
 samurai_sprite_sheets = sprite_sheets["samurai"]
-Female_Warrior_sprite_sheets = sprite_sheets["Female Warrior"]
+Squire_sprite_sheets = sprite_sheets["Squire"]
 
 # Extract animation steps for each fighter
 fantasy_warrior_animation_steps = animation_steps["fantasy_warrior"]
@@ -40,7 +40,7 @@ wizard_animation_steps = animation_steps["wizard"]
 martial_hero_animation_steps = animation_steps["martial_hero"]
 oni_samurai_animation_steps = animation_steps["oni_samurai"]
 samurai_animation_steps = animation_steps["samurai"]
-Female_Warrior_animation_steps = animation_steps["Female Warrior"]
+Squire_animation_steps = animation_steps["Squire"]
 
 # defining fighter variables
 fighter_data = fighter_variables()
@@ -50,7 +50,7 @@ wizard_data = fighter_data["wizard"]
 martial_hero_data = fighter_data["martial_hero"]
 oni_samurai_data = fighter_data["oni_samurai"]
 samurai_data = fighter_data["samurai"]
-Female_Warrior_data = fighter_data["Female Warrior"]
+Squire_data = fighter_data["Squire"]
 
 # Colors
 BLUE = (0, 0, 255)
@@ -231,8 +231,8 @@ def select_player_1() :
     selected_samurai = pygame.transform.scale(selected_samurai, (200, 200))
     selected_MH = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/selected.png")
     selected_MH = pygame.transform.scale(selected_MH, (200, 200))
-    selected_Female = pygame.image.load("Assets/Fighters/Female Warrior/selected.png")
-    selected_Female = pygame.transform.scale(selected_Female, (200, 200))
+    selected_Squire = pygame.image.load("Assets/Fighters/Squire/Sprites/selected.png")
+    selected_Squire = pygame.transform.scale(selected_Squire, (200, 200))
 
     # Create instances of the Button class for each image
     selected_FW_button = Button(50, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
@@ -240,13 +240,13 @@ def select_player_1() :
     selected_Samurai_button = Button(500, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
     selected_samurai_button = Button(725, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
     selected_MH_button = Button(950, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
-    selected_Female_button = Button(175, 333,200,200,BLACK_2,AZURE_2, "", None, None, screen )
+    selected_Squire_button = Button(175, 333, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
 
 
 
     # List of selected images and their corresponding buttons
-    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai, selected_MH, selected_Female]
-    selected_buttons = [selected_FW_button, selected_wizard_button, selected_Samurai_button, selected_samurai_button, selected_MH_button, selected_Female_button]
+    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai, selected_MH, selected_Squire]
+    selected_buttons = [selected_FW_button, selected_wizard_button, selected_Samurai_button, selected_samurai_button, selected_MH_button, selected_Squire_button]
 
     # select loop
 
@@ -270,7 +270,8 @@ def select_player_1() :
                         elif i == 4:
                             return "martial hero"
                         elif i == 5:
-                            return "Female Warrior"
+                            return "Squire"
+
 
         # Draw selected images and buttons on the screen
         screen.fill(BLACK_2)
@@ -314,10 +315,11 @@ def initialize_fighter_1(player1_choice):
         player1_animation_steps = martial_hero_animation_steps
         THIRD_ATTACK = True  # Set to True for martial hero
 
-    elif player1_choice == "Female Warrior":
-        player1_data = Female_Warrior_data
-        player1_sprite_sheet = Female_Warrior_sprite_sheets
-        player1_animation_steps = Female_Warrior_animation_steps
+    elif player1_choice == "Squire":
+        player1_data = Squire_data
+        player1_sprite_sheet = Squire_sprite_sheets
+        player1_animation_steps = Squire_animation_steps
+        THIRD_ATTACK = True
 
 
 
@@ -340,8 +342,8 @@ def select_player_2():
     selected_samurai = pygame.transform.scale(selected_samurai, (200, 200))
     selected_MH = pygame.image.load("Assets/Fighters/Martial Hero/Sprites/selected.png")
     selected_MH = pygame.transform.scale(selected_MH, (200, 200))
-    selected_Female = pygame.image.load("Assets/Fighters/Female Warrior/selected.png")
-    selected_Female = pygame.transform.scale(selected_Female, (200, 200))
+    selected_Squire = pygame.image.load("Assets/Fighters/Squire/Sprites/selected.png")
+    selected_Squire = pygame.transform.scale(selected_Squire, (200, 200))
 
     # Create instances of the Button class for each image
     selected_FW_button = Button(50, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
@@ -349,11 +351,11 @@ def select_player_2():
     selected_Samurai_button = Button(500, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
     selected_samurai_button = Button(725, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
     selected_MH_button = Button(950, 100, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
-    selected_Female_button = Button(175, 333, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
+    selected_Squire_button = Button(175, 333, 200, 200, BLACK_2, AZURE_2, "", None, None, screen)
 
     # List of selected images and their corresponding buttons
-    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai, selected_MH, selected_Female]
-    selected_buttons = [selected_FW_button, selected_wizard_button, selected_Samurai_button, selected_samurai_button, selected_MH_button, selected_Female_button]
+    selected_images = [selected_FW, selected_wizard, selected_Samurai, selected_samurai, selected_MH, selected_Squire]
+    selected_buttons = [selected_FW_button, selected_wizard_button, selected_Samurai_button, selected_samurai_button, selected_MH_button, selected_Squire_button]
 
     # selected loop
     while selecting_player_2:
@@ -376,7 +378,7 @@ def select_player_2():
                         elif j == 4:
                             return "martial hero"
                         elif j == 5:
-                            return "Female Warrior"
+                            return "Squire"
 
         # Draw selected images and buttons on the screen
         screen.fill(BLACK_2)
@@ -420,10 +422,11 @@ def initialize_fighter_2(player2_choice):
         player2_animation_steps = martial_hero_animation_steps
         THIRD_ATTACK = True
 
-    elif player2_choice == "Female Warrior":
-        player2_data = Female_Warrior_data
-        player2_sprite_sheet = Female_Warrior_sprite_sheets
-        player2_animation_steps = Female_Warrior_animation_steps
+    elif player2_choice == "Squire":
+        player2_data = Squire_data
+        player2_sprite_sheet = Squire_sprite_sheets
+        player2_animation_steps = Squire_animation_steps
+        THIRD_ATTACK = True
 
 
     global fighter_2
