@@ -49,14 +49,16 @@ def load_spritesheets():
     hit_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Samurai/Sprites/Take Hit 2.png")
     death_samurai_sprite_sheet = pygame.image.load("Assets/Fighters/Samurai/Sprites/Death.png")
 
-    idle_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/Idle.png")
-    run_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/Run.png")
-    jump_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/Jump.png")
-    fall_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/Fall.png")
-    attack1_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/Attack1.png")
-    attack2_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/DashAttack.png")
-    hit_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/HitEffect.png")
-    death_Female_Warrior_sprite_sheet = pygame.image.load("Assets/Fighters/Female Warrior/DeathEffect.png")
+
+    idle_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Idle.png")
+    run_Squire_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Run.png")
+    jump_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Jump.png")
+    fall_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Fall.png")
+    attack1_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Attack1.png")
+    attack2_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Attack3.png")
+    attack3_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Attack4.png")
+    hit_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Take Hit.png")
+    death_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Death.png")
 
 
     return {
@@ -65,7 +67,7 @@ def load_spritesheets():
         "martial_hero": [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, fall_martial_hero_sprite_sheet,  attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet],
         "oni_samurai": [idle_oni_samurai_sprite_sheet, run_oni_samurai_sprite_sheet, jump_oni_samurai_sprite_sheet, fall_oni_samurai_sprite_sheet,  attack1_oni_samurai_sprite_sheet, attack2_oni_samurai_sprite_sheet, hit_oni_samurai_sprite_sheet, death_oni_samurai_sprite_sheet],
         "samurai": [idle_samurai_sprite_sheet, run_samurai_sprite_sheet, jump_samurai_sprite_sheet, fall_samurai_sprite_sheet, attack1_samurai_sprite_sheet, attack2_samurai_sprite_sheet, hit_samurai_sprite_sheet, death_samurai_sprite_sheet],
-        "Female Warrior": [idle_Female_Warrior_sprite_sheet, run_Female_Warrior_sprite_sheet, jump_Female_Warrior_sprite_sheet, fall_Female_Warrior_sprite_sheet, attack1_Female_Warrior_sprite_sheet, attack2_Female_Warrior_sprite_sheet, hit_Female_Warrior_sprite_sheet, death_Female_Warrior_sprite_sheet]
+        "Squire" :[idle_Squire_sprite_sheet, run_Squire_sheet, jump_Squire_sprite_sheet, fall_Squire_sprite_sheet, attack1_Squire_sprite_sheet, attack2_Squire_sprite_sheet, attack3_Squire_sprite_sheet,hit_Squire_sprite_sheet, death_Squire_sprite_sheet ]
     }
 
 def load_animation_steps():
@@ -117,15 +119,16 @@ def load_animation_steps():
     hit_samurai_animation_steps = [4]
     death_samurai_animation_steps = [6]
 
-    idle_Female_Warrior_animation_steps = [6]
-    run_Female_Warrior_animation_steps = [8]
-    jump_Female_Warrior_animation_steps = [3]
-    fall_Female_Warrior_animation_steps = [3]
-    attack1_Female_Warrior_animation_steps = [12]
-    attack2_Female_Warrior_animation_steps = [10]
-    hit_Female_Warrior_animation_steps = [4]
-    death_Female_Warrior_animation_steps = [11]
 
+    idle_Squire_animation_steps = [8]
+    run_Squire_animation_steps = [8]
+    jump_Squire_animation_steps = [2]
+    fall_Squire_animation_steps = [2]
+    attack1_Squire_animation_steps = [4]
+    attack2_Squire_animation_steps = [4]
+    attack3_Squire_animation_steps = [4]
+    hit_Squire_animation_steps = [3]
+    death_Squire_animation_steps = [9]
 
     return {
         "fantasy_warrior": [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, fall_fantasy_warrior_animation_steps,  attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps, attack3_fantasy_warrior_animation_steps],
@@ -133,7 +136,7 @@ def load_animation_steps():
         "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, fall_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps],
         "oni_samurai": [idle_oni_samurai_animation_steps, run_oni_samurai_animation_steps, jump_oni_samurai_animation_steps, fall_oni_samurai_animation_steps, attack1_oni_samurai_animation_steps, attack2_oni_samurai_animation_steps, hit_oni_samurai_animation_steps, death_oni_samurai_animation_steps],
         "samurai": [idle_samurai_animation_steps, run_samurai_animation_steps, jump_samurai_animation_steps, fall_samurai_animation_steps, attack1_samurai_animation_steps, attack2_samurai_animation_steps, hit_samurai_animation_steps, death_samurai_animation_steps],
-        "Female Warrior": [idle_Female_Warrior_animation_steps, run_Female_Warrior_animation_steps, jump_Female_Warrior_animation_steps, fall_Female_Warrior_animation_steps, attack1_Female_Warrior_animation_steps, attack2_Female_Warrior_animation_steps, hit_Female_Warrior_animation_steps, death_Female_Warrior_animation_steps]
+        "Squire" : [idle_Squire_animation_steps, run_Squire_animation_steps, jump_Squire_animation_steps, fall_Squire_animation_steps, attack1_Squire_animation_steps, attack2_Squire_animation_steps, attack3_Squire_animation_steps,  hit_Squire_animation_steps, death_Squire_animation_steps]
     }
 
 def fighter_variables() :
@@ -178,13 +181,14 @@ def fighter_variables() :
     samurai_timer_attack_2 = 300
     samurai_timer_attack_3 = 0
 
-    Female_Warrior_x_size = 64
-    Female_Warrior_y_size = 44
-    Female_Warrior_scale = 4
-    Female_Warrior_offset = [17, -2]
-    Female_Warrior_timer_attack_1 = 200
-    Female_Warrior_timer_attack_2 = 200
-    Female_Warrior_timer_attack_3 = 0
+
+    Squire_x_size = 150
+    Squire_y_size = 150
+    Squire_scale = 4
+    Squire_offset = [17, 50]
+    Squire_timer_attack_1 = 200
+    Squire_timer_attack_2 = 200
+    Squire_timer_attack_3 = 200
 
     return {
         "fantasy_warrior" : [fantasy_warrior_x_size, fantasy_warrior_y_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
@@ -192,5 +196,5 @@ def fighter_variables() :
         "martial_hero" : [martial_hero_x_size, martial_hero_y_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
         "oni_samurai" : [oni_samurai_x_size, oni_samurai_y_size, oni_samurai_scale, oni_samurai_offset, oni_samurai_timer_attack_1, oni_samurai_timer_attack_2, oni_samurai_timer_attack_3],
         "samurai": [samurai_x_size, samurai_y_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
-        "Female Warrior": [Female_Warrior_x_size, Female_Warrior_y_size, Female_Warrior_scale, Female_Warrior_offset, Female_Warrior_timer_attack_1, Female_Warrior_timer_attack_2, Female_Warrior_timer_attack_3]
+        "Squire": [Squire_x_size, Squire_y_size, Squire_scale, Squire_offset, Squire_timer_attack_1, Squire_timer_attack_2, Squire_timer_attack_3]
     }
