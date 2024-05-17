@@ -136,7 +136,7 @@ def load_animation_steps():
         "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, fall_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps],
         "oni_samurai": [idle_oni_samurai_animation_steps, run_oni_samurai_animation_steps, jump_oni_samurai_animation_steps, fall_oni_samurai_animation_steps, attack1_oni_samurai_animation_steps, attack2_oni_samurai_animation_steps, hit_oni_samurai_animation_steps, death_oni_samurai_animation_steps],
         "samurai": [idle_samurai_animation_steps, run_samurai_animation_steps, jump_samurai_animation_steps, fall_samurai_animation_steps, attack1_samurai_animation_steps, attack2_samurai_animation_steps, hit_samurai_animation_steps, death_samurai_animation_steps],
-        "Squire" : [idle_Squire_animation_steps, run_Squire_animation_steps, jump_Squire_animation_steps, fall_Squire_animation_steps, attack1_Squire_animation_steps, attack2_Squire_animation_steps, hit_Squire_animation_steps, death_Squire_animation_steps]
+        "Squire" : [idle_Squire_animation_steps, run_Squire_animation_steps, jump_Squire_animation_steps, fall_Squire_animation_steps, attack1_Squire_animation_steps, attack2_Squire_animation_steps, attack3_Squire_animation_steps,  hit_Squire_animation_steps, death_Squire_animation_steps]
     }
 
 def fighter_variables() :
