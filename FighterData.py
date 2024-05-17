@@ -60,14 +60,24 @@ def load_spritesheets():
     hit_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Take Hit.png")
     death_Squire_sprite_sheet = pygame.image.load("Assets/Fighters/Squire/Sprites/Death.png")
 
+    idle_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Idle.png")
+    run_knight_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Run.png")
+    jump_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Jump.png")
+    fall_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Fall.png")
+    attack1_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Attack.png")
+    attack2_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Attack.png")
+    hit_knight_sprite_sheet = pygame.image.load("Assets/Knight /Squire/Sprites/Take Hit.png")
+    death_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Death.png")
+
 
     return {
         "fantasy_warrior": [idle_fantasy_warrior_sprite_sheet, run_fantasy_warrior_sprite_sheet, jump_fantasy_warrior_sprite_sheet, fall_fantasy_warrior_sprite_sheet, attack1_fantasy_warrior_sprite_sheet, attack2_fantasy_warrior_sprite_sheet, hit_fantasy_warrior_sprite_sheet, death_fantasy_warrior_sprite_sheet, attack3_fantasy_warrior_sprite_sheet],
         "wizard": [idle_wizard_sprite_sheet, run_wizard_sprite_sheet, jump_wizard_sprite_sheet, fall_wizard_sprite_sheet, attack1_wizard_sprite_sheet, attack2_wizard_sprite_sheet, hit_wizard_sprite_sheet, death_wizard_sprite_sheet],
-        "martial_hero": [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, fall_martial_hero_sprite_sheet,  attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet],
-        "oni_samurai": [idle_oni_samurai_sprite_sheet, run_oni_samurai_sprite_sheet, jump_oni_samurai_sprite_sheet, fall_oni_samurai_sprite_sheet,  attack1_oni_samurai_sprite_sheet, attack2_oni_samurai_sprite_sheet, hit_oni_samurai_sprite_sheet, death_oni_samurai_sprite_sheet],
+        "martial_hero": [idle_martial_hero_sprite_sheet, run_martial_hero_sprite_sheet, jump_martial_hero_sprite_sheet, fall_martial_hero_sprite_sheet, attack1_martial_hero_sprite_sheet, attack2_martial_hero_sprite_sheet, hit_martial_hero_sprite_sheet, death_martial_hero_sprite_sheet, attack3_martial_hero_sprite_sheet],
+        "oni_samurai": [idle_oni_samurai_sprite_sheet, run_oni_samurai_sprite_sheet, jump_oni_samurai_sprite_sheet, fall_oni_samurai_sprite_sheet, attack1_oni_samurai_sprite_sheet, attack2_oni_samurai_sprite_sheet, hit_oni_samurai_sprite_sheet, death_oni_samurai_sprite_sheet],
         "samurai": [idle_samurai_sprite_sheet, run_samurai_sprite_sheet, jump_samurai_sprite_sheet, fall_samurai_sprite_sheet, attack1_samurai_sprite_sheet, attack2_samurai_sprite_sheet, hit_samurai_sprite_sheet, death_samurai_sprite_sheet],
-        "Squire" :[idle_Squire_sprite_sheet, run_Squire_sheet, jump_Squire_sprite_sheet, fall_Squire_sprite_sheet, attack1_Squire_sprite_sheet, attack2_Squire_sprite_sheet, hit_Squire_sprite_sheet, death_Squire_sprite_sheet, attack3_Squire_sprite_sheet]
+        "Squire" :[idle_Squire_sprite_sheet, run_Squire_sheet, jump_Squire_sprite_sheet, fall_Squire_sprite_sheet, attack1_Squire_sprite_sheet, attack2_Squire_sprite_sheet, hit_Squire_sprite_sheet, death_Squire_sprite_sheet, attack3_Squire_sprite_sheet],
+        "Knight" : [idle_knight_sprite_sheet, run_knight_sheet, jump_knight_sprite_sheet, fall_knight_sprite_sheet, attack1_knight_sprite_sheet, attack2_knight_sprite_sheet, hit_knight_sprite_sheet, death_knight_sprite_sheet]
     }
 
 def load_animation_steps():
@@ -129,13 +139,23 @@ def load_animation_steps():
     hit_Squire_animation_steps = [4]
     death_Squire_animation_steps = [6]
 
+    idle_knight_animation_steps = [11]
+    run_knight_animation_steps = [8]
+    jump_knight_animation_steps = [4]
+    fall_knight_animation_steps = [4]
+    attack1_knight_animation_steps = [6]
+    attack2_knight_animation_steps = [6]
+    hit_knight_animation_steps = [4]
+    death_knight_animation_steps = [9]
+
     return {
         "fantasy_warrior": [idle_fantasy_warrior_animation_steps, run_fantasy_warrior_animation_steps, jump_fantasy_warrior_animation_steps, fall_fantasy_warrior_animation_steps,  attack1_fantasy_warrior_animation_steps, attack2_fantasy_warrior_animation_steps, hit_fantasy_warrior_animation_steps, death_fantasy_warrior_animation_steps, attack3_fantasy_warrior_animation_steps],
         "wizard": [idle_wizard_animation_steps, run_wizard_animation_steps, jump_wizard_animation_steps, fall_wizard_animation_steps, attack1_wizard_animation_steps, attack2_wizard_animation_steps, hit_wizard_animation_steps, death_wizard_animation_steps],
         "martial_hero": [idle_martial_hero_animation_steps, run_martial_hero_animation_steps, jump_martial_hero_animation_steps, fall_martial_hero_animation_steps, attack1_martial_hero_animation_steps, attack2_martial_hero_animation_steps, hit_martial_hero_animation_steps, death_fantasy_warrior_animation_steps, attack3_martial_hero_animation_steps],
         "oni_samurai": [idle_oni_samurai_animation_steps, run_oni_samurai_animation_steps, jump_oni_samurai_animation_steps, fall_oni_samurai_animation_steps, attack1_oni_samurai_animation_steps, attack2_oni_samurai_animation_steps, hit_oni_samurai_animation_steps, death_oni_samurai_animation_steps],
         "samurai": [idle_samurai_animation_steps, run_samurai_animation_steps, jump_samurai_animation_steps, fall_samurai_animation_steps, attack1_samurai_animation_steps, attack2_samurai_animation_steps, hit_samurai_animation_steps, death_samurai_animation_steps],
-        "Squire" : [idle_Squire_animation_steps, run_Squire_animation_steps, jump_Squire_animation_steps, fall_Squire_animation_steps, attack1_Squire_animation_steps, attack2_Squire_animation_steps, hit_Squire_animation_steps, death_Squire_animation_steps, attack3_Squire_animation_steps]
+        "Squire" : [idle_Squire_animation_steps, run_Squire_animation_steps, jump_Squire_animation_steps, fall_Squire_animation_steps, attack1_Squire_animation_steps, attack2_Squire_animation_steps, hit_Squire_animation_steps, death_Squire_animation_steps, attack3_Squire_animation_steps],
+        "Knight" : [idle_knight_animation_steps, run_knight_animation_steps, jump_knight_animation_steps, fall_knight_animation_steps, attack1_knight_animation_steps, attack2_knight_animation_steps, hit_knight_animation_steps, death_knight_animation_steps]
     }
 
 def fighter_variables() :
@@ -189,11 +209,20 @@ def fighter_variables() :
     Squire_timer_attack_2 = 200
     Squire_timer_attack_3 = 200
 
+    knight_x_size = 140
+    knight_y_size = 140
+    knight_scale = 3.7
+    knight_offset = [65, 46]
+    knight_timer_attack_1 = 200
+    knight_timer_attack_2 = 200
+    knight_timer_attack_3 = 200
+
     return {
         "fantasy_warrior" : [fantasy_warrior_x_size, fantasy_warrior_y_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
         "wizard" : [wizard_x_size, wizard_y_size, wizard_scale, wizard_offset, wizard_timer_attack_1, wizard_timer_attack_2, wizard_timer_attack_3],
         "martial_hero" : [martial_hero_x_size, martial_hero_y_size, martial_hero_scale, martial_hero_offset, martial_hero_timer_attack_1, martial_hero_timer_attack_2, martial_hero_timer_attack_3],
         "oni_samurai" : [oni_samurai_x_size, oni_samurai_y_size, oni_samurai_scale, oni_samurai_offset, oni_samurai_timer_attack_1, oni_samurai_timer_attack_2, oni_samurai_timer_attack_3],
         "samurai": [samurai_x_size, samurai_y_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
-        "Squire": [Squire_x_size, Squire_y_size, Squire_scale, Squire_offset, Squire_timer_attack_1, Squire_timer_attack_2, Squire_timer_attack_3]
+        "Squire": [Squire_x_size, Squire_y_size, Squire_scale, Squire_offset, Squire_timer_attack_1, Squire_timer_attack_2, Squire_timer_attack_3],
+        "Knight" : [knight_x_size, knight_y_size, knight_scale, knight_offset, knight_timer_attack_1, knight_timer_attack_2, knight_timer_attack_3]
     }
