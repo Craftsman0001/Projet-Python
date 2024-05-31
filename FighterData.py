@@ -139,6 +139,7 @@ def load_animation_steps():
     hit_samurai_animation_steps = [4]
     death_samurai_animation_steps = [6]
 
+
     idle_Squire_animation_steps = [8]
     run_Squire_animation_steps = [8]
     jump_Squire_animation_steps = [2]
@@ -183,7 +184,7 @@ def fighter_variables() :
     fantasy_warrior_x_size = 162
     fantasy_warrior_y_size = 162
     fantasy_warrior_scale = 4
-    fantasy_warrior_offset = [72, 56]  
+    fantasy_warrior_offset = [72, 56]
     fantasy_warrior_timer_attack_1 = 350
     fantasy_warrior_timer_attack_2 = 200
     fantasy_warrior_timer_attack_3 = 450
@@ -223,8 +224,8 @@ def fighter_variables() :
 
     Squire_x_size = 150
     Squire_y_size = 150
-    Squire_scale = 3.7
-    Squire_offset = [65, 46]
+    Squire_scale = 4
+    Squire_offset = [17, 50]
     Squire_timer_attack_1 = 200
     Squire_timer_attack_2 = 200
     Squire_timer_attack_3 = 200

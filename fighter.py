@@ -1,8 +1,10 @@
 import pygame
+
+
 import math
 
-class Fighter() :
-    def __init__(self, player, x, y, ground_level, flip, third_attack, data, sprite_sheets, animation_steps) :
+class Fighter():
+    def __init__(self, player, x, y, ground_level, flip, third_attack, data, sprite_sheets, animation_steps):
         self.player = player
         self.sprite_sheets = sprite_sheets
         self.animation_steps = animation_steps
@@ -14,7 +16,7 @@ class Fighter() :
         self.timer_attack_2 = data[5]
         self.timer_attack_3 = data[6]
         self.flip = False
-        self.action = 0 # 0: idle, 1: run, 2: jump, 3: attack1, 4: attack2, 5: hit, 6: death
+        self.action = 0  # 0: idle, 1: run, 2: jump, 3: attack1, 4: attack2, 5: hit, 6: death
         self.frame_index = 0
         self.last_update = pygame.time.get_ticks()
         self.rect = pygame.Rect((x, y, 80, 180))
@@ -35,27 +37,27 @@ class Fighter() :
         self.attack_start_time = 0
         self.attack_duration = 0
         self.apply_attack_damage = False
-        # self.damage_taken = 0
-        # self.damage_duration = 5000  # milliseconds
+        self.damage_taken = 0
+        self.damage_duration = 5000  # milliseconds
         self.last_update_time = pygame.time.get_ticks()
         self.border_radius = 25
         self.rectangle_edge = 5
 
-
-    def load_images(self) :
+    def load_images(self):
         # Extraction of the images from the spritesheet
         animation_list = []
-        for sheet, steps in zip(self.sprite_sheets, self.animation_steps) :
+        for sheet, steps in zip(self.sprite_sheets, self.animation_steps):
             temporary_image_list = []
-            for step in steps :
-                for x in range(step) :
+            for step in steps:
+                for x in range(step):
                     temporary_image = sheet.subsurface(x * self.x_size, 0, self.x_size, self.y_size)
-                    temporary_image_list.append( pygame.transform.scale(temporary_image, (self.x_size * self.image_scale, self.y_size * self.image_scale)))
+                    temporary_image_list.append(pygame.transform.scale(temporary_image, (
+                    self.x_size * self.image_scale, self.y_size * self.image_scale)))
             animation_list.append(temporary_image_list)
         return animation_list
 
-    def move(self, round_over, screen_width, screen_height, surface, enemy) :
-        SPEED = 8 # constant
+    def move(self, round_over, screen_width, screen_height, surface, enemy):
+        SPEED = 8  # constant
         GRAVITY = 1.5
         dx = 0
         dy = 0
@@ -85,12 +87,12 @@ class Fighter() :
                 # Attack
                 if keys[pygame.K_r] and self.third_attack == True and self.attack_cooldown == 0:
                     self.attack_type = 7
-                    self.attack_duration = self.timer_attack_3 
+                    self.attack_duration = self.timer_attack_3
                     self.attack(enemy)
                 elif keys[pygame.K_e] and self.attack_cooldown == 0:
                     self.attack_type = 1
-                    self.attack_duration = self.timer_attack_1 
-                    self.attack(enemy) 
+                    self.attack_duration = self.timer_attack_1
+                    self.attack(enemy)
                 elif keys[pygame.K_a] and self.attack_cooldown == 0:
                     self.attack_type = 2
                     self.attack_duration = self.timer_attack_2 
@@ -100,7 +102,7 @@ class Fighter() :
                 if keys[pygame.K_t] and self.mana == 50 :
                     self.bonus_damage = 10
                     self.mana = 0
-                
+
             # check the player 2 controls
             if self.player == 2 :
                 if keys[pygame.K_LEFT]:
@@ -277,16 +279,17 @@ class Fighter() :
 
             ### pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
-    def update_fighter_action(self, new_action) :
+    def update_fighter_action(self, new_action):
         # check if the new action is different than the previous one
-        if new_action != self.action :
+        if new_action != self.action:
             self.action = new_action
 
             # update de animation settings
             self.frame_index = 0
-            self.last_update = pygame.time.get_ticks() 
+            self.last_update = pygame.time.get_ticks()
 
-    # Inside the Fighter class definition
+            # Inside the Fighter class definition
+
     def reset(self, x, y):
         self.rect.centerx = x
         self.rect.centery = y
@@ -295,7 +298,7 @@ class Fighter() :
         self.mana = 0
 
     def add_mana(self, add) :
-        if self.mana + add < 50 : 
+        if self.mana + add < 50 :
             self.mana += add
         elif self.mana + add > 50 :
             self.mana = 50
@@ -391,4 +394,3 @@ class Fighter() :
                 # enemy.damage_taken = enemy.damage_taken +5 + self.bonus_damage
                 self.apply_attack_damage = False
                 self.bonus_damage = 0
-                
