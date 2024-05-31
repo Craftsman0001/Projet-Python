@@ -73,6 +73,7 @@ GREY_3 = (50, 50, 50)
 PURPLE = (200, 0, 255)
 
 # defining game variables
+
 countdown = 4
 last_count_update = pygame.time.get_ticks()
 score = [0, 0]  # player scores : [player1, player2]
