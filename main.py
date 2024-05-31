@@ -34,7 +34,7 @@ martial_hero_sprite_sheets = sprite_sheets["martial_hero"]
 oni_samurai_sprite_sheets = sprite_sheets["oni_samurai"]
 samurai_sprite_sheets = sprite_sheets["samurai"]
 Squire_sprite_sheets = sprite_sheets["Squire"]
-#knight_sprite_sheets = sprite_sheets["Knight"]
+knight_sprite_sheets = sprite_sheets["Knight"]
 
 # Extract animation steps for each fighter
 fantasy_warrior_animation_steps = animation_steps["fantasy_warrior"]
@@ -43,7 +43,7 @@ martial_hero_animation_steps = animation_steps["martial_hero"]
 oni_samurai_animation_steps = animation_steps["oni_samurai"]
 samurai_animation_steps = animation_steps["samurai"]
 Squire_animation_steps = animation_steps["Squire"]
-#knight_animation_steps = animation_steps["Knight"]
+knight_animation_steps = animation_steps["Knight"]
 
 # defining fighter variables
 fighter_data = fighter_variables()

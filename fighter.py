@@ -1,6 +1,7 @@
 import pygame
-import math
 
+
+import math
 
 class Fighter():
     def __init__(self, player, x, y, ground_level, flip, third_attack, data, sprite_sheets, animation_steps):
@@ -39,6 +40,8 @@ class Fighter():
         self.damage_taken = 0
         self.damage_duration = 5000  # milliseconds
         self.last_update_time = pygame.time.get_ticks()
+        self.border_radius = 25
+        self.rectangle_edge = 5
 
     def load_images(self):
         # Extraction of the images from the spritesheet
@@ -67,21 +70,21 @@ class Fighter():
         keys = pygame.key.get_pressed()
 
         # Performing actions if not attacking
-        if self.attacking == False and self.alive == True and round_over == False:
+        if self.attacking == False and self.alive == True and round_over == False :
             # check the player 1 controls
-            if self.player == 1:
+            if self.player == 1 :
                 if keys[pygame.K_q]:
                     dx -= SPEED
                     self.running = True
                 elif keys[pygame.K_d]:
                     dx += SPEED
-                    self.running = True
-                    # Jumping
+                    self.running = True  
+                # Jumping 
                 if keys[pygame.K_z] and self.jump == False:
-                    if self.rect.bottom == self.ground_level:  # Only jump if the fighter is on the ground
+                    if self.rect.bottom == self.ground_level :  # Only jump if the fighter is on the ground
                         self.velocity_y = -30
-                        self.jump = True
-                        # Attack
+                        self.jump = True 
+                # Attack
                 if keys[pygame.K_r] and self.third_attack == True and self.attack_cooldown == 0:
                     self.attack_type = 7
                     self.attack_duration = self.timer_attack_3
@@ -92,25 +95,25 @@ class Fighter():
                     self.attack(enemy)
                 elif keys[pygame.K_a] and self.attack_cooldown == 0:
                     self.attack_type = 2
-                    self.attack_duration = self.timer_attack_2
-                    self.attack(enemy)
+                    self.attack_duration = self.timer_attack_2 
+                    self.attack(enemy) 
 
-                    # Mana
-                if keys[pygame.K_t] and self.mana == 50:
+                # Mana
+                if keys[pygame.K_t] and self.mana == 50 :
                     self.bonus_damage = 10
                     self.mana = 0
 
             # check the player 2 controls
-            if self.player == 2:
+            if self.player == 2 :
                 if keys[pygame.K_LEFT]:
                     dx -= SPEED
                     self.running = True
                 if keys[pygame.K_RIGHT]:
                     dx += SPEED
                     self.running = True
-                # Jumping
+                # Jumping 
                 if keys[pygame.K_UP] and self.jump == False:
-                    if self.rect.bottom == self.ground_level:  # Only jump if the fighter is on the ground
+                    if self.rect.bottom == self.ground_level :  # Only jump if the fighter is on the ground
                         self.velocity_y = -30
                         self.jump = True
                 # Attack
@@ -128,148 +131,148 @@ class Fighter():
                     self.attack(enemy)
 
                 # Mana
-                if keys[pygame.K_o] and self.mana == 50:
+                if keys[pygame.K_o] and self.mana == 50 :
                     self.bonus_damage = 10
                     self.mana = 0
 
         # Ensure fighters face each other
-        if enemy.rect.centerx > self.rect.centerx:
+        if enemy.rect.centerx > self.rect.centerx :
             self.flip = False
-        else:
+        else :
             self.flip = True
 
         # apply attack cooldown
-        if self.attack_cooldown > 0:
+        if self.attack_cooldown > 0 :
             self.attack_cooldown -= 1
 
         dy += self.velocity_y
 
         # Fighter stays on the screen (left and right)
-        if self.rect.left + dx < 0:
-            dx = -self.rect.left
-        elif self.rect.right + dx > screen_width:
+        if self.rect.left + dx < 0 : 
+            dx = -self.rect.left 
+        elif self.rect.right + dx > screen_width :
             dx = screen_width - self.rect.right
 
         # Updating the position of the fighter (moving the rect by dx and dy)
-        self.rect.move_ip(dx, dy)
+        self.rect.move_ip(dx, dy) 
 
         # Update velocity for gravity
         self.velocity_y += GRAVITY
 
         # Fighter stays on the ground
-        if self.rect.bottom > self.ground_level:
+        if self.rect.bottom > self.ground_level :
             self.rect.bottom = self.ground_level
             self.velocity_y = 0
             self.jump = False
 
-    def update_attack(self):
-        if self.attack_type == 1:
-            self.update_fighter_action(4)  # attack1
-        elif self.attack_type == 2:
-            self.update_fighter_action(5)  # attack2
-        elif self.attack_type == 7:
-            self.update_fighter_action(8)  # attack 3
+    def update_attack(self) :
+        if self.attack_type == 1 :
+            self.update_fighter_action(4) # attack1
+        elif self.attack_type == 2 :
+            self.update_fighter_action(5) # attack2
+        elif self.attack_type == 7 :
+            self.update_fighter_action(8) # attack 3
 
-    def update(self, enemy):
+    def update(self, enemy) :
 
         # check if the fighter is dead
-        if self.health <= 0:
+        if self.health <= 0 :
             self.health = 0
             self.alive = False
-            self.update_fighter_action(7)  # death
+            self.update_fighter_action(7) # death
 
         # Check if the fighter is in mid-air
-        elif self.jump == True and self.rect.bottom != self.ground_level:
-            if self.attacking == True:
+        elif self.jump == True and self.rect.bottom != self.ground_level : 
+            if self.attacking == True :
                 # Update the fighter's action to attacking while jumping
                 self.update_attack()
             # Check if the fighter is at the maximum height of the jump
             elif self.velocity_y >= 0:
                 self.update_fighter_action(3)  # fall animation
-            else:
+            else :
                 self.update_fighter_action(2)  # jump animation
 
         else:
-            # Check other conditions and update animations accordingly
-            if self.hit == True:
-                self.update_fighter_action(6)  # hit
+        # Check other conditions and update animations accordingly
+            if self.hit == True :
+                self.update_fighter_action(6) # hit
                 self.hit = False
-            elif self.attacking == True:
+            elif self.attacking == True :
                 self.update_attack()
-            elif self.running == True:
+            elif self.running == True :
                 self.update_fighter_action(1)  # run
-            else:
-                self.update_fighter_action(0)  # idle
+            else : 
+                self.update_fighter_action(0) # idle
 
-        ANIMATION_COOLDOWN = 90  # Default to 100 milliseconds if action not found
+  
+        ANIMATION_COOLDOWN = 90 # Default to 100 milliseconds if action not found
         current_time = pygame.time.get_ticks()
 
         # update image
         self.image = self.animation[self.action][self.frame_index]
 
         # Check if enough time has passed since the last update
-        if current_time - self.last_update > ANIMATION_COOLDOWN:
+        if current_time - self.last_update > ANIMATION_COOLDOWN :
             self.frame_index += 1
             self.last_update = current_time
 
-            if self.frame_index >= len(self.animation[self.action]):
-                if self.alive == True:
+            if self.frame_index >= len(self.animation[self.action]) :
+                if self.alive == True :
                     # check if an attack was done
-                    if self.action in (4, 5, 8):
+                    if self.action in (4, 5, 8) :
                         self.frame_index = 0
                         # Check if it's during a attack animation
                         self.attacking = False
                         self.attack_cooldown = 30
-                        self.update_fighter_action(0)  # idle
+                        self.update_fighter_action(0) # idle
                     # check if fighter took a hit
-                    elif self.action == 6:
+                    elif self.action == 6 :
                         self.frame_index = 0
                         self.hit = False
                         # check that if the player is in the middle of an attack it is stoppped
                         self.attacking = False
                         self.attack_cooldown = 50
-                        self.update_fighter_action(0)  # idle
+                        self.update_fighter_action(0) # idle
                     # Transition back to idle animation
-                    else:
+                    else :
                         self.frame_index = 0  # idle
-                else:
+                else :
                     # If the fighter is dead, keep the last frame of the death animation
                     self.frame_index = len(self.animation[self.action]) - 1
-
-        if self.attack_cooldown > 0:
+        
+        if self.attack_cooldown > 0 :
             self.attack_cooldown -= 1
 
-    def draw(self, surface):
+    def draw(self, surface) :
         # Get the current animation frame
         current_frame = self.animation[self.action][self.frame_index]
-
+    
         # Flip the current frame if necessary
-        if self.flip == True:
+        if self.flip == True :
             current_frame = pygame.transform.flip(current_frame, self.flip, False)
 
         # Draw the flipped frame onto the surface
         ### pygame.draw.rect(surface, (255, 0, 0), self.rect)
-        surface.blit(current_frame, (
-        self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
+        surface.blit(current_frame, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
 
-    def attack(self, enemy):  ### def attack(self, surface, enemy) :
+    def attack(self, enemy) : ### def attack(self, surface, enemy) :
 
-        if self.attack_cooldown == 0:
-
+        if self.attack_cooldown == 0 :
+            
             self.attacking = True
             self.attack_start_time = pygame.time.get_ticks()
 
-            if self.flip:
+            if self.flip :
                 # If the fighter is flipped, the attacking rectangle starts from the left side of the fighter
                 attacking_rect_left = self.rect.left - 1.5 * self.rect.width
-            else:
+            else :
                 # If the fighter is not flipped, the attacking rectangle starts from the right side of the fighter
                 attacking_rect_left = self.rect.right
 
             # Create the attacking rectangle
             attacking_rect = pygame.Rect(attacking_rect_left, self.rect.y, 1.5 * self.rect.width, self.rect.height)
-
-            if attacking_rect.colliderect(enemy.rect):
+        
+            if attacking_rect.colliderect(enemy.rect) :
                 enemy.hit = True
                 self.apply_attack_damage = True
                 self.add_mana(10)
@@ -294,16 +297,16 @@ class Fighter():
         self.health = 100
         self.mana = 0
 
-    def add_mana(self, add):
-        if self.mana + add < 50:
+    def add_mana(self, add) :
+        if self.mana + add < 50 :
             self.mana += add
-        elif self.mana + add > 50:
+        elif self.mana + add > 50 :
             self.mana = 50
 
     # Function to draw fighter health bars
     def update_health(self, enemy, x, y, screen):
 
-        LIGHT_GREY = (200, 200, 200)
+        LIGHT_GREY = (160, 160, 160)
         WHITE = (255, 255, 255)
         BLACK = (0, 0, 0)
         GREEN = (20, 255, 150)
@@ -311,81 +314,82 @@ class Fighter():
         RED = (255, 0, 0)
         YELLOW = (255, 255, 0)
 
+
         RECTANGLE_WIDTH = 400
         RECTANGLE_HEIGHT = 30
 
         # Calculate ratios for health and mana
         ratio_health = self.health / 100
         ratio_mana = self.mana / 50
-
+        
         # Draw outer border
-        pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10))
+        pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10), border_radius=self.border_radius)
         # Draw inner health bar
-        pygame.draw.rect(screen, LIGHT_GREY, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT))
+        pygame.draw.rect(screen, LIGHT_GREY, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT), border_radius=self.border_radius)
 
         # Draw health bar based on fighter
-        if self.player == 1:
-            pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
-        if self.player == 2:
-            pygame.draw.rect(screen, GREEN, (
-            x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health,
-            RECTANGLE_HEIGHT))
+        if self.player == 1 :
+            if self.health > 15 :
+                pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            else :
+                pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=(self.border_radius + 45))
+        if self.player == 2 :
+            if self.health > 15 :
+                pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            else :
+                pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=(self.border_radius + 45))
 
         RECTANGLE_WIDTH_DIVISION = math.ceil(RECTANGLE_WIDTH / 2)
 
         # Draw mana bar based on fighter
-        if self.player == 1:
-            pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10))
-            pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
-            pygame.draw.rect(screen, PURPLE, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
-        if self.player == 2:
-            pygame.draw.rect(screen, BLACK, (
-            x + RECTANGLE_WIDTH_DIVISION - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10))
-            if self.mana < 50:
-                pygame.draw.rect(screen, LIGHT_GREY,
-                                 (x + RECTANGLE_WIDTH_DIVISION - 1, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
-            else:
-                pygame.draw.rect(screen, LIGHT_GREY,
-                                 (x + RECTANGLE_WIDTH_DIVISION, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
-            pygame.draw.rect(screen, PURPLE, (
-            x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
+        if self.player == 1 :
+            pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, PURPLE, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
+        if self.player == 2 :
+            pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            if self.mana < 50 :
+                pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana) + 1, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            else :
+                pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH_DIVISION - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
 
         # Calculate the width of the damage rectangle based on damage taken
-        damage_width = RECTANGLE_WIDTH * (self.damage_taken / 100)
-
+        # damage_width = RECTANGLE_WIDTH * (self.damage_taken / 100)
+            
         # Calculate the starting position of the damage rectangle based on player
-        damage_x = x + RECTANGLE_WIDTH - damage_width
+        # damage_x = x + RECTANGLE_WIDTH - damage_width
 
         gap = 0
-        if self.health < 100:
+        if self.health < 100 :
             gap = RECTANGLE_WIDTH * (1 - ratio_health)
-
+        
         # If damage has been taken, draw a white rectangle representing the damage
-        if self.damage_taken > 0:
-            if self.player == 1:
-                pygame.draw.rect(screen, WHITE, (x + RECTANGLE_WIDTH - gap, y, damage_width, RECTANGLE_HEIGHT))
+        #if self.damage_taken > 0:
+        #    if self.player == 1 :
+        #        pygame.draw.rect(screen, WHITE, (x + RECTANGLE_WIDTH - gap, y, damage_width, RECTANGLE_HEIGHT))
 
-            if self.player == 2:
-                pygame.draw.rect(screen, WHITE, (damage_x - RECTANGLE_WIDTH + gap, y, damage_width, RECTANGLE_HEIGHT))
-
+        #    if self.player == 2 :
+        #        pygame.draw.rect(screen, WHITE, (damage_x - RECTANGLE_WIDTH + gap, y, damage_width, RECTANGLE_HEIGHT))
+                
             # Decrease the duration for damage indicator
-            self.damage_duration -= pygame.time.get_ticks() - self.last_update_time
+        #    self.damage_duration -= pygame.time.get_ticks() - self.last_update_time
 
-            if self.damage_duration <= 0:
-                self.damage_taken = 0
-                self.damage_duration = 5000  # Reset duration
-            if self.health == 0:
-                self.damage_taken = 0
-                self.damage_duration = 0
+        #    if self.damage_duration <= 0:
+        #        self.damage_taken = 0
+        #        self.damage_duration = 5000  # Reset duration
+        #    if self.health == 0 :
+        #        self.damage_taken = 0
+        #        self.damage_duration = 0
 
         # Reset the last update time
         self.last_update_time = pygame.time.get_ticks()
 
-        if self.attacking == True and self.apply_attack_damage == True:
+        if self.attacking == True and self.apply_attack_damage == True :
             current_time = pygame.time.get_ticks()
             elapsed_time = current_time - self.attack_start_time
-            if elapsed_time >= self.attack_duration:
-                enemy.health = enemy.health - 5 - self.bonus_damage
-                enemy.damage_taken = enemy.damage_taken + 5 + self.bonus_damage
+            if elapsed_time >= self.attack_duration :
+                enemy.health = enemy.health -5 - self.bonus_damage
+                # enemy.damage_taken = enemy.damage_taken +5 + self.bonus_damage
                 self.apply_attack_damage = False
                 self.bonus_damage = 0
