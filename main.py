@@ -40,7 +40,6 @@ GREY_3 = (50, 50, 50)
 PURPLE = (200, 0, 255)
 
 # defining game variables
-
 countdown = 4
 last_count_update = pygame.time.get_ticks()
 score = [0, 0]  # player scores : [player1, player2]
@@ -50,12 +49,10 @@ game_paused = False
 player1_choice = None
 player2_choice = None
 
-
 # defining the font
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
-
 
 # function for displaying introduction video and wait for user to press space bar to continue
 def display_intro_video():
@@ -200,10 +197,8 @@ def intro_screen():
     main_menu_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 38)
 
     # Create buttons
-    play_button = Button(SCREEN_WIDTH // 2 - 150, 200, 300, 75, GREY_2, AZURE_2, "Start Game", main_menu_font_2, BLACK,
-                         screen)
-    exit_button = Button(SCREEN_WIDTH // 2 - 150, 300, 300, 75, GREY_2, AZURE_2, "Exit Game", main_menu_font_2, BLACK,
-                         screen)
+    play_button = Button(SCREEN_WIDTH // 2 - 150, 200, 300, 75, GREY_2, AZURE_2, "Start Game", main_menu_font_2, BLACK, screen)
+    exit_button = Button(SCREEN_WIDTH // 2 - 150, 300, 300, 75, GREY_2, AZURE_2, "Exit Game", main_menu_font_2, BLACK, screen)
 
     clock = pygame.time.Clock()
     intro = True
