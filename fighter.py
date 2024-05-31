@@ -319,8 +319,6 @@ class Fighter() :
         ratio_health = self.health / 100
         ratio_mana = self.mana / 50
         
-        # Draw outer border
-        pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10), border_radius=self.border_radius)
         # Draw inner health bar
         pygame.draw.rect(screen, LIGHT_GREY, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT), border_radius=self.border_radius)
 
@@ -329,12 +327,15 @@ class Fighter() :
             if self.health > 15 :
                 pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             else :
-                pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=(self.border_radius + 45))
+                pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
         if self.player == 2 :
             if self.health > 15 :
                 pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             else :
-                pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=(self.border_radius + 45))
+                pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+
+        # Draw outer border
+        pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
 
         RECTANGLE_WIDTH_DIVISION = math.ceil(RECTANGLE_WIDTH / 2)
 
