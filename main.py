@@ -88,7 +88,7 @@ def reset_game():
     last_count_update = pygame.time.get_ticks()
 
 # function to draw text
-def draw_text(text, font, text_color, x, y):
+def draw_text( text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
 
@@ -216,8 +216,8 @@ def intro_screen():
                     # Play the game
                     intro = False
                     global player1_choice, player2_choice, fighter_1, fighter_2
-                    player1_choice = select_player_1()
-                    player2_choice = select_player_2()
+                    player1_choice = select_player_1(screen)
+                    player2_choice = select_player_2(screen)
                     fighter_1 = initialize_fighter_1(player1_choice)
                     fighter_2 = initialize_fighter_2(player2_choice)
 

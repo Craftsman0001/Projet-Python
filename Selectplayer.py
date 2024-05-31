@@ -5,19 +5,6 @@ from FighterData import *
 from fighter import Fighter
 from FighterData import load_spritesheets, load_animation_steps, fighter_variables
 
-# Creation of the Game Window
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 600
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Brawl Arena")
-
-# Load background image and scale it to fit the screen
-original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
-background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
-
-# load the victory image
-original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
-victory_image = pygame.transform.scale(original_victory_image, (400, 150))
 
 # Load sprite sheets and animation steps
 sprite_sheets = load_spritesheets()
@@ -68,11 +55,12 @@ GREY_2 = (93, 93, 93)
 GREY_3 = (50, 50, 50)
 PURPLE = (200, 0, 255)
 
-def draw_text(text, font, text_color, x, y):
+def draw_text(text, font, text_color, x, y, screen):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
 
-def select_player_1() :
+
+def select_player_1(screen) :
     selecting_player_1 = True
     main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
     screen.fill(BLACK_2)
@@ -140,7 +128,7 @@ def select_player_1() :
             screen.blit(image, button.rect.topleft)
 
         # Draw text
-        draw_text("Player 1: Select your fighter", main_menu_font_1, WHITE, 250, 20)
+        draw_text("Player 1: Select your fighter", main_menu_font_1, WHITE, 250, 20, screen)
         pygame.display.flip()
 
 def initialize_fighter_1(player1_choice):
@@ -184,7 +172,7 @@ def initialize_fighter_1(player1_choice):
     fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player1_data, player1_sprite_sheet, player1_animation_steps)
     return fighter_1
 
-def select_player_2():
+def select_player_2(screen):
     selecting_player_2 = True
     main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
     screen.fill(BLACK_2)
@@ -248,7 +236,7 @@ def select_player_2():
             screen.blit(image, button.rect.topleft)
 
         # Draw text
-        draw_text("Player 2: Select your fighter", main_menu_font_1, WHITE, 250, 20)
+        draw_text("Player 2: Select your fighter", main_menu_font_1, WHITE, 250, 20, screen)
         pygame.display.flip()
 
 def initialize_fighter_2(player2_choice):
