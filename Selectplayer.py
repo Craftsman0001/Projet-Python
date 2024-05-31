@@ -71,6 +71,7 @@ PURPLE = (200, 0, 255)
 def draw_text(text, font, text_color, x, y):
     image = font.render(text, True, text_color)
     screen.blit(image, (x, y))
+
 def select_player_1() :
     selecting_player_1 = True
     main_menu_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 60)
@@ -182,7 +183,6 @@ def initialize_fighter_1(player1_choice):
     global fighter_1
     fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player1_data, player1_sprite_sheet, player1_animation_steps)
     return fighter_1
-
 
 def select_player_2():
     selecting_player_2 = True

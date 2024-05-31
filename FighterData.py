@@ -224,8 +224,8 @@ def fighter_variables() :
 
     Squire_x_size = 150
     Squire_y_size = 150
-    Squire_scale = 4
-    Squire_offset = [17, 50]
+    Squire_scale = 3.7
+    Squire_offset = [65, 46]
     Squire_timer_attack_1 = 200
     Squire_timer_attack_2 = 200
     Squire_timer_attack_3 = 200

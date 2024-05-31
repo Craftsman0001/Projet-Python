@@ -23,39 +23,6 @@ background_image = pygame.transform.scale(original_background_image, (SCREEN_WID
 original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
 victory_image = pygame.transform.scale(original_victory_image, (400, 150))
 
-# Load sprite sheets and animation steps
-sprite_sheets = load_spritesheets()
-animation_steps = load_animation_steps()
-
-# Extract sprite sheets for each fighter
-fantasy_warrior_sprite_sheet = sprite_sheets["fantasy_warrior"]
-wizard_sprite_sheet = sprite_sheets["wizard"]
-martial_hero_sprite_sheets = sprite_sheets["martial_hero"]
-oni_samurai_sprite_sheets = sprite_sheets["oni_samurai"]
-samurai_sprite_sheets = sprite_sheets["samurai"]
-Squire_sprite_sheets = sprite_sheets["Squire"]
-knight_sprite_sheets = sprite_sheets["Knight"]
-
-# Extract animation steps for each fighter
-fantasy_warrior_animation_steps = animation_steps["fantasy_warrior"]
-wizard_animation_steps = animation_steps["wizard"]
-martial_hero_animation_steps = animation_steps["martial_hero"]
-oni_samurai_animation_steps = animation_steps["oni_samurai"]
-samurai_animation_steps = animation_steps["samurai"]
-Squire_animation_steps = animation_steps["Squire"]
-knight_animation_steps = animation_steps["Knight"]
-
-# defining fighter variables
-fighter_data = fighter_variables()
-
-fantasy_warrior_data = fighter_data["fantasy_warrior"]
-wizard_data = fighter_data["wizard"]
-martial_hero_data = fighter_data["martial_hero"]
-oni_samurai_data = fighter_data["oni_samurai"]
-samurai_data = fighter_data["samurai"]
-Squire_data = fighter_data["Squire"]
-knight_data = fighter_data["Knight"]
-
 # Colors
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
@@ -219,8 +186,6 @@ def display_pause_menu():
         pygame.display.update()
 
     return None
-
-
 
 # Define the intro_screen function
 def intro_screen():
