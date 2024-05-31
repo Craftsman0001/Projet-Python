@@ -62,11 +62,11 @@ def load_spritesheets():
 
     idle_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Idle.png")
     run_knight_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Run.png")
-    jump_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Jump.png")
-    fall_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Fall.png")
-    attack1_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Attack.png")
-    attack2_knight_sprite_sheet = pygame.image.load("Assets/Knight/Squire/Sprites/Attack.png")
-    hit_knight_sprite_sheet = pygame.image.load("Assets/Knight /Squire/Sprites/Take Hit.png")
+    jump_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Jump.png")
+    fall_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Fall.png")
+    attack1_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Attack.png")
+    attack2_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Attack.png")
+    hit_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Take Hit.png")
     death_knight_sprite_sheet = pygame.image.load("Assets/Fighters/Knight/Sprites/Death.png")
 
 
