@@ -35,9 +35,11 @@ class Fighter() :
         self.attack_start_time = 0
         self.attack_duration = 0
         self.apply_attack_damage = False
-        self.damage_taken = 0
-        self.damage_duration = 5000  # milliseconds
+        # self.damage_taken = 0
+        # self.damage_duration = 5000  # milliseconds
         self.last_update_time = pygame.time.get_ticks()
+        self.border_radius = 25
+        self.rectangle_edge = 5
 
 
     def load_images(self) :
@@ -301,7 +303,7 @@ class Fighter() :
     # Function to draw fighter health bars
     def update_health(self, enemy, x, y, screen):
 
-        LIGHT_GREY = (200, 200, 200)
+        LIGHT_GREY = (160, 160, 160)
         WHITE = (255, 255, 255)
         BLACK = (0, 0, 0)
         GREEN = (20, 255, 150)
@@ -318,58 +320,64 @@ class Fighter() :
         ratio_mana = self.mana / 50
         
         # Draw outer border
-        pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10))
+        pygame.draw.rect(screen, BLACK, (x - 5, y - 5, RECTANGLE_WIDTH + 10, RECTANGLE_HEIGHT + 10), border_radius=self.border_radius)
         # Draw inner health bar
-        pygame.draw.rect(screen, LIGHT_GREY, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT))
+        pygame.draw.rect(screen, LIGHT_GREY, (x, y, RECTANGLE_WIDTH, RECTANGLE_HEIGHT), border_radius=self.border_radius)
 
         # Draw health bar based on fighter
         if self.player == 1 :
-            pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
+            if self.health > 15 :
+                pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            else :
+                pygame.draw.rect(screen, GREEN, (x, y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=(self.border_radius + 45))
         if self.player == 2 :
-            pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT))
+            if self.health > 15 :
+                pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            else :
+                pygame.draw.rect(screen, GREEN, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH * ratio_health), y, RECTANGLE_WIDTH * ratio_health, RECTANGLE_HEIGHT), border_radius=(self.border_radius + 45))
 
         RECTANGLE_WIDTH_DIVISION = math.ceil(RECTANGLE_WIDTH / 2)
 
         # Draw mana bar based on fighter
         if self.player == 1 :
-            pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10))
-            pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
-            pygame.draw.rect(screen, PURPLE, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
+            pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, PURPLE, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
         if self.player == 2 :
-            pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH_DIVISION - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10))
+            pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             if self.mana < 50 :
-                pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION -1, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
+                pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana) + 1, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             else :
-                pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT))
-            pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT))
+                pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH_DIVISION - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
 
         # Calculate the width of the damage rectangle based on damage taken
-        damage_width = RECTANGLE_WIDTH * (self.damage_taken / 100)
+        # damage_width = RECTANGLE_WIDTH * (self.damage_taken / 100)
             
         # Calculate the starting position of the damage rectangle based on player
-        damage_x = x + RECTANGLE_WIDTH - damage_width
+        # damage_x = x + RECTANGLE_WIDTH - damage_width
 
         gap = 0
         if self.health < 100 :
             gap = RECTANGLE_WIDTH * (1 - ratio_health)
         
         # If damage has been taken, draw a white rectangle representing the damage
-        if self.damage_taken > 0:
-            if self.player == 1 :
-                pygame.draw.rect(screen, WHITE, (x + RECTANGLE_WIDTH - gap, y, damage_width, RECTANGLE_HEIGHT))
+        #if self.damage_taken > 0:
+        #    if self.player == 1 :
+        #        pygame.draw.rect(screen, WHITE, (x + RECTANGLE_WIDTH - gap, y, damage_width, RECTANGLE_HEIGHT))
 
-            if self.player == 2 :
-                pygame.draw.rect(screen, WHITE, (damage_x - RECTANGLE_WIDTH + gap, y, damage_width, RECTANGLE_HEIGHT))
+        #    if self.player == 2 :
+        #        pygame.draw.rect(screen, WHITE, (damage_x - RECTANGLE_WIDTH + gap, y, damage_width, RECTANGLE_HEIGHT))
                 
             # Decrease the duration for damage indicator
-            self.damage_duration -= pygame.time.get_ticks() - self.last_update_time
+        #    self.damage_duration -= pygame.time.get_ticks() - self.last_update_time
 
-            if self.damage_duration <= 0:
-                self.damage_taken = 0
-                self.damage_duration = 5000  # Reset duration
-            if self.health == 0 :
-                self.damage_taken = 0
-                self.damage_duration = 0
+        #    if self.damage_duration <= 0:
+        #        self.damage_taken = 0
+        #        self.damage_duration = 5000  # Reset duration
+        #    if self.health == 0 :
+        #        self.damage_taken = 0
+        #        self.damage_duration = 0
 
         # Reset the last update time
         self.last_update_time = pygame.time.get_ticks()
@@ -379,7 +387,7 @@ class Fighter() :
             elapsed_time = current_time - self.attack_start_time
             if elapsed_time >= self.attack_duration :
                 enemy.health = enemy.health -5 - self.bonus_damage
-                enemy.damage_taken = enemy.damage_taken +5 + self.bonus_damage
+                # enemy.damage_taken = enemy.damage_taken +5 + self.bonus_damage
                 self.apply_attack_damage = False
                 self.bonus_damage = 0
                 

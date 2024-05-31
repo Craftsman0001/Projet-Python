@@ -74,7 +74,7 @@ def load_spritesheets():
     jump_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Jump.png")
     fall_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Fall.png")
     attack_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Attack.png")
-    projectile_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Arrow/Static.png")
+    projectile_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Arrow/Static.png")
     hit_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Get Hit.png")
     death_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Death.png")
 

@@ -9,6 +9,7 @@ class Button:
         self.font = text_font
         self.text_color = text_color
         self.screen = screen
+        self.border_radius = 15
 
     # Function to draw text on the button
     def draw_text(self, text, font, text_color):
@@ -26,14 +27,14 @@ class Button:
 
     def update_button_color(self):
         # Draw button rectangle with hover color
-        pygame.draw.rect(self.screen, self.hover_color, self.rect)
+        pygame.draw.rect(self.screen, self.hover_color, self.rect, border_radius=self.border_radius)
 
         # Draw text on hover
         self.draw_text(self.text, self.font, self.text_color)
 
     def update_button(self):
         # Draw button rectangle with default color
-        pygame.draw.rect(self.screen, self.button_color, self.rect)
+        pygame.draw.rect(self.screen, self.button_color, self.rect, border_radius=self.border_radius)
 
         # Draw text on default
         self.draw_text(self.text, self.font, self.text_color)
