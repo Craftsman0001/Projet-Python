@@ -333,12 +333,24 @@ while run:
                 countdown -= 1
                 last_count_update = pygame.time.get_ticks()
 
+        # when the countdown finishes start game clock
         if countdown == 0 :
             if (pygame.time.get_ticks() - last_count_update) >= 1000:
                 game_time -= 1
                 last_count_update = pygame.time.get_ticks()
+        # when game clock finished verify who is the winner and reset accordingly
         if game_time == 0 :
-            reset_game()
+            if fighter_2.health > fighter_1.health :
+                score[1] += 1
+            elif fighter_1.health > fighter_2.health :
+                score[0] += 1
+            elif fighter_1.health == fighter_2.health :
+                score[1] = 0
+                score[0] = 0
+            countdown = 4
+            game_time = 120
+            fighter_1 = initialize_fighter(player1_choice, 1)
+            fighter_2 = initialize_fighter(player2_choice, 2)
 
         # update fighters
         fighter_2.update(fighter_1)
@@ -367,6 +379,7 @@ while run:
             if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
                 countdown = 4
+                game_time = 120
                 fighter_1 = initialize_fighter(player1_choice, 1)
                 fighter_2 = initialize_fighter(player2_choice, 2)
 
