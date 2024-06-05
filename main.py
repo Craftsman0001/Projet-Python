@@ -35,11 +35,13 @@ GREY = (128, 128, 128)
 GREY_2 = (93, 93, 93)
 GREY_3 = (50, 50, 50)
 PURPLE = (200, 0, 255)
+LIGHT_GOLD = (255, 255, 150)
 
 # defining game variables
 countdown = 4
 last_count_update = pygame.time.get_ticks()
 score = [0, 0]  # player scores : [player1, player2]
+game_time = 120
 round_over = False
 ROUND_OVER_COOLDOWN = 3000
 game_paused = False
@@ -49,7 +51,7 @@ player2_choice = None
 # defining the font
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
-score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 30)
+score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 35)
 
 # function for displaying introduction video and wait for user to press space bar to continue
 def display_intro_video():
@@ -76,6 +78,7 @@ def reset_game():
     global score, countdown, round_over, fighter_1, fighter_2, last_count_update
 
     score = [0, 0]
+    game_time = 120
     countdown = 4
     round_over = False
     fighter_1.reset(238, 491)  # Reset fighter 1 position
@@ -290,8 +293,22 @@ while run:
         fighter_1.update_health(fighter_2, 20, 20, screen)
         fighter_2.update_health(fighter_1, 780, 20, screen)
 
-        draw_text(" P1 : " + str(score[0]), score_font, BLACK, 430, 20)
-        draw_text(" P2 : " + str(score[1]), score_font, BLACK, 695, 20)
+        X = 15
+        Y = 500
+
+        pygame.draw.rect(screen, WHITE, (Y, X, 200, 50), border_radius=10)
+        pygame.draw.rect(screen, BLACK_2, (Y, X, 50, 50), 5, border_radius=10)
+        pygame.draw.rect(screen, BLACK_2, (Y + 150, X, 50, 50), 5, border_radius=10)
+        pygame.draw.rect(screen, BLACK_2, (Y + 43, X, 114, 50))
+
+        draw_text(str(game_time), score_font, WHITE, Y + 85, X + 5)
+
+        if score[0]==1 or score[1]==1 :
+            draw_text(str(score[0]), score_font, BLACK, Y + 20, X + 5)
+            draw_text(str(score[1]), score_font, BLACK, Y + 171, X + 5)
+        else :
+            draw_text(str(score[0]), score_font, BLACK, Y + 17, X + 5)
+            draw_text(str(score[1]), score_font, BLACK, Y + 168, X + 5)
 
         # update countdown
         if countdown <= 0:
@@ -315,6 +332,13 @@ while run:
             if (pygame.time.get_ticks() - last_count_update) >= 1000:
                 countdown -= 1
                 last_count_update = pygame.time.get_ticks()
+
+        if countdown == 0 :
+            if (pygame.time.get_ticks() - last_count_update) >= 1000:
+                game_time -= 1
+                last_count_update = pygame.time.get_ticks()
+        if game_time == 0 :
+            reset_game()
 
         # update fighters
         fighter_2.update(fighter_1)
