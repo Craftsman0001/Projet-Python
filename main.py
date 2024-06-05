@@ -27,12 +27,9 @@ victory_image = pygame.transform.scale(original_victory_image, (400, 150))
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-BLACK_2 = (25, 25, 25)
 GREEN = (0, 255, 0)
 AZURE = (0, 100, 255)
-AZURE_2 = (20, 150, 255)
 AQUAMARINE = (0, 255, 100)
 GREY = (128, 128, 128)
 GREY_2 = (93, 93, 93)
@@ -216,10 +213,10 @@ def intro_screen():
                     # Play the game
                     intro = False
                     global player1_choice, player2_choice, fighter_1, fighter_2
-                    player1_choice = select_player_1(screen)
-                    player2_choice = select_player_2(screen)
-                    fighter_1 = initialize_fighter_1(player1_choice)
-                    fighter_2 = initialize_fighter_2(player2_choice)
+                    player1_choice = select_player(screen, "1")
+                    player2_choice = select_player(screen, "2")
+                    fighter_1 = initialize_fighter(player1_choice, 1)
+                    fighter_2 = initialize_fighter(player2_choice, 2)
 
                     manage_music("play1")
                 elif exit_button.rect.collidepoint(mouse_position):
@@ -346,8 +343,8 @@ while run:
             if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
                 countdown = 4
-                fighter_1 = initialize_fighter_1(player1_choice)
-                fighter_2 = initialize_fighter_2(player2_choice)
+                fighter_1 = initialize_fighter(player1_choice, 1)
+                fighter_2 = initialize_fighter(player2_choice, 2)
 
 
     # Update display
