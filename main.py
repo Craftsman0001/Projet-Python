@@ -53,6 +53,7 @@ player2_choice = None
 countdown_font_1 = pygame.font.Font("Assets/Fonts/Turok.ttf", 200)
 countdown_font_2 = pygame.font.Font("Assets/Fonts/Turok.ttf", 220)
 score_font = pygame.font.Font("Assets/Fonts/Turok.ttf", 35)
+Mana_maxed_font = pygame.font.Font("Assets/Fonts/Shock.ttf", 35)
 
 # function for displaying introduction video and wait for user to press space bar to continue
 def display_intro_video():
@@ -297,9 +298,9 @@ while run:
         fighter_2.update_health(fighter_1, 780, 20, screen)
 
         if fighter_1.mana == 50 :
-            draw_text("MAX", score_font, WHITE, 95, 59)
+            draw_text("MAX", Mana_maxed_font, WHITE, 85, 66)
         if fighter_2.mana == 50 :    
-            draw_text("MAX", score_font, WHITE, 1055, 59)        
+            draw_text("MAX", Mana_maxed_font, WHITE, 1045, 66)        
 
         pygame.draw.rect(screen, WHITE, (Y, X, 200, 50), border_radius=10)
         pygame.draw.rect(screen, BLACK_2, (Y, X, 50, 50), 5, border_radius=10)
