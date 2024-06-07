@@ -1,8 +1,8 @@
 import pygame
 import sys
+import random
 from moviepy.editor import VideoFileClip
 from fighter import Fighter
-from FighterData import *
 from button import *
 from Selectplayer import *
 
@@ -16,8 +16,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Brawl Arena")
 
 # Load background image and scale it to fit the screen
-original_background_image = pygame.image.load("Assets/BackGrounds/trees.jpg")
-background_image = pygame.transform.scale(original_background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+i = random.randint(0, 1)
+image = BackGrounds()
+background_image = pygame.transform.scale(image[i], (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # load the victory image
 original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
@@ -258,6 +259,8 @@ display_intro_video()
 intro_screen()
 
 # Game Loop
+X = 15
+Y = 500
 clock = pygame.time.Clock()  # Setting up framerate
 run = True
 while run:
@@ -293,8 +296,10 @@ while run:
         fighter_1.update_health(fighter_2, 20, 20, screen)
         fighter_2.update_health(fighter_1, 780, 20, screen)
 
-        X = 15
-        Y = 500
+        if fighter_1.mana == 50 :
+            draw_text("MAX", score_font, WHITE, 95, 59)
+        if fighter_2.mana == 50 :    
+            draw_text("MAX", score_font, WHITE, 1055, 59)        
 
         pygame.draw.rect(screen, WHITE, (Y, X, 200, 50), border_radius=10)
         pygame.draw.rect(screen, BLACK_2, (Y, X, 50, 50), 5, border_radius=10)

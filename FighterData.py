@@ -74,7 +74,8 @@ def load_spritesheets():
     jump_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Jump.png")
     fall_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Fall.png")
     attack_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Attack.png")
-    projectile_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Arrow/Static.png")
+    # projectile_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Arrow/Static.png")
+    attack2_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Attack.png")
     hit_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Get Hit.png")
     death_Huntress_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Character/Death.png")
 
@@ -87,7 +88,7 @@ def load_spritesheets():
         "samurai": [idle_samurai_sprite_sheet, run_samurai_sprite_sheet, jump_samurai_sprite_sheet, fall_samurai_sprite_sheet, attack1_samurai_sprite_sheet, attack2_samurai_sprite_sheet, hit_samurai_sprite_sheet, death_samurai_sprite_sheet],
         "Squire" :[idle_Squire_sprite_sheet, run_Squire_sprite_sheet, jump_Squire_sprite_sheet, fall_Squire_sprite_sheet, attack1_Squire_sprite_sheet, attack2_Squire_sprite_sheet, hit_Squire_sprite_sheet, death_Squire_sprite_sheet, attack3_Squire_sprite_sheet],
         "Knight" : [idle_knight_sprite_sheet, run_knight_sprite_sheet, jump_knight_sprite_sheet, fall_knight_sprite_sheet, attack1_knight_sprite_sheet, attack2_knight_sprite_sheet, hit_knight_sprite_sheet, death_knight_sprite_sheet],
-        "Huntress" : [idle_Huntress_sprite_sheet, run_Huntress_sprite_sheet, jump_Huntress_sprite_sheet, fall_Huntress_sprite_sheet, attack_Huntress_sprite_sheet, projectile_Huntress_sprite_sheet, hit_Huntress_sprite_sheet, death_Huntress_sprite_sheet]
+        "Huntress" : [idle_Huntress_sprite_sheet, run_Huntress_sprite_sheet, jump_Huntress_sprite_sheet, fall_Huntress_sprite_sheet, attack_Huntress_sprite_sheet, attack2_Huntress_sprite_sheet, hit_Huntress_sprite_sheet, death_Huntress_sprite_sheet]
     }
 
 def load_animation_steps():
@@ -233,16 +234,18 @@ def fighter_variables() :
     knight_x_size = 140
     knight_y_size = 140
     knight_scale = 3.7
-    knight_offset = [65, 46]
-    knight_timer_attack_1 = 200
-    knight_timer_attack_2 = 200
-    knight_timer_attack_3 = 200
+    knight_offset = [60, 34.5]
+    knight_timer_attack_1 = 300
+    knight_timer_attack_2 = 300
+    knight_timer_attack_3 = 0
 
     Huntress_x_size = 100
     Huntress_y_size = 100
-    Huntress_scale = 3.7
-    Huntress_offset = [65, 46]
-    Huntress_timer_attack = 200
+    Huntress_scale = 4
+    Huntress_offset = [37.5, 22]
+    Huntress_timer_attack_1 = 200
+    Huntress_timer_attack_2 = 200
+    Huntress_timer_attack_3 = 0
 
     return {
         "fantasy_warrior" : [fantasy_warrior_x_size, fantasy_warrior_y_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
@@ -252,5 +255,13 @@ def fighter_variables() :
         "samurai": [samurai_x_size, samurai_y_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
         "Squire": [Squire_x_size, Squire_y_size, Squire_scale, Squire_offset, Squire_timer_attack_1, Squire_timer_attack_2, Squire_timer_attack_3],
         "Knight" : [knight_x_size, knight_y_size, knight_scale, knight_offset, knight_timer_attack_1, knight_timer_attack_2, knight_timer_attack_3],
-        "Huntress" : [Huntress_x_size, Huntress_y_size, Huntress_scale, Huntress_offset, Huntress_timer_attack]
+        "Huntress" : [Huntress_x_size, Huntress_y_size, Huntress_scale, Huntress_offset, Huntress_timer_attack_1, Huntress_timer_attack_2, Huntress_timer_attack_3]
     }
+
+def BackGrounds() :
+    background_image_1 = pygame.image.load("Assets/BackGrounds/trees.jpg")
+    background_image_2 = pygame.image.load("Assets/BackGrounds/Pixel_Landscapes/Landscape_17.png")
+
+    images = [background_image_1, background_image_2]
+
+    return images

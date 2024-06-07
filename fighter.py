@@ -311,12 +311,15 @@ class Fighter():
         BLACK = (0, 0, 0)
         GREEN = (20, 255, 150)
         PURPLE = (200, 0, 255)
-        RED = (255, 0, 0)
-        YELLOW = (255, 255, 0)
-
+        PINK = (255, 0, 255)
 
         RECTANGLE_WIDTH = 400
         RECTANGLE_HEIGHT = 30
+
+        if self.mana < 50 :
+            mana_colour = PURPLE
+        if self.mana == 50 :
+            mana_colour = PINK
 
         # Calculate ratios for health and mana
         ratio_health = self.health / 100
@@ -345,14 +348,14 @@ class Fighter():
         # Draw mana bar based on fighter
         if self.player == 1 :
             pygame.draw.rect(screen, LIGHT_GREY, (x, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT), border_radius=self.border_radius)
-            pygame.draw.rect(screen, PURPLE, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+            pygame.draw.rect(screen, mana_colour, (x, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             pygame.draw.rect(screen, BLACK, (x - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
         if self.player == 2 :
             pygame.draw.rect(screen, LIGHT_GREY, (x + RECTANGLE_WIDTH_DIVISION, y + 45, RECTANGLE_WIDTH_DIVISION, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             if self.mana < 50 :
-                pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana) + 1, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+                pygame.draw.rect(screen, mana_colour, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana) + 1, y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             else :
-                pygame.draw.rect(screen, PURPLE, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
+                pygame.draw.rect(screen, mana_colour, (x + RECTANGLE_WIDTH - (RECTANGLE_WIDTH_DIVISION * ratio_mana), y + 45, 200 * ratio_mana, RECTANGLE_HEIGHT), border_radius=self.border_radius)
             pygame.draw.rect(screen, BLACK, (x + RECTANGLE_WIDTH_DIVISION - 5, y + 40, RECTANGLE_WIDTH_DIVISION + 10, RECTANGLE_HEIGHT + 10), self.rectangle_edge, border_radius=self.border_radius)
 
         # Calculate the width of the damage rectangle based on damage taken
