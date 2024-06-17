@@ -77,7 +77,7 @@ def display_intro_video():
     pygame.time.wait(100)
 
 def reset_game():
-    global score, countdown, round_over, fighter_1, fighter_2, last_count_update
+    global score, countdown, round_over, fighter_1, fighter_2, last_count_update, game_time
 
     score = [0, 0]
     game_time = 120
@@ -283,6 +283,8 @@ while run:
             reset_game()
             game_paused = False
         elif pause_action == "Main menu":
+            game_time = 120
+            countdown = 4
             intro_screen()
             game_paused = False
 

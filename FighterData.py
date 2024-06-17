@@ -218,8 +218,8 @@ def fighter_variables() :
     samurai_y_size = 200
     samurai_scale = 3.3
     samurai_offset = [88, 67.5]
-    samurai_timer_attack_1 = 280
-    samurai_timer_attack_2 = 300
+    samurai_timer_attack_1 = 5000 #280
+    samurai_timer_attack_2 = 5000 #300
     samurai_timer_attack_3 = 0
 
 
@@ -243,9 +243,12 @@ def fighter_variables() :
     Huntress_y_size = 100
     Huntress_scale = 4
     Huntress_offset = [37.5, 22]
-    Huntress_timer_attack_1 = 200
-    Huntress_timer_attack_2 = 200
-    Huntress_timer_attack_3 = 0
+    Huntress_projectile_x_size = 24
+    Huntress_projectile_y_size = 5
+    Huntress_projectile_image_scale = 1.3
+    Huntress_projectile_y_offset = -25
+    Huntress_projectile_width = 100
+    Huntress_projectile_height = 20
 
     return {
         "fantasy_warrior" : [fantasy_warrior_x_size, fantasy_warrior_y_size, fantasy_warrior_scale, fantasy_warrior_offset, fantasy_warrior_timer_attack_1, fantasy_warrior_timer_attack_2, fantasy_warrior_timer_attack_3],
@@ -255,7 +258,16 @@ def fighter_variables() :
         "samurai": [samurai_x_size, samurai_y_size, samurai_scale, samurai_offset, samurai_timer_attack_1, samurai_timer_attack_2, samurai_timer_attack_3],
         "Squire": [Squire_x_size, Squire_y_size, Squire_scale, Squire_offset, Squire_timer_attack_1, Squire_timer_attack_2, Squire_timer_attack_3],
         "Knight" : [knight_x_size, knight_y_size, knight_scale, knight_offset, knight_timer_attack_1, knight_timer_attack_2, knight_timer_attack_3],
-        "Huntress" : [Huntress_x_size, Huntress_y_size, Huntress_scale, Huntress_offset, Huntress_timer_attack_1, Huntress_timer_attack_2, Huntress_timer_attack_3]
+        "Huntress" : [Huntress_x_size, Huntress_y_size, Huntress_scale, Huntress_offset, Huntress_projectile_x_size, Huntress_projectile_y_size, Huntress_projectile_image_scale, Huntress_projectile_y_offset, Huntress_projectile_width, Huntress_projectile_height]
+    }
+
+def projectiles() :
+    #function that has the data for each fighter projectile
+    projectile_sprite_sheet = pygame.image.load("Assets/Fighters/Huntress/Sprites/Arrow/Move.png")
+    projectile_animation_steps = [2]
+
+    return {
+        "Huntress" : [projectile_sprite_sheet, projectile_animation_steps]
     }
 
 def BackGrounds() :

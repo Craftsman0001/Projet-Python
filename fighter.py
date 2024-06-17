@@ -1,6 +1,4 @@
 import pygame
-
-
 import math
 
 class Fighter():
@@ -37,9 +35,9 @@ class Fighter():
         self.attack_start_time = 0
         self.attack_duration = 0
         self.apply_attack_damage = False
-        self.damage_taken = 0
+        #self.damage_taken = 0
         self.damage_duration = 5000  # milliseconds
-        self.last_update_time = pygame.time.get_ticks()
+        #self.last_update_time = pygame.time.get_ticks()
         self.border_radius = 25
         self.rectangle_edge = 5
 
@@ -96,7 +94,7 @@ class Fighter():
                 elif keys[pygame.K_a] and self.attack_cooldown == 0:
                     self.attack_type = 2
                     self.attack_duration = self.timer_attack_2 
-                    self.attack(enemy) 
+                    self.attack(enemy)
 
                 # Mana
                 if keys[pygame.K_t] and self.mana == 50 :
@@ -255,28 +253,46 @@ class Fighter():
         ### pygame.draw.rect(surface, (255, 0, 0), self.rect)
         surface.blit(current_frame, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
 
-    def attack(self, enemy) : ### def attack(self, surface, enemy) :
-
-        if self.attack_cooldown == 0 :
-            
+    def attack(self, enemy):
+        if self.attack_cooldown == 0:
             self.attacking = True
             self.attack_start_time = pygame.time.get_ticks()
 
-            if self.flip :
-                # If the fighter is flipped, the attacking rectangle starts from the left side of the fighter
+            # Define base damage
+            base_damage = 5
+
+            # Apply bonus damage if available
+            total_damage = base_damage + self.bonus_damage
+
+            # Determine attacking rectangle position based on fighter orientation
+            if self.flip:
                 attacking_rect_left = self.rect.left - 1.5 * self.rect.width
-            else :
-                # If the fighter is not flipped, the attacking rectangle starts from the right side of the fighter
+            else:
                 attacking_rect_left = self.rect.right
 
             # Create the attacking rectangle
             attacking_rect = pygame.Rect(attacking_rect_left, self.rect.y, 1.5 * self.rect.width, self.rect.height)
-        
-            if attacking_rect.colliderect(enemy.rect) :
-                enemy.hit = True
-                self.apply_attack_damage = True
-                self.add_mana(10)
 
+            # Check for collision with the enemy
+            if attacking_rect.colliderect(enemy.rect):
+                enemy.hit = True
+                if self.attacking == True and self.apply_attack_damage == True :
+                    print("good")
+                    current_time = pygame.time.get_ticks()
+                    elapsed_time = current_time - self.attack_start_time
+                    if elapsed_time >= self.attack_duration :
+                        enemy.health = enemy.health -5 - self.bonus_damage
+                        self.apply_attack_damage = False
+                        self.bonus_damage = 0
+                # Apply damage to the enemy
+                enemy.health -= total_damage
+                # Set cooldown period for the attack
+                self.attack_cooldown = 30
+                # Add mana when the attack hits
+                self.add_mana(10)
+                self.bonus_damage = 0
+
+            # Draw the attacking rectangle for debugging
             ### pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
     def update_fighter_action(self, new_action):
@@ -387,13 +403,6 @@ class Fighter():
         #        self.damage_duration = 0
 
         # Reset the last update time
-        self.last_update_time = pygame.time.get_ticks()
+        #self.last_update_time = pygame.time.get_ticks()
 
-        if self.attacking == True and self.apply_attack_damage == True :
-            current_time = pygame.time.get_ticks()
-            elapsed_time = current_time - self.attack_start_time
-            if elapsed_time >= self.attack_duration :
-                enemy.health = enemy.health -5 - self.bonus_damage
-                # enemy.damage_taken = enemy.damage_taken +5 + self.bonus_damage
-                self.apply_attack_damage = False
-                self.bonus_damage = 0
+

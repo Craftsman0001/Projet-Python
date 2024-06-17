@@ -3,6 +3,7 @@ import sys
 from button import Button
 from FighterData import *
 from fighter import Fighter
+from RangedFighter import RangedFighter
 from FighterData import load_spritesheets, load_animation_steps, fighter_variables
 
 
@@ -41,6 +42,11 @@ samurai_data = fighter_data["samurai"]
 Squire_data = fighter_data["Squire"]
 Knight_data = fighter_data["Knight"]
 Huntress_data = fighter_data["Huntress"]
+
+projectiles = projectiles()
+
+Huntress = projectiles["Huntress"]
+
 
 # Colors
 WHITE = (255, 255, 255)
@@ -131,12 +137,13 @@ def select_player(screen, player_number) :
         pygame.display.flip()
 
 def initialize_fighter(player_choice, player_number):
-    THIRD_ATTACK = False  # Default value
+    third_attack = False  # Default value
+    Ranged = False
     if player_choice == "Fantasy Warrior":
         player_data = fantasy_warrior_data
         player_sprite_sheet = fantasy_warrior_sprite_sheet
         player_animation_steps = fantasy_warrior_animation_steps
-        THIRD_ATTACK = True  # Set to True for Fantasy Warrior
+        third_attack = True  # Set to True for Fantasy Warrior
 
     elif player_choice == "Evil Wizard":
         player_data = wizard_data
@@ -157,31 +164,40 @@ def initialize_fighter(player_choice, player_number):
         player_data = martial_hero_data
         player_sprite_sheet = martial_hero_sprite_sheets
         player_animation_steps = martial_hero_animation_steps
-        THIRD_ATTACK = True  # Set to True for martial hero
+        third_attack = True  # Set to True for martial hero
 
     elif player_choice == "Squire":
         player_data = Squire_data
         player_sprite_sheet = Squire_sprite_sheets
         player_animation_steps = Squire_animation_steps
-        THIRD_ATTACK = True
+        third_attack = True
 
     elif player_choice == "Knight":
         player_data = Knight_data
         player_sprite_sheet = Knight_sprite_sheets
         player_animation_steps = Knight_animation_steps
-        THIRD_ATTACK = False
+        third_attack = False
 
     elif player_choice == "Huntress":
         player_data = Huntress_data
         player_sprite_sheet = Huntress_sprite_sheets
         player_animation_steps = Huntress_animation_steps
-        THIRD_ATTACK = False
+        projectile_sprite_sheet = Huntress[0]
+        projectile_animation_steps = Huntress[1]
+        third_attack = False
+        Ranged = True
     
     if player_number == 1 :
         global fighter_1
-        fighter_1 = Fighter(1, 200, 400, 581, True, THIRD_ATTACK, player_data, player_sprite_sheet, player_animation_steps)
+        if Ranged == False :
+            fighter_1 = Fighter(1, 200, 400, 581, True, third_attack, player_data, player_sprite_sheet, player_animation_steps)
+        else :
+            fighter_1 = RangedFighter(1, 200, 400, 581, True, third_attack, player_data, player_sprite_sheet, player_animation_steps, projectile_sprite_sheet, projectile_animation_steps)
         return fighter_1
     else :
         global fighter_2
-        fighter_2 = Fighter(2, 925, 400, 581, False, THIRD_ATTACK, player_data, player_sprite_sheet, player_animation_steps)
+        if Ranged == False :
+            fighter_2 = Fighter(2, 925, 400, 581, False, third_attack, player_data, player_sprite_sheet, player_animation_steps)
+        else :
+            fighter_2 = RangedFighter(2, 925, 400, 581, False, third_attack, player_data, player_sprite_sheet, player_animation_steps, projectile_sprite_sheet, projectile_animation_steps)
         return fighter_2
