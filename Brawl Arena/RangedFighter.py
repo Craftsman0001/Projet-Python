@@ -46,9 +46,9 @@ class RangedFighter(Fighter):
                     direction = -1
                 else:
                     direction = +1
-                self.projectile_y_offset = self.projectile_y_offset + (bonus_damage //2)
-                projectile_x = self.rect.centerx + direction * self.rect.width // 2 + (bonus_damage //2)
-                projectile_y = self.rect.centery + self.projectile_y_offset + (bonus_damage //2)
+                self.projectile_y_offset = self.projectile_y_offset + (self.bonus_damage //2)
+                projectile_x = self.rect.centerx + direction * self.rect.width // 2 + (self.bonus_damage //2)
+                projectile_y = self.rect.centery + self.projectile_y_offset + (self.bonus_damage //2)
 
                 # Apply bonus damage if "T" key is pressed and mana is sufficient
                 damage = self.projectile_damage + self.bonus_damage 
