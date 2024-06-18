@@ -246,7 +246,7 @@ def fighter_variables() :
     Huntress_projectile_x_size = 24
     Huntress_projectile_y_size = 5
     Huntress_projectile_image_scale = 1.3
-    Huntress_projectile_y_offset = -25
+    Huntress_projectile_y_offset = -30
     Huntress_projectile_width = 100
     Huntress_projectile_height = 20
 
