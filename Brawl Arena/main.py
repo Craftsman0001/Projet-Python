@@ -17,9 +17,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Brawl Arena")
 
 # Load background image and scale it to fit the screen
-i = random.randint(0, 1)
+i = random.randint(0, 4)
 image = BackGrounds()
-background_image = pygame.transform.scale(image[i], (SCREEN_WIDTH, SCREEN_HEIGHT))
+background_image = pygame.transform.scale(image[i][0], (SCREEN_WIDTH, SCREEN_HEIGHT + 200))
 
 # load the victory image
 original_victory_image = pygame.image.load("Assets/Images/victory_3.png")
@@ -294,7 +294,7 @@ while run:
         clock.tick(60)
 
         # Draw background Image
-        screen.blit(background_image, (0, 0))
+        screen.blit(background_image, (0, image[i][1])) 
 
         # Displaying the players stats
         fighter_1.update_health(fighter_2, 20, 20, screen)

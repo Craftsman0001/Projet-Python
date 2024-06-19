@@ -271,10 +271,12 @@ def projectiles() :
     }
 
 def BackGrounds() :
-    background_image_1 = pygame.image.load("Assets/BackGrounds/trees.jpg")
-    background_image_2 = pygame.image.load("Assets/BackGrounds/Pixel_Landscapes/Landscape_17.png")
-
-    images = [background_image_1, background_image_2]
+    background_image_1 = [pygame.image.load("Assets/BackGrounds/trees.jpg"), -200]
+    background_image_2 = [pygame.image.load("Assets/BackGrounds/Pixel_Landscapes/Landscape_17.png"), -150]
+    background_image_3 = [pygame.image.load("Assets/BackGrounds/Pixel_Landscapes/Landscape_49.png"), -150]
+    background_image_4 = [pygame.image.load("Assets/BackGrounds/Pixel_Landscapes/Landscape_41.png"), -150]
+    background_image_5 = [pygame.image.load("Assets/BackGrounds/Pixel_Landscapes/Landscape_29.png"), -193]
+    images = [background_image_1, background_image_2, background_image_3, background_image_4, background_image_5]
 
     return images
 
