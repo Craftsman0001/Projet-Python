@@ -58,14 +58,14 @@ Mana_maxed_font = pygame.font.Font("Assets/Fonts/Shock.ttf", 35)
 
 # function for displaying introduction video and wait for user to press space bar to continue
 def display_intro_video():
-    clip = VideoFileClip("Assets/intro/intro.mp4")
+    clip = VideoFileClip("Assets/intro/intro_2.mp4")
     clip = clip.without_audio()  # disable audio track
     clip = clip.set_fps(60)
 
     # loop to display each frame of the video
     for frame in clip.iter_frames():
         frame_surface = pygame.image.frombuffer(frame, clip.size, "RGB")
-        screen.blit(frame_surface, (0, 0))
+        screen.blit(frame_surface, (0, -70))
         pygame.display.update()
 
         # check if space bar is pressed to skip intro video
