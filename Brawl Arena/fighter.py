@@ -405,4 +405,3 @@ class Fighter():
         # Reset the last update time
         #self.last_update_time = pygame.time.get_ticks()
 
-
